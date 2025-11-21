@@ -110,7 +110,7 @@ class DocumentService:
 
 
 class RAGService:
-    """Handle RAG chat"""
+    """Handle RAG (Retrieval-Augmented Generation) chat"""
     
     def __init__(self, llm, vectorstore, raw_documents):
         self.llm = llm
@@ -131,7 +131,17 @@ class RAGService:
         try:
             logger.info("Attempting hybrid RAG")
             enhanced_query, key_terms = preprocess_query(question)
+            
+            # Check if vectorstore has documents
+            if self.vectorstore is None:
+                raise ValueError("No vector store")
+            
             retrieved_docs = hybrid_search(enhanced_query, self.vectorstore, k=7)
+            
+            if not retrieved_docs:
+                logger.info("No documents retrieved, using direct LLM")
+                response = self.llm.invoke(question)
+                return response, "direct"
             
             logger.info(f"Retrieved {len(retrieved_docs)} documents")
             
@@ -144,8 +154,6 @@ class RAGService:
             
             prompt = f"""You are reading text extracted from an image or document using OCR.
 
-CRITICAL: If asked "what does this say" or "what text is in this image", extract and present the actual text content from below.
-
 DOCUMENT TEXT:
 {context}
 
@@ -153,7 +161,7 @@ DOCUMENT TEXT:
 
 USER QUESTION: {question}
 
-ANSWER (extract relevant text or answer the question):"""
+ANSWER:"""
             
             response = self.llm.invoke(prompt)
             logger.info("Hybrid RAG successful")
@@ -179,7 +187,6 @@ INSTRUCTIONS:
 2. Provide a comprehensive answer
 3. If not in the document, say so clearly
 4. Be specific and reference relevant parts
-5. Do not make assumptions beyond the text, if unsure then ask for clarification
 
 FULL DOCUMENT(S):
 {full_context[:10000]}

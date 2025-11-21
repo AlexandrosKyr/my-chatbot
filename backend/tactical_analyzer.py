@@ -7,6 +7,10 @@ import os
 import logging
 import torch
 import clip
+import tempfile
+from symbol_helper import get_symbol_helper
+from symbol_classifier import ResNetSymbolClassifier
+import json
 
 logger = logging.getLogger(__name__)
 
@@ -18,23 +22,13 @@ class TacticalAnalyzer:
         self.clip_model = clip_model
         self.clip_preprocess = clip_preprocess
         self.device = device
-        # Load YOLO
-        try:
-            self.yolo_model = YOLO('yolov8n.pt')
-            logger.info("✓ YOLO loaded")
-        except Exception as e:
-            logger.error(f"YOLO failed: {e}")
-            self.yolo_model = None
-        
-        # Load CLIP
-        try:
-            self.device = "cuda" if torch.cuda.is_available() else "cpu"
-            self.clip_model, self.clip_preprocess = clip.load("ViT-B/32", device=self.device)
-            logger.info(f"✓ CLIP loaded on {self.device}")
-        except Exception as e:
-            logger.error(f"CLIP failed: {e}")
-            self.clip_model = None
-        
+        self.symbol_helper = get_symbol_helper()
+
+        # Initialize NATO symbol classifier
+        self.symbol_classifier = None
+        self.class_mapping = None
+        self._load_symbol_classifier()
+
         # Tactical classifications for CLIP
         self.terrain_types = [
             "dense forest with trees",
@@ -68,33 +62,116 @@ class TacticalAnalyzer:
             "fortifications",
             "open areas"
         ]
-    
+
+    def _load_symbol_classifier(self):
+        """Load trained symbol classifier if available"""
+        try:
+            model_path = './models/symbol_classifier.pth'
+            mapping_path = './symbol_dataset/class_mapping.json'
+
+            if os.path.exists(model_path) and os.path.exists(mapping_path):
+                # Load class mapping first to determine number of classes
+                with open(mapping_path, 'r') as f:
+                    self.class_mapping = json.load(f)
+
+                num_classes = len(self.class_mapping)
+                self.symbol_classifier = ResNetSymbolClassifier(num_classes=num_classes, device=str(self.device))
+                self.symbol_classifier.load_model(model_path)
+
+                logger.info(f"NATO symbol classifier loaded successfully ({num_classes} classes)")
+            else:
+                logger.warning("Symbol classifier not found - symbol detection disabled")
+                logger.warning(f"  Model: {model_path}")
+                logger.warning(f"  Mapping: {mapping_path}")
+        except Exception as e:
+            logger.error(f"Failed to load symbol classifier: {e}")
+
+    def detect_nato_symbols(self, image_path, yolo_detections):
+        """Classify YOLO detections as NATO symbols"""
+        if self.symbol_classifier is None or self.class_mapping is None:
+            return []
+
+        detected_symbols = []
+
+        try:
+            img = Image.open(image_path)
+
+            for detection in yolo_detections:
+                # Extract crop from detection bbox
+                x1, y1, x2, y2 = detection['bbox']
+                crop = img.crop((x1, y1, x2, y2))
+
+                # Classify symbol
+                result = self.symbol_classifier.predict(crop)
+                class_idx = result['class_idx']
+                confidence = result['confidence']
+
+                # Get symbol name from mapping
+                symbol_name = self.class_mapping.get(str(class_idx), f"Unknown ({class_idx})")
+
+                # Format symbol name for readability
+                readable_name = symbol_name.replace('_', ' ').title()
+
+                # Calculate position in compass terms
+                img_width, img_height = img.size
+                center_x, center_y = detection['position']
+
+                # Determine sector
+                h_third = img_width / 3
+                v_third = img_height / 3
+
+                if center_y < v_third:
+                    vertical = "North"
+                elif center_y < 2 * v_third:
+                    vertical = "Center"
+                else:
+                    vertical = "South"
+
+                if center_x < h_third:
+                    horizontal = "West"
+                elif center_x < 2 * h_third:
+                    horizontal = ""
+                else:
+                    horizontal = "East"
+
+                sector = f"{vertical}{horizontal}".strip()
+                if sector == "Center":
+                    sector = "Center"
+
+                detected_symbols.append({
+                    'symbol': readable_name,
+                    'confidence': confidence,
+                    'sector': sector,
+                    'position': (center_x, center_y),
+                    'low_confidence': confidence < 0.85
+                })
+
+            logger.info(f"Detected {len(detected_symbols)} NATO symbols")
+            return detected_symbols
+
+        except Exception as e:
+            logger.error(f"Symbol detection failed: {e}")
+            return []
+
     def classify_with_clip(self, image_path, text_options, top_k=3):
         """Classify image against multiple text options using CLIP"""
         if self.clip_model is None:
             return []
         
         try:
-            # Load and preprocess image
             image = Image.open(image_path).convert('RGB')
             image_input = self.clip_preprocess(image).unsqueeze(0).to(self.device)
-            
-            # Encode text options
             text_tokens = clip.tokenize(text_options).to(self.device)
             
-            # Get similarity scores
             with torch.no_grad():
                 image_features = self.clip_model.encode_image(image_input)
                 text_features = self.clip_model.encode_text(text_tokens)
                 
-                # Normalize features
                 image_features /= image_features.norm(dim=-1, keepdim=True)
                 text_features /= text_features.norm(dim=-1, keepdim=True)
                 
-                # Calculate cosine similarity
                 similarity = (100.0 * image_features @ text_features.T).softmax(dim=-1)
             
-            # Get top k results
             values, indices = similarity[0].topk(top_k)
             
             results = []
@@ -125,7 +202,6 @@ class TacticalAnalyzer:
             'objects_present': object_results
         }
         
-        # Log results
         logger.info("CLIP Terrain Analysis:")
         logger.info(f"  Primary terrain: {terrain_results[0]['label']} ({terrain_results[0]['confidence']:.2%})")
         logger.info(f"  Key feature: {tactical_results[0]['label']} ({tactical_results[0]['confidence']:.2%})")
@@ -138,7 +214,6 @@ class TacticalAnalyzer:
             img = Image.open(image_path)
             width, height = img.size
             
-            # Divide into 3x3 grid
             regions = {}
             directions = [
                 ['northwest', 'north', 'northeast'],
@@ -148,7 +223,6 @@ class TacticalAnalyzer:
             
             for i in range(3):
                 for j in range(3):
-                    # Extract region
                     x1 = j * (width // 3)
                     y1 = i * (height // 3)
                     x2 = (j + 1) * (width // 3)
@@ -156,11 +230,10 @@ class TacticalAnalyzer:
                     
                     region_img = img.crop((x1, y1, x2, y2))
                     
-                    # Save temporarily
-                    temp_path = f"/tmp/region_{i}_{j}.jpg"
-                    region_img.save(temp_path)
+                    with tempfile.NamedTemporaryFile(suffix='.jpg', delete=False) as tmp:
+                        temp_path = tmp.name
+                        region_img.save(temp_path)
                     
-                    # Classify region
                     terrain = self.classify_with_clip(temp_path, self.terrain_types, top_k=1)
                     tactical = self.classify_with_clip(temp_path, self.tactical_features, top_k=1)
                     
@@ -172,7 +245,6 @@ class TacticalAnalyzer:
                             'tactical_confidence': tactical[0]['confidence']
                         }
                     
-                    # Clean up
                     if os.path.exists(temp_path):
                         os.remove(temp_path)
             
@@ -183,7 +255,7 @@ class TacticalAnalyzer:
             return {}
     
     def detect_objects_yolo(self, image_path):
-        """YOLO object detection (existing code)"""
+        """YOLO object detection"""
         if self.yolo_model is None:
             return []
         
@@ -218,28 +290,61 @@ class TacticalAnalyzer:
             return []
     
     def get_visual_understanding_llava(self, image_path, scenario):
-        """LLaVA visual analysis (existing code)"""
+        """LLaVA visual analysis with NATO symbology reference"""
         try:
             logger.info("Querying LLaVA for detailed visual analysis...")
-            
+
+            # Get symbol reference guide
+            symbol_guide = self.symbol_helper.get_symbol_reference_guide()
+
             response = ollama.chat(
                 model='llava:13b',
                 messages=[{
                     'role': 'user',
-                    'content': f"""Analyze this tactical/battlefield map in detail.
+                    'content': f"""You are a NATO reconnaissance analyst conducting Intelligence Preparation of the Battlefield (IPB). You are trained in NATO APP-6(E) military symbology and can identify standard military map symbols.
 
-Scenario: {scenario}
+MISSION: {scenario}
 
-Provide a comprehensive description of:
-1. Terrain features and layout
-2. Strategic positions (high ground, cover, chokepoints)
-3. Natural and man-made obstacles
-4. Potential approach routes
-5. Defensive and offensive positions
-6. Any visible units or structures
+{symbol_guide}
 
-Be specific about locations using compass directions, altitude changes, and terrain types.
-Always ask the user to confirm if the information is correct or if they have additional details to provide.""",
+When you see military symbols on the map, identify:
+- Unit type (infantry, armor, artillery, reconnaissance, engineer, headquarters, etc.)
+- Affiliation (friendly/enemy/neutral - indicated by frame shape and color)
+- Echelon/size (symbols above the icon showing unit size)
+- Location on the map (use compass directions and terrain features)
+- Tactical significance of placement relative to terrain
+
+Conduct a systematic battlefield reconnaissance following IPB methodology:
+
+STEP 1 - MILITARY SYMBOL IDENTIFICATION:
+- What military symbols are present on the map?
+- What unit types, sizes, and affiliations do they represent?
+- Where are friendly forces positioned? Where are enemy forces?
+- Are there headquarters, support units, or special symbols marked?
+
+STEP 2 - TERRAIN ANALYSIS (OAKOC Framework):
+- Observation & Fields of Fire: What are the key observation points and fields of fire?
+- Avenues of Approach: Identify mobility corridors for mounted/dismounted movement
+- Key Terrain: What terrain features provide tactical advantage?
+- Obstacles: Natural/man-made obstacles that channelize or restrict movement
+- Cover & Concealment: Where can forces find protection from fires and observation?
+
+STEP 3 - TACTICAL GEOMETRY & SYMBOL PLACEMENT ANALYSIS:
+- High ground positions and their commanding fields of view
+- Why are units positioned where they are relative to terrain?
+- Do symbol placements align with sound tactical principles?
+- Chokepoints that restrict maneuver
+- Dead ground and defilade positions
+- Flanking routes and engagement areas
+
+STEP 4 - FORCE EMPLOYMENT ASSESSMENT:
+- How are forces currently arrayed based on symbols?
+- Suitable locations for defensive positions
+- Viable offensive approach routes
+- Artillery firing positions and observation posts
+- Assembly areas and support-by-fire positions
+
+Use compass directions (N, NE, E, SE, S, SW, W, NW), estimate distances, and describe elevations. Think like a military planner assessing this battlefield and the force dispositions shown by military symbols.""",
                     'images': [image_path]
                 }]
             )
@@ -250,8 +355,8 @@ Always ask the user to confirm if the information is correct or if they have add
             logger.error(f"LLaVA failed: {e}")
             return "Visual analysis unavailable."
     
-    def generate_comprehensive_strategy(self, image_path, scenario, unit_types=None):
-        """Complete tactical analysis using all three models"""
+    def generate_comprehensive_strategy(self, image_path, scenario, unit_types=None, vectorstore=None):
+        """Complete tactical analysis using all models + KB"""
         
         logger.info("="*70)
         logger.info("MULTI-MODEL TACTICAL ANALYSIS")
@@ -265,23 +370,57 @@ Always ask the user to confirm if the information is correct or if they have add
                 'reconnaissance': 2
             }
         
-        # PHASE 1: CLIP - Fast terrain classification
-        logger.info("\n[1/4] CLIP: Fast Terrain Classification")
+        # PHASE 1: CLIP
+        logger.info("\n[1/5] CLIP: Terrain Classification")
         clip_terrain = self.analyze_terrain_with_clip(image_path)
         clip_regions = self.analyze_regions_with_clip(image_path)
         
-        # PHASE 2: YOLO - Object detection
-        logger.info("\n[2/4] YOLO: Object Detection")
+        # PHASE 2: YOLO + Symbol Classification
+        logger.info("\n[2/5] YOLO: Object Detection")
         yolo_objects = self.detect_objects_yolo(image_path)
-        
-        # PHASE 3: LLaVA - Detailed visual understanding
-        logger.info("\n[3/4] LLaVA: Detailed Visual Analysis")
+
+        # PHASE 2.5: NATO Symbol Classification
+        logger.info("\n[2.5/5] ResNet18: NATO Symbol Classification")
+        nato_symbols = self.detect_nato_symbols(image_path, yolo_objects)
+
+        # PHASE 3: LLaVA
+        logger.info("\n[3/5] LLaVA: Visual Analysis")
         llava_analysis = self.get_visual_understanding_llava(image_path, scenario)
         
-        # PHASE 4: Synthesize with Llama
-        logger.info("\n[4/4] Llama 3.2: Strategy Synthesis")
+        # PHASE 4: KB Retrieval (Enhanced with unit-specific queries)
+        logger.info("\n[4/5] Knowledge Base: Doctrine Retrieval")
+        kb_context = ""
+        if vectorstore is not None:
+            # Extract unit categories from LLaVA analysis for targeted doctrine retrieval
+            unit_categories = self.symbol_helper.extract_unit_categories(llava_analysis)
+
+            if unit_categories:
+                logger.info(f"Detected unit types: {', '.join(unit_categories)}")
+                # Generate enhanced query based on identified units
+                doctrine_query = self.symbol_helper.generate_enhanced_doctrine_query(scenario, unit_categories)
+            else:
+                # Fallback to general query if no specific units detected
+                doctrine_query = f"""How does NATO doctrine address {scenario}?
+                What are the tactical principles for terrain analysis, force deployment,
+                offensive and defensive operations, intelligence preparation of the battlefield,
+                and military decision-making processes?"""
+
+            logger.info(f"Doctrine query: {doctrine_query[:150]}...")
+            doctrine_docs = vectorstore.similarity_search(doctrine_query, k=8)
+            
+            if doctrine_docs:
+                kb_context = "\n\n=== NATO DOCTRINE & TACTICAL REFERENCES ===\n"
+                for idx, doc in enumerate(doctrine_docs, 1):
+                    source = doc.metadata.get('source', 'Unknown')
+                    kb_context += f"\n[Reference {idx}: {source}]\n{doc.page_content}\n"
+                kb_context += "\n=== END DOCTRINE ===\n"
+                logger.info(f"Retrieved {len(doctrine_docs)} doctrine references")
+            else:
+                logger.warning("No KB documents found")
+        else:
+            logger.warning("No vectorstore provided - KB not accessible")
         
-        # Build comprehensive intelligence report
+        # Build summaries
         clip_summary = f"""CLIP TERRAIN ANALYSIS:
 Primary Terrain: {clip_terrain['terrain_type'][0]['label']} ({clip_terrain['terrain_type'][0]['confidence']:.1%} confidence)
 Secondary: {clip_terrain['terrain_type'][1]['label']} ({clip_terrain['terrain_type'][1]['confidence']:.1%})
@@ -298,64 +437,106 @@ Regional Breakdown:"""
         yolo_summary = f"\nYOLO OBJECT DETECTION:\n"
         if yolo_objects:
             yolo_summary += f"Detected {len(yolo_objects)} objects:\n"
-            for obj in yolo_objects[:10]:  # Limit to 10
+            for obj in yolo_objects[:10]:
                 yolo_summary += f"  - {obj['type']} at ({obj['position'][0]}, {obj['position'][1]}) [confidence: {obj['confidence']}]\n"
         else:
             yolo_summary += "No objects detected\n"
+
+        # Build NATO symbols summary
+        symbols_summary = "\n═══════════════════════════════════════════════════════════════════\n"
+        symbols_summary += "NATO MILITARY SYMBOLS DETECTED ON MAP (ResNet18 Classification)\n"
+        symbols_summary += "═══════════════════════════════════════════════════════════════════\n"
+
+        if nato_symbols:
+            symbols_summary += f"\nIdentified {len(nato_symbols)} NATO symbols:\n\n"
+            for idx, symbol in enumerate(nato_symbols, 1):
+                conf_indicator = " ⚠️ (Low Confidence)" if symbol['low_confidence'] else ""
+                symbols_summary += f"{idx}. {symbol['symbol']}\n"
+                symbols_summary += f"   Location: {symbol['sector']} sector\n"
+                symbols_summary += f"   Confidence: {symbol['confidence']:.1%}{conf_indicator}\n\n"
+
+            symbols_summary += "Note: Symbols marked with ⚠️ have <85% confidence.\n"
+            symbols_summary += "If any symbols appear incorrect or missing, please notify me.\n"
+        else:
+            symbols_summary += "\nNo NATO symbols detected on this map.\n"
+            if self.symbol_classifier is None:
+                symbols_summary += "(Symbol classifier not loaded - model training may be required)\n"
+
+        symbols_summary += "═══════════════════════════════════════════════════════════════════\n"
+
+        # PHASE 5: Strategy Synthesis
+        logger.info("\n[5/5] Llama 3.2: Strategy Synthesis")
         
-        # Generate strategy
-        strategy_prompt = f"""You are a smart military strategist with AI-enhanced battlefield intelligence.
+        strategy_prompt = f"""You are a NATO tactical operations officer conducting mission planning with access to alliance doctrine and multi-source intelligence.
 
-SCENARIO: {scenario}
+You are expert in interpreting NATO APP-6(E) military symbology on tactical maps. When analyzing the visual reconnaissance, pay special attention to:
+- Identified military symbols and their tactical significance
+- Unit dispositions (friendly, enemy, neutral forces) and their relationship to terrain
+- Echelon indicators showing unit size and command relationships
+- How symbol placement reflects tactical principles from doctrine
 
-AVAILABLE FORCES:
+═══════════════════════════════════════════════════════════════════
+OPERATION DEVELOPMENT
+═══════════════════════════════════════════════════════════════════
+
+MISSION: {scenario}
+
+FRIENDLY FORCES (Available):
 {chr(10).join([f"- {unit}: {count} units" for unit, count in unit_types.items()])}
 
-=== MULTI-SOURCE INTELLIGENCE REPORT ===
+═══════════════════════════════════════════════════════════════════
+INTELLIGENCE PREPARATION OF THE BATTLEFIELD 
+═══════════════════════════════════════════════════════════════════
 
+AI-ENHANCED TERRAIN ANALYSIS (CLIP):
 {clip_summary}
 
+OBJECT DETECTION INTELLIGENCE (YOLO):
 {yolo_summary}
 
-LLAVA DETAILED RECONNAISSANCE:
+{symbols_summary}
+
+VISUAL RECONNAISSANCE ASSESSMENT (LLaVA):
 {llava_analysis}
 
-=== END REPORT ===
+NATO DOCTRINAL REFERENCES:
+{kb_context}
 
-Using the three-source intelligence above (CLIP terrain classification, YOLO object detection, and LLaVA visual analysis), create a detailed tactical deployment plan.
+═══════════════════════════════════════════════════════════════════
+TACTICAL MISSION ANALYSIS REQUIRED
+═══════════════════════════════════════════════════════════════════
 
-Your strategy should:
+Develop a comprehensive tactical plan following NATO planning methodology:
 
-1. TERRAIN EXPLOITATION
-   - Leverage CLIP's terrain identification for unit placement
-   - Match unit types to terrain advantages
-   - Identify cover, concealment, and fields of fire
+1. SITUATION ANALYSIS
+   - Synthesize terrain intelligence from all sources (CLIP, YOLO, LLaVA)
+   - Identify key terrain and decisive points
+   - Assess enemy most likely/most dangerous courses of action (if applicable)
 
-2. THREAT ASSESSMENT
-   - Account for detected objects from YOLO
-   - Plan around existing structures/obstacles
-   - Identify potential enemy positions
+2. MISSION ANALYSIS
+   - Apply relevant NATO doctrine to this scenario
+   - Identify specified, implied, and essential tasks
+   - State mission in "who, what, when, where, why" format
 
-3. FORCE DEPLOYMENT
-   For each unit type, specify:
-   - Exact positions using compass directions and terrain features
-   - Tactical rationale based on intelligence
-   - Coordination with other units
-   - Fallback positions
+3. COURSE OF ACTION (COA) DEVELOPMENT
+   - SCHEME OF MANEUVER: How will forces be arrayed and employed?
+   - TASK ORGANIZATION: How should units be task-organized?
+   - FIRE SUPPORT PLAN: Artillery positioning and fire support coordination
+   - SUSTAINMENT: Logistics and casualty evacuation considerations
 
-4. EXECUTION PLAN
-   - Priority of deployment
-   - Critical terrain to secure first
-   - Coordination sequence
-   - Contingencies
+4. EXECUTION MATRIX
+   Provide specific deployment instructions:
+   - Unit-by-unit positioning with grid references/compass bearings
+   - Rationale tied to terrain analysis and doctrine
+   - Coordination measures (phase lines, checkpoints, boundaries)
+   - Contingency plans for expected friction points
 
-Be highly specific. Reference the intelligence findings directly.
-In order for you to provide the best possible strategy, ensure you integrate insights from all three models cohesively.
-If the models do not recognise any information on the map, then let the user know that no viable strategy can be formed based on the available data.
-If only partial information or even in the cases of no information ask the user questions to understand the situation better and be
-able to create a more informed strategy. If the user does not have enough information then let them know that no viable strategy can be formed based on the available data.
-If the user does not provide any information about their units then inquire about their available forces before proceeding.
-If you do not understand something then ask the user for clarification before proceeding always."""
+5. DOCTRINAL COMPLIANCE
+   - Cite specific NATO doctrine principles applied
+   - Reference chapter/section if identifiable from KB
+   - Explain how doctrine informs your recommendations
+
+DELIVER A COMPLETE, ACTIONABLE TACTICAL PLAN WITH CLEAR TIES TO INTELLIGENCE AND DOCTRINE."""
 
         strategy = self.llm.invoke(strategy_prompt)
         
@@ -368,8 +549,9 @@ If you do not understand something then ask the user for clarification before pr
             'clip_analysis': clip_terrain,
             'clip_regions': clip_regions,
             'yolo_detections': yolo_objects,
+            'nato_symbols': nato_symbols,
             'llava_analysis': llava_analysis,
-            'models_used': ['CLIP', 'YOLO', 'LLaVA', 'Llama 3.2']
+            'models_used': ['CLIP', 'YOLO', 'ResNet18', 'LLaVA', 'KB', 'Llama 3.2']
         }
     
     def create_annotated_map(self, image_path, yolo_detections, clip_regions, output_path):
@@ -378,7 +560,6 @@ If you do not understand something then ask the user for clarification before pr
             img = cv2.imread(image_path)
             height, width = img.shape[:2]
             
-            # Draw YOLO detections
             for detection in yolo_detections:
                 x1, y1, x2, y2 = detection['bbox']
                 label = f"{detection['type']} ({detection['confidence']})"
@@ -387,7 +568,6 @@ If you do not understand something then ask the user for clarification before pr
                 cv2.putText(img, label, (x1, y1 - 10),
                            cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
             
-            # Draw CLIP region labels
             directions = [
                 ['northwest', 'north', 'northeast'],
                 ['west', 'center', 'east'],
@@ -400,12 +580,10 @@ If you do not understand something then ask the user for clarification before pr
                     if direction in clip_regions:
                         region_info = clip_regions[direction]
                         
-                        # Calculate region center
                         x = int((j + 0.5) * (width / 3))
                         y = int((i + 0.5) * (height / 3))
                         
-                        # Draw label
-                        terrain = region_info['terrain'].split()[0]  # First word
+                        terrain = region_info['terrain'].split()[0]
                         label = f"{direction.upper()[:2]}: {terrain}"
                         
                         cv2.putText(img, label, (x - 40, y),

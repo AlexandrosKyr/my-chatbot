@@ -6,7 +6,7 @@ authors = [
     {name = "alexandros",email = "alex.kyr.triant@gmail.com"}
 ]
 readme = "README.md"
-requires-python = "^3.12"
+requires-python = "^3.13"
 dependencies = [
     "pdf2image (>=1.17.0,<2.0.0)",
     "pytesseract (>=0.3.13,<0.4.0)",
@@ -19,10 +19,18 @@ dependencies = [
     "langchain-ollama (>=0.3.10,<0.4.0)",
     "langchain-experimental (>=0.3.4,<0.4.0)",
     "chromadb (>=1.1.1,<2.0.0)",
-    "sentence-transformers (>=5.1.1,<6.0.0)"
+    "sentence-transformers (>=5.1.1,<6.0.0)",
+    "military-symbol (==2.0.7)",
+    "cairosvg (==2.7.1)",
+    "torch (==2.9.1) ; python_version >= \"3.13\" and python_version < \"3.15\"",
+    "torchvision (==0.24.1) ; python_version >= \"3.13\" and python_version < \"3.15\"",
+    "tqdm (>=4.67.1,<5.0.0) ; python_version >= \"3.13\" and python_version < \"3.15\""
 ]
 
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+package-mode = false

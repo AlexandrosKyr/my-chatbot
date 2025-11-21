@@ -1,0 +1,49 @@
+# Core Framework
+Flask==3.0.0
+Flask-CORS==4.0.0
+python-dotenv==1.0.0
+
+# LLM & Language Models
+langchain==0.1.0
+langchain-community==0.0.10
+langchain-huggingface==0.0.1
+langchain-ollama==0.1.0
+sentence-transformers==2.2.2
+
+# Vector Database
+chromadb==0.4.24
+
+# Vision Models
+ultralytics==8.3.217
+opencv-python==4.12.0.88
+torch==2.9.0
+torchvision==0.24.0
+clip-vision==0.1.0
+
+#For CLIP, pip install git+https://github.com/openai/CLIP.git
+# Or use: ollama pull llava:13b (for LLaVA)
+
+# Document Processing
+pdf2image==1.16.3
+pytesseract==0.3.10
+Pillow==11.3.0
+PyPDF==3.17.1
+
+# Data Processing
+numpy==2.2.6
+pandas==2.1.4
+
+# Military Symbology
+military-symbol==2.0.7
+cairosvg==2.7.1
+
+# Utilities
+requests==2.32.5
+pyyaml==6.0.3
+tqdm==4.67.1
+loguru==0.7.2
+
+# Development (optional)
+pytest==7.4.3
+black==23.12.1
+flake8==6.1.0
