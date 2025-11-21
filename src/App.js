@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Send, Upload, FileText, RefreshCw, AlertCircle, CheckCircle, XCircle, Trash2, Zap, Database } from 'lucide-react';
+import { Send, Upload, FileText, RefreshCw, Trash2, Zap, BookOpen } from 'lucide-react';
 
 export default function Chatbot() {
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [uploadedFile, setUploadedFile] = useState(null);
+  const [tacticalImageFile, setTacticalImageFile] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const [isThinking, setIsThinking] = useState(false);
   const [systemHealth, setSystemHealth] = useState(null);
@@ -39,6 +40,7 @@ export default function Chatbot() {
     if (window.confirm('Clear conversation history?')) {
       setMessages([]);
       setInputValue('');
+      setTacticalImageFile(null);
       checkHealth();
     }
   };
@@ -59,6 +61,7 @@ export default function Chatbot() {
         setMessages([]);
         setInputValue('');
         setUploadedFile(null);
+        setTacticalImageFile(null);
         const successMsg = {
           role: 'system',
           text: 'System reset complete. All data purged.',
@@ -97,12 +100,20 @@ export default function Chatbot() {
         const blob = item.getAsFile();
         if (!blob) continue;
 
-        const file = new File([blob], `img-${Date.now()}.png`, { type: blob.type });
+        const file = new File([blob], `pasted-img-${Date.now()}.png`, { type: blob.type });
         
         if (isTacticalMode) {
-          await handleTacticalAnalysis(file);
+          setTacticalImageFile(file);
+          setUploadedFile(file.name);
+          
+          const infoMsg = {
+            role: 'system',
+            text: `✓ Tactical image loaded: ${file.name}\n\nSend a message to run analysis.`,
+            isError: false
+          };
+          setMessages(prev => [...prev, infoMsg]);
         } else {
-          await uploadDocument(file);
+          await uploadDocument(file, false);
         }
         
         break;
@@ -110,13 +121,17 @@ export default function Chatbot() {
     }
   };
 
-  const uploadDocument = async (file) => {
+  const uploadDocument = async (file, showCompletion = true) => {
     const uploadingMsg = {
       role: 'system',
-      text: 'Processing...',
+      text: 'Processing document...',
       isError: false
     };
-    setMessages(prev => [...prev, uploadingMsg]);
+    
+    if (showCompletion) {
+      setMessages(prev => [...prev, uploadingMsg]);
+    }
+    
     setIsUploading(true);
 
     const formData = new FormData();
@@ -129,17 +144,23 @@ export default function Chatbot() {
       });
 
       const data = await response.json();
-      setMessages(prev => prev.filter(msg => msg.text !== 'Processing...'));
+      setMessages(prev => prev.filter(msg => msg.text !== 'Processing document...'));
 
       if (response.ok && data.success) {
         setUploadedFile(file.name);
-        const systemMessage = {
-          role: 'system',
-          text: `Indexed: ${file.name}\nChunks: ${data.details.chunks} | Size: ${data.details.file_size_kb}KB\n\nQuery ready.`,
-          isError: false
-        };
-        setMessages(prev => [...prev, systemMessage]);
+        
+        if (showCompletion) {
+          const systemMessage = {
+            role: 'system',
+            text: `✓ Indexed: ${file.name}\nChunks: ${data.details.chunks} | Size: ${data.details.file_size_kb}KB\n\nReady for queries.`,
+            isError: false
+          };
+          setMessages(prev => [...prev, systemMessage]);
+        }
+        
         checkHealth();
+        setIsUploading(false);
+        return true;
       } else {
         const errorMessage = {
           role: 'system',
@@ -147,24 +168,26 @@ export default function Chatbot() {
           isError: true
         };
         setMessages(prev => [...prev, errorMessage]);
+        setIsUploading(false);
+        return false;
       }
     } catch (error) {
-      setMessages(prev => prev.filter(msg => msg.text !== 'Processing...'));
+      setMessages(prev => prev.filter(msg => msg.text !== 'Processing document...'));
       const errorMessage = {
         role: 'system',
         text: 'Connection failed.',
         isError: true
       };
       setMessages(prev => [...prev, errorMessage]);
-    } finally {
       setIsUploading(false);
+      return false;
     }
   };
 
   const handleTacticalAnalysis = async (file) => {
     const analysisMsg = {
       role: 'system',
-      text: 'Running multi-model analysis...\nETA: 60-90s',
+      text: 'Running multi-model analysis...\nETA: 60-90s\nModels: CLIP → YOLO → LLaVA → KB → Llama',
       isError: false
     };
     setMessages(prev => [...prev, analysisMsg]);
@@ -183,7 +206,7 @@ export default function Chatbot() {
     formData.append('units', JSON.stringify(units));
 
     try {
-      const response = await fetch('http://127.0.0.1:5000/analyze_tactical_enhanced', {
+      const response = await fetch('http://127.0.0.1:5000/analyze_tactical', {
         method: 'POST',
         body: formData,
       });
@@ -192,8 +215,6 @@ export default function Chatbot() {
       setMessages(prev => prev.filter(msg => !msg.text.includes('Running multi-model')));
 
       if (response.ok && data.success) {
-        setUploadedFile(file.name);
-        
         let clipInfo = '';
         if (data.clip_terrain && data.clip_terrain.terrain_type) {
           clipInfo = `\nCLIP: ${data.clip_terrain.terrain_type[0].label} (${(data.clip_terrain.terrain_type[0].confidence * 100).toFixed(0)}%)\n`;
@@ -202,15 +223,17 @@ export default function Chatbot() {
 
         const strategyMessage = {
           role: 'assistant',
-          text: `ANALYSIS COMPLETE\n\n` +
+          text: `═══════════════════════════════════════════════════════════\n` +
+                `TACTICAL ANALYSIS COMPLETE\n` +
+                `═══════════════════════════════════════════════════════════\n\n` +
                 `Context: ${scenario}\n` +
                 `Pipeline: ${data.models_used.join(' > ')}\n` +
-                `Objects: ${data.yolo_detections}\n` +
+                `Objects Detected: ${data.yolo_detections}\n` +
                 clipInfo +
                 `\n${'─'.repeat(60)}\n\n` +
                 `${data.strategy}\n\n` +
                 `${'─'.repeat(60)}\n` +
-                `Output: ${data.annotated_map}`,
+                `Annotated Map: ${data.annotated_map}`,
           mode: 'tactical'
         };
         setMessages(prev => [...prev, strategyMessage]);
@@ -233,88 +256,203 @@ export default function Chatbot() {
       setMessages(prev => [...prev, errorMessage]);
     } finally {
       setIsUploading(false);
+      setTacticalImageFile(null);
     }
   };
 
   const handleDoctrineUpload = async (event) => {
-    const file = event.target.files[0];
-    if (!file) return;
+    const files = Array.from(event.target.files);
+    if (files.length === 0) return;
 
-    const formData = new FormData();
-    formData.append('file', file);
-    
+    const uploadingMsg = {
+      role: 'system',
+      text: `Processing ${files.length} Knowledge Base document${files.length > 1 ? 's' : ''}...\nPlease wait...`,
+      isError: false
+    };
+    setMessages(prev => [...prev, uploadingMsg]);
+
     setIsUploading(true);
 
-    try {
-      const response = await fetch('http://127.0.0.1:5000/upload_doctrine', {
-        method: 'POST',
-        body: formData,
-      });
+    let successCount = 0;
+    let failCount = 0;
+    const results = [];
 
-      const data = await response.json();
+    for (const file of files) {
+      const formData = new FormData();
+      formData.append('file', file);
+      
+      try {
+        const response = await fetch('http://127.0.0.1:5000/upload_doctrine', {
+          method: 'POST',
+          body: formData,
+        });
 
-      if (response.ok) {
-        const successMsg = {
-          role: 'system',
-          text: `Knowledge Base updated: ${file.name}\nConcepts indexed: ${data.chunks}`,
-          isError: false
-        };
-        setMessages(prev => [...prev, successMsg]);
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          successCount++;
+          results.push({
+            success: true,
+            filename: data.filename,
+            chunks: data.chunks,
+            size: data.file_size_kb
+          });
+        } else {
+          failCount++;
+          results.push({
+            success: false,
+            filename: file.name,
+            error: data.error
+          });
+        }
+      } catch (error) {
+        failCount++;
+        results.push({
+          success: false,
+          filename: file.name,
+          error: error.message
+        });
       }
-    } catch (error) {
-      const errorMsg = {
-        role: 'system',
-        text: `Upload failed: ${error.message}`,
-        isError: true
-      };
-      setMessages(prev => [...prev, errorMsg]);
-    } finally {
-      setIsUploading(false);
     }
+
+    setMessages(prev => prev.filter(msg => !msg.text.includes('Processing')));
+
+    let resultText = `✓ Knowledge Base Batch Upload Complete\n\n`;
+    resultText += `Success: ${successCount} | Failed: ${failCount}\n`;
+    resultText += `${'─'.repeat(50)}\n\n`;
+
+    results.forEach((result, idx) => {
+      if (result.success) {
+        resultText += `✓ ${result.filename}\n  Chunks: ${result.chunks} | Size: ${result.size}KB\n\n`;
+      } else {
+        resultText += `✗ ${result.filename}\n  Error: ${result.error}\n\n`;
+      }
+    });
+
+    resultText += `${'─'.repeat(50)}\nKB documents are permanently available for all queries.`;
+
+    const summaryMsg = {
+      role: 'system',
+      text: resultText,
+      isError: failCount === files.length
+    };
+    setMessages(prev => [...prev, summaryMsg]);
+    
+    setIsUploading(false);
+    checkHealth();
+    
+    event.target.value = '';
   };
 
   const handleFileUpload = async (event) => {
-    const file = event.target.files[0];
-    if (!file) return;
+    const files = Array.from(event.target.files);
+    if (files.length === 0) return;
 
     if (isTacticalMode) {
-      await handleTacticalAnalysis(file);
+      if (files.length > 1) {
+        const errorMsg = {
+          role: 'system',
+          text: 'Tactical mode: Upload one image at a time. Send a message to analyze.',
+          isError: true
+        };
+        setMessages(prev => [...prev, errorMsg]);
+        event.target.value = '';
+        return;
+      }
+      
+      setTacticalImageFile(files[0]);
+      setUploadedFile(files[0].name);
+      
+      const infoMsg = {
+        role: 'system',
+        text: `✓ Tactical image loaded: ${files[0].name}\n\nSend a message to run analysis.`,
+        isError: false
+      };
+      setMessages(prev => [...prev, infoMsg]);
+      
+      event.target.value = '';
       return;
     }
 
     const allowedTypes = ['.pdf', '.jpg', '.jpeg', '.png', '.bmp', '.tiff'];
-    if (!allowedTypes.some(ext => file.name.toLowerCase().endsWith(ext))) {
+    const invalidFiles = files.filter(file => 
+      !allowedTypes.some(ext => file.name.toLowerCase().endsWith(ext))
+    );
+
+    if (invalidFiles.length > 0) {
       const errorMsg = {
         role: 'system',
-        text: 'Invalid file type. Accepted: PDF, JPG, PNG, BMP, TIFF',
+        text: `Invalid file type(s): ${invalidFiles.map(f => f.name).join(', ')}\nAccepted: PDF, JPG, PNG, BMP, TIFF`,
         isError: true
       };
       setMessages(prev => [...prev, errorMsg]);
+      event.target.value = '';
       return;
     }
 
-    await uploadDocument(file);
+    if (files.length > 1) {
+      const uploadingMsg = {
+        role: 'system',
+        text: `Processing ${files.length} documents...\nPlease wait...`,
+        isError: false
+      };
+      setMessages(prev => [...prev, uploadingMsg]);
+
+      let successCount = 0;
+      let failCount = 0;
+
+      for (const file of files) {
+        const success = await uploadDocument(file, false);
+        if (success) successCount++;
+        else failCount++;
+      }
+
+      setMessages(prev => prev.filter(msg => !msg.text.includes('Processing')));
+
+      const summaryMsg = {
+        role: 'system',
+        text: `✓ Batch Upload Complete\n\nSuccess: ${successCount} | Failed: ${failCount}\n\nReady for queries.`,
+        isError: failCount === files.length
+      };
+      setMessages(prev => [...prev, summaryMsg]);
+      checkHealth();
+    } else {
+      await uploadDocument(files[0], true);
+    }
+
+    event.target.value = '';
   };
 
   const handleSendMessage = async () => {
-    if (inputValue.trim() === '') return;
-
+    if (inputValue.trim() === '' && !tacticalImageFile) return;
+  
+    // Handle tactical analysis if image is loaded
+    if (isTacticalMode && tacticalImageFile) {
+      // User message first
+      const userMessage = { role: 'user', text: inputValue || 'Analyze this tactical map' };
+      setMessages(prev => [...prev, userMessage]);
+      
+      await handleTacticalAnalysis(tacticalImageFile);
+      setInputValue('');
+      return;
+    }
+  
     const userMessage = { role: 'user', text: inputValue };
     setMessages([...messages, userMessage]);
     setInputValue('');
     setIsThinking(true);
-
+  
     try {
       const response = await fetch('http://127.0.0.1:5000/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ message: inputValue }),
+        body: JSON.stringify({ message: userMessage.text }),
       });
-
+  
       const data = await response.json();
-
+  
       if (response.ok && data.success) {
         const botResponse = {
           role: 'assistant',
@@ -358,12 +496,11 @@ export default function Chatbot() {
 
   return (
     <div className="flex flex-col h-screen bg-black text-gray-300">
-      {/* Header */}
       <div className="border-b border-gray-800 bg-black px-4 py-3">
         <div className="max-w-3xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
             <h2 className="text-sm font-mono text-gray-200 font-semibold">
-              {isTacticalMode ? 'ENHANCED ANALYSIS' : 'SYSTEM INTERFACE'}
+              {isTacticalMode ? 'TACTICAL VISION MODE' : 'DOCUMENT INTELLIGENCE'}
             </h2>
             <button
               onClick={() => setShowHealth(!showHealth)}
@@ -371,11 +508,11 @@ export default function Chatbot() {
               title="Click to see system status"
             >
               {systemHealth?.status === 'healthy' ? (
-                <div className="w-3 h-3 bg-green-500 rounded-full" />
+                <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
               ) : systemHealth?.status === 'error' ? (
-                <div className="w-3 h-3 bg-red-500 rounded-full" />
+                <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse" />
               ) : (
-                <div className="w-3 h-3 bg-yellow-500 rounded-full" />
+                <div className="w-3 h-3 bg-yellow-500 rounded-full animate-pulse" />
               )}
               <span className="text-gray-400 font-mono text-xs font-semibold">STATUS</span>
             </button>
@@ -386,22 +523,40 @@ export default function Chatbot() {
               onClick={() => setIsTacticalMode(!isTacticalMode)}
               className={`px-3 py-1 text-xs font-mono font-semibold rounded transition-colors ${
                 isTacticalMode 
-                  ? 'bg-gray-700 text-gray-100 border border-gray-600' 
+                  ? 'bg-blue-900 text-blue-100 border border-blue-700' 
                   : 'bg-black text-gray-400 border border-gray-800 hover:border-gray-700'
               }`}
             >
               <Zap size={12} className="inline mr-1" />
-              VISION
+              TACTICAL
             </button>
 
-            <label className="px-3 py-1 text-xs font-mono font-semibold rounded bg-black text-gray-400 border border-gray-800 hover:border-gray-700 cursor-pointer transition-colors" title="Upload knowledge base documents">
-              <Database size={12} className="inline mr-1" />
+            <label 
+              className="px-3 py-1 text-xs font-mono font-semibold rounded bg-green-900 text-green-100 border border-green-700 hover:bg-green-800 cursor-pointer transition-colors" 
+            >
+              <BookOpen size={12} className="inline mr-1" />
               KB
               <input
                 type="file"
-                accept=".pdf,.txt,.md"
+                accept=".pdf,.txt,.md,.doc,.docx"
                 onChange={handleDoctrineUpload}
                 disabled={isUploading}
+                multiple
+                className="hidden"
+              />
+            </label>
+
+            <label 
+              className="px-3 py-1 text-xs font-mono font-semibold rounded bg-gray-800 text-gray-100 border border-gray-700 hover:bg-gray-700 cursor-pointer transition-colors"
+            >
+              <Upload size={12} className="inline mr-1" />
+              {isUploading ? 'PROC...' : 'UPLOAD'}
+              <input
+                type="file"
+                accept=".pdf,.jpg,.jpeg,.png,.bmp,.tiff"
+                onChange={handleFileUpload}
+                disabled={isUploading}
+                multiple
                 className="hidden"
               />
             </label>
@@ -421,39 +576,25 @@ export default function Chatbot() {
               <RefreshCw size={12} className="inline mr-1" />
               RESET
             </button>
-            
-            <label className="px-3 py-1 text-xs font-mono font-semibold rounded bg-gray-800 text-gray-100 border border-gray-700 hover:bg-gray-700 cursor-pointer transition-colors">
-              <Upload size={12} className="inline mr-1" />
-              {isUploading ? 'PROC...' : 'UPLOAD'}
-              <input
-                type="file"
-                accept=".pdf,.jpg,.jpeg,.png,.bmp,.tiff"
-                onChange={handleFileUpload}
-                disabled={isUploading}
-                className="hidden"
-              />
-            </label>
           </div>
         </div>
       </div>
 
-      {/* Mode Settings */}
       {isTacticalMode && (
         <div className="border-b border-gray-800 bg-black px-4 py-2">
           <div className="max-w-3xl mx-auto flex items-center gap-4">
-            <span className="text-xs font-mono text-gray-400 font-semibold">CONTEXT:</span>
+            <span className="text-xs font-mono text-gray-400 font-semibold">SCENARIO:</span>
             <input
               type="text"
               value={scenario}
               onChange={(e) => setScenario(e.target.value)}
-              placeholder="context parameters..."
+              placeholder="Enter tactical scenario context..."
               className="flex-1 px-3 py-1 text-xs font-mono bg-black border border-gray-800 rounded text-gray-300 focus:outline-none focus:border-gray-700 placeholder-gray-700"
             />
           </div>
         </div>
       )}
 
-      {/* Health Status Panel */}
       {showHealth && systemHealth && (
         <div className="border-b border-gray-800 bg-black px-4 py-3">
           <div className="max-w-3xl mx-auto">
@@ -461,7 +602,7 @@ export default function Chatbot() {
               <h3 className="text-sm font-mono text-gray-300 font-semibold">SYSTEM STATUS</h3>
               <button
                 onClick={checkHealth}
-                className="text-xs font-mono text-gray-500 hover:text-gray-300"
+                className="text-xs font-mono text-gray-500 hover:text-gray-300 transition-colors"
               >
                 REFRESH
               </button>
@@ -497,6 +638,7 @@ export default function Chatbot() {
                 <div className="flex gap-6">
                   <span>Queries: {systemHealth.stats.total_queries}</span>
                   <span>Documents: {systemHealth.stats.documents_processed}</span>
+                  <span>KB Docs: {systemHealth.stats.kb_documents}</span>
                   <span>Errors: {systemHealth.stats.errors}</span>
                 </div>
               </div>
@@ -505,40 +647,39 @@ export default function Chatbot() {
         </div>
       )}
 
-      {/* Uploaded File Indicator */}
       {uploadedFile && (
         <div className="border-b border-gray-800 bg-black px-4 py-2">
           <div className="max-w-3xl mx-auto flex items-center gap-2 text-xs font-mono text-gray-300 font-semibold">
             <FileText size={12} className="text-gray-400" />
-            <span>
-              LOADED: {uploadedFile}
-            </span>
+            <span>LOADED: {uploadedFile}</span>
           </div>
         </div>
       )}
 
-      {/* Main Content Area */}
       <div className={`flex-1 ${messages.length > 0 ? 'overflow-y-auto' : 'overflow-hidden flex items-center justify-center'}`}>
         <div className="max-w-3xl mx-auto px-4 w-full">
           
-          {/* Welcome State */}
           {messages.length === 0 && (
             <div className="flex flex-col items-center justify-center text-center px-4">
               <div className="text-xs font-mono text-gray-600 mb-2">
-                {isTacticalMode ? '[ENHANCED MODE ACTIVE]' : '[SYSTEM READY]'}
+                {isTacticalMode ? '[TACTICAL ANALYSIS MODE]' : '[DOCUMENT Q&A MODE]'}
               </div>
               <h1 className="text-3xl font-mono text-gray-300 mb-4 font-bold">
-                {isTacticalMode ? 'AWAITING INPUT' : 'QUERY INTERFACE'}
+                {isTacticalMode ? 'MULTI-MODEL ANALYSIS' : 'INTELLIGENT ASSISTANT'}
               </h1>
-              <p className="text-sm font-mono text-gray-500">
+              <p className="text-sm font-mono text-gray-500 mb-6">
                 {isTacticalMode 
-                  ? 'Upload data for multi-layer analysis'
-                  : 'Upload files or input query'}
+                  ? 'Upload tactical maps for CLIP, YOLO, and LLaVA analysis'
+                  : 'Upload documents or ask questions'}
               </p>
+              <div className="text-xs font-mono text-gray-600 space-y-1">
+                <p>• <span className="text-green-400">KB Button</span>: Upload permanent reference documents</p>
+                <p>• <span className="text-gray-400">UPLOAD Button</span>: Upload documents for immediate analysis</p>
+                <p>• <span className="text-blue-400">TACTICAL Button</span>: Enable multi-model vision analysis</p>
+              </div>
             </div>
           )}
 
-          {/* Messages */}
           <div className="py-8 space-y-4">
             {messages.map((message, index) => (
               <div
@@ -551,7 +692,7 @@ export default function Chatbot() {
                       message.role === 'user' 
                         ? 'bg-gray-700 text-gray-200 border border-gray-600' 
                         : message.mode === 'tactical'
-                        ? 'bg-gray-700 text-gray-200 border border-gray-600'
+                        ? 'bg-blue-900 text-blue-200 border border-blue-700'
                         : 'bg-gray-700 text-gray-200 border border-gray-600'
                     }`}>
                       {message.role === 'user' ? 'U' : 'A'}
@@ -579,7 +720,7 @@ export default function Chatbot() {
                   <div className="flex-shrink-0 w-7 h-7 rounded flex items-center justify-center text-xs font-mono font-bold bg-gray-700 text-gray-200 border border-gray-600">
                     A
                   </div>
-                  <div className="text-sm font-mono text-gray-400 font-semibold">processing...</div>
+                  <div className="text-sm font-mono text-gray-400 font-semibold animate-pulse">processing...</div>
                 </div>
               </div>
             )}
@@ -587,7 +728,6 @@ export default function Chatbot() {
         </div>
       </div>
 
-      {/* Input Area */}
       <div className="border-t border-gray-800 bg-black">
         <div className="max-w-3xl mx-auto px-4 py-4">
           <div className="relative flex items-end gap-2">
@@ -596,7 +736,7 @@ export default function Chatbot() {
               onChange={(e) => setInputValue(e.target.value)}
               onKeyPress={handleKeyPress}
               onPaste={handlePaste}
-              placeholder={isTacticalMode ? "input query or paste data..." : "input query..."}
+              placeholder={isTacticalMode && tacticalImageFile ? "Send message to analyze..." : isTacticalMode ? "Upload image or describe tactical scenario..." : "Ask a question or paste an image..."}
               rows={1}
               disabled={isThinking}
               className="flex-1 resize-none border border-gray-800 rounded bg-black px-4 py-3 pr-12 text-sm font-mono text-gray-200 placeholder-gray-600 focus:outline-none focus:border-gray-700 disabled:opacity-50"
@@ -604,9 +744,9 @@ export default function Chatbot() {
             />
             <button
               onClick={handleSendMessage}
-              disabled={inputValue.trim() === '' || isThinking}
+              disabled={(inputValue.trim() === '' && !tacticalImageFile) || isThinking}
               className={`absolute right-3 bottom-3 p-2 rounded transition-colors ${
-                inputValue.trim() === '' || isThinking
+                (inputValue.trim() === '' && !tacticalImageFile) || isThinking
                   ? 'text-gray-700 cursor-not-allowed'
                   : 'text-gray-300 hover:text-gray-100'
               }`}

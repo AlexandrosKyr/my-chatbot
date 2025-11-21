@@ -21,3 +21,26 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+
+# Backend uploads and temp files
+backend/uploads/
+backend/chroma_db/
+
+# Training data (too large for GitHub - regenerate locally)
+backend/symbol_dataset/train/
+backend/symbol_dataset/val/
+backend/symbol_dataset/test/
+
+# Keep the trained model and class mapping (commit these!)
+!backend/models/symbol_classifier.pth
+!backend/symbol_dataset/class_mapping.json

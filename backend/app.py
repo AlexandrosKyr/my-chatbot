@@ -5,13 +5,11 @@ from datetime import datetime
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import json
-
 from config import Config
 from models import get_models
 from services import DocumentService, RAGService, TacticalService
 from tactical_analyzer import TacticalAnalyzer
 
-# Configure logging
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
@@ -21,19 +19,16 @@ logger = logging.getLogger(__name__)
 app = Flask(__name__)
 CORS(app)
 
-# Global state
 app_state = {
     "started_at": datetime.now().isoformat(),
     "documents_processed": 0,
+    "kb_documents": 0,
     "total_queries": 0,
     "errors": 0,
     "last_error": None
 }
 
-# Initialize models
 models = get_models()
-
-# Initialize services
 document_service = None
 rag_service = None
 tactical_service = None
@@ -43,17 +38,14 @@ def initialize_services():
     global document_service, rag_service, tactical_service
     
     try:
-        # Document service
         document_service = DocumentService(models.vectorstore)
         
-        # RAG service
         rag_service = RAGService(
             models.llm,
             models.vectorstore,
             document_service.raw_documents
         )
         
-        # Tactical service
         if models.yolo_model and models.clip_model:
             analyzer = TacticalAnalyzer(
                 models.llm,
@@ -70,8 +62,6 @@ def initialize_services():
         logger.error(f"Service initialization failed: {e}")
         logger.error(traceback.format_exc())
 
-
-# ============== HEALTH CHECK ==============
 
 @app.route('/health', methods=['GET'])
 def health():
@@ -99,6 +89,7 @@ def health():
             },
             "stats": {
                 "documents_processed": app_state["documents_processed"],
+                "kb_documents": app_state["kb_documents"],
                 "total_queries": app_state["total_queries"],
                 "errors": app_state["errors"]
             }
@@ -111,8 +102,6 @@ def health():
         logger.error(f"Health check failed: {e}")
         return jsonify({"status": "error", "message": str(e)}), 500
 
-
-# ============== DOCUMENTS ==============
 
 @app.route('/upload', methods=['POST'])
 def upload_document():
@@ -134,11 +123,9 @@ def upload_document():
         if models.llm is None or models.embeddings is None:
             return jsonify({"error": "Server components not initialized"}), 500
         
-        # Save file
         filepath = os.path.join(Config.UPLOAD_FOLDER, file.filename)
         file.save(filepath)
         
-        # Process
         result = document_service.upload_and_index(filepath, file.filename)
         app_state["documents_processed"] += 1
         
@@ -154,6 +141,43 @@ def upload_document():
         return jsonify({"error": str(e)}), 500
 
 
+@app.route('/upload_doctrine', methods=['POST'])
+def upload_doctrine():
+    """Upload knowledge base documents"""
+    global document_service
+    
+    try:
+        if 'file' not in request.files:
+            return jsonify({"error": "No file provided"}), 400
+        
+        file = request.files['file']
+        
+        if file.filename == '':
+            return jsonify({"error": "No file selected"}), 400
+        
+        kb_filename = f"KB_{file.filename}"
+        filepath = os.path.join(Config.KB_FOLDER, kb_filename)
+        file.save(filepath)
+        
+        logger.info(f"Processing knowledge base document: {kb_filename}")
+        
+        result = document_service.upload_and_index(filepath, kb_filename, is_kb=True)
+        app_state["kb_documents"] += 1
+        
+        return jsonify({
+            "success": True,
+            "filename": kb_filename,
+            "chunks": result['chunks'],
+            "text_length": result['text_length'],
+            "file_size_kb": result['file_size_kb']
+        }), 200
+    
+    except Exception as e:
+        app_state["errors"] += 1
+        logger.error(f"Doctrine upload error: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
 @app.route('/delete_all', methods=['POST'])
 def delete_all():
     """Delete all documents"""
@@ -162,9 +186,11 @@ def delete_all():
     try:
         result = document_service.delete_all()
         
-        # Reinitialize vector store
         models.load_vectorstore()
         document_service = DocumentService(models.vectorstore)
+        
+        app_state["documents_processed"] = 0
+        app_state["kb_documents"] = 0
         
         return jsonify(result), 200
     
@@ -173,8 +199,6 @@ def delete_all():
         logger.error(f"Delete error: {e}")
         return jsonify({"error": str(e)}), 500
 
-
-# ============== CHAT ==============
 
 @app.route('/chat', methods=['POST'])
 def chat():
@@ -215,8 +239,6 @@ def chat():
         return jsonify({"error": str(e)}), 500
 
 
-# ============== TACTICAL ANALYSIS ==============
-
 @app.route('/analyze_tactical', methods=['POST'])
 def analyze_tactical():
     """Multi-model tactical analysis"""
@@ -233,21 +255,22 @@ def analyze_tactical():
         data = request.form
         scenario = data.get('scenario', 'Tactical operation')
         
-        # Parse units if provided
         unit_types = None
         if 'units' in data:
             unit_types = json.loads(data['units'])
         
-        # Save file
         filepath = os.path.join(Config.UPLOAD_FOLDER, file.filename)
         file.save(filepath)
         
         logger.info(f"Analysis: {file.filename}, Scenario: {scenario}")
         
-        # Run analysis
-        result = tactical_service.analyze_map(filepath, scenario, unit_types)
+        result = tactical_service.analyze_map(
+            filepath, 
+            scenario, 
+            unit_types,
+            vectorstore=models.vectorstore
+        )
         
-        # Create annotated map
         annotated_path = os.path.join(Config.UPLOAD_FOLDER, f"annotated_{file.filename}")
         tactical_service.create_annotated_map(
             filepath,
@@ -272,8 +295,6 @@ def analyze_tactical():
         logger.error(traceback.format_exc())
         return jsonify({"error": str(e)}), 500
 
-
-# ============== DEBUG ==============
 
 @app.route('/debug/chunks', methods=['GET'])
 def debug_chunks():
@@ -304,8 +325,6 @@ def debug_chunks():
         return jsonify({"error": str(e)}), 500
 
 
-# ============== ERROR HANDLERS ==============
-
 @app.errorhandler(404)
 def not_found(e):
     return jsonify({"error": "Endpoint not found"}), 404
@@ -316,8 +335,6 @@ def internal_error(e):
     return jsonify({"error": "Internal server error"}), 500
 
 
-# ============== MAIN ==============
-
 if __name__ == '__main__':
     logger.info("="*60)
     logger.info("STARTING CHATBOT BACKEND")
@@ -325,7 +342,6 @@ if __name__ == '__main__':
     logger.info(f"Debug: {Config.DEBUG}")
     logger.info(f"Models: Ollama({models.llm is not None}), YOLO({models.yolo_model is not None}), CLIP({models.clip_model is not None})")
     
-    # Initialize services
     initialize_services()
     
     logger.info("="*60)

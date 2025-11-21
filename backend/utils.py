@@ -125,13 +125,19 @@ def has_meaningful_text(documents, min_chars=None):
 # ============== Text Chunking ==============
 
 def create_smart_chunks(text, source_name):
-    """Create multiple chunk sizes for better retrieval"""
+    """Create multiple chunk sizes optimized for NATO doctrine documents
+
+    Doctrine chapters are 10-15 pages with 5-10 line paragraphs (~100-200 chars each).
+    We use overlapping chunks at multiple granularities to preserve context while
+    enabling precise retrieval of specific doctrinal principles.
+    """
     chunks = []
-    
-    # Small chunks (precise retrieval)
+
+    # Small chunks (precise retrieval of specific principles)
+    # ~2 paragraphs - good for finding exact doctrinal statements
     small_splitter = RecursiveCharacterTextSplitter(
         chunk_size=Config.CHUNK_SMALL,
-        chunk_overlap=50,
+        chunk_overlap=75,  # Increased overlap to preserve paragraph continuity
         separators=["\n\n", "\n", ". ", "! ", "? ", "; ", ", ", " ", ""]
     )
     small_chunks = small_splitter.split_text(text)
@@ -140,11 +146,12 @@ def create_smart_chunks(text, source_name):
             page_content=chunk,
             metadata={"source": source_name, "chunk_type": "small", "chunk_id": f"small_{i}"}
         ))
-    
-    # Medium chunks (balanced)
+
+    # Medium chunks (balanced context and specificity)
+    # ~4-5 paragraphs - captures full doctrinal concepts with supporting detail
     medium_splitter = RecursiveCharacterTextSplitter(
         chunk_size=Config.CHUNK_MEDIUM,
-        chunk_overlap=100,
+        chunk_overlap=150,  # Significant overlap to maintain doctrinal flow
         separators=["\n\n", "\n", ". ", " ", ""]
     )
     medium_chunks = medium_splitter.split_text(text)
@@ -153,11 +160,13 @@ def create_smart_chunks(text, source_name):
             page_content=chunk,
             metadata={"source": source_name, "chunk_type": "medium", "chunk_id": f"medium_{i}"}
         ))
-    
-    # Large chunks (context)
+
+    # Large chunks (comprehensive context)
+    # ~8-10 paragraphs - provides full sections with complete context
+    # Critical for understanding how doctrine integrates multiple concepts
     large_splitter = RecursiveCharacterTextSplitter(
         chunk_size=Config.CHUNK_LARGE,
-        chunk_overlap=200,
+        chunk_overlap=300,  # Large overlap to ensure conceptual continuity
         separators=["\n\n", "\n", ". ", " "]
     )
     large_chunks = large_splitter.split_text(text)
@@ -166,7 +175,7 @@ def create_smart_chunks(text, source_name):
             page_content=chunk,
             metadata={"source": source_name, "chunk_type": "large", "chunk_id": f"large_{i}"}
         ))
-    
+
     logger.info(f"Created {len(small_chunks)} small, {len(medium_chunks)} medium, {len(large_chunks)} large chunks")
     return chunks
 
