@@ -35,6 +35,7 @@ ENV/
 # Backend uploads and temp files
 backend/uploads/
 backend/chroma_db/
+backend/knowledge_base/
 
 # Training data (too large for GitHub - regenerate locally)
 backend/symbol_dataset/train/
@@ -44,3 +45,28 @@ backend/symbol_dataset/test/
 # Keep the trained model and class mapping (commit these!)
 !backend/models/symbol_classifier.pth
 !backend/symbol_dataset/class_mapping.json
+
+# Poetry virtual environments
+backend/.venv/
+.venv/
+
+# IDE and OS files
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Python version file
+backend/.python-version
+
+# Development and training scripts (not needed for runtime)
+backend/verify_model.py
+backend/symbol_dataset_generator.py
+
+# Lock files (keep poetry.lock, exclude others)
+package-lock.json
+
+# Markdown documentation
+*.md

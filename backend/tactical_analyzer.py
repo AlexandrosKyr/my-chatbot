@@ -40,7 +40,11 @@ class TacticalAnalyzer:
             "snowy winter landscape",
             "agricultural farmland",
             "hilly rolling terrain",
-            "coastal beach area"
+            "coastal beach area",
+            "lake or large body of water",
+            "wetland or marsh area",
+            "mixed forest and water",
+            "valley with stream or river"
         ]
         
         self.tactical_features = [

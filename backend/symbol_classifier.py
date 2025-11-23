@@ -2,7 +2,8 @@
 NATO Symbol Classifier - ResNet18 Transfer Learning
 
 Fast, accurate symbol recognition using pretrained ResNet18.
-Training time: 30min-2hrs on GPU for ~3,000 images.
+Only the last layer of the model has been trained to the NATO symbols.
+
 """
 
 import os

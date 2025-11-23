@@ -2,8 +2,8 @@ import logging
 import pytesseract
 from PIL import Image, ImageEnhance, ImageFilter
 from pdf2image import convert_from_path
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.schema import Document
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_core.documents import Document
 from config import Config
 
 logger = logging.getLogger(__name__)

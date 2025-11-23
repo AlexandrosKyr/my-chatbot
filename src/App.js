@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Send, Upload, FileText, RefreshCw, Trash2, Zap, BookOpen } from 'lucide-react';
+import { FileText } from 'lucide-react';
 
 export default function Chatbot() {
   const [messages, setMessages] = useState([]);
@@ -25,7 +25,7 @@ export default function Chatbot() {
 
   const checkHealth = async () => {
     try {
-      const response = await fetch('http://127.0.0.1:5000/health');
+      const response = await fetch('http://127.0.0.1:5001/health');
       const data = await response.json();
       setSystemHealth(data);
     } catch (error) {
@@ -51,7 +51,7 @@ export default function Chatbot() {
     }
 
     try {
-      const response = await fetch('http://127.0.0.1:5000/delete_all', {
+      const response = await fetch('http://127.0.0.1:5001/delete_all', {
         method: 'POST',
       });
 
@@ -138,7 +138,7 @@ export default function Chatbot() {
     formData.append('file', file);
 
     try {
-      const response = await fetch('http://127.0.0.1:5000/upload', {
+      const response = await fetch('http://127.0.0.1:5001/upload', {
         method: 'POST',
         body: formData,
       });
@@ -206,7 +206,7 @@ export default function Chatbot() {
     formData.append('units', JSON.stringify(units));
 
     try {
-      const response = await fetch('http://127.0.0.1:5000/analyze_tactical', {
+      const response = await fetch('http://127.0.0.1:5001/analyze_tactical', {
         method: 'POST',
         body: formData,
       });
@@ -282,7 +282,7 @@ export default function Chatbot() {
       formData.append('file', file);
       
       try {
-        const response = await fetch('http://127.0.0.1:5000/upload_doctrine', {
+        const response = await fetch('http://127.0.0.1:5001/upload_doctrine', {
           method: 'POST',
           body: formData,
         });
@@ -425,34 +425,49 @@ export default function Chatbot() {
 
   const handleSendMessage = async () => {
     if (inputValue.trim() === '' && !tacticalImageFile) return;
-  
+
     // Handle tactical analysis if image is loaded
     if (isTacticalMode && tacticalImageFile) {
       // User message first
       const userMessage = { role: 'user', text: inputValue || 'Analyze this tactical map' };
       setMessages(prev => [...prev, userMessage]);
-      
+
       await handleTacticalAnalysis(tacticalImageFile);
       setInputValue('');
       return;
     }
-  
+
+    // If in tactical mode but no image, show error
+    if (isTacticalMode && !tacticalImageFile) {
+      const userMessage = { role: 'user', text: inputValue };
+      setMessages(prev => [...prev, userMessage]);
+      setInputValue('');
+
+      const errorMessage = {
+        role: 'system',
+        text: 'Tactical mode requires an image. Upload or paste an image first, then send your analysis request.',
+        isError: true
+      };
+      setMessages(prev => [...prev, errorMessage]);
+      return;
+    }
+
     const userMessage = { role: 'user', text: inputValue };
     setMessages([...messages, userMessage]);
     setInputValue('');
     setIsThinking(true);
-  
+
     try {
-      const response = await fetch('http://127.0.0.1:5000/chat', {
+      const response = await fetch('http://127.0.0.1:5001/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ message: userMessage.text }),
       });
-  
+
       const data = await response.json();
-  
+
       if (response.ok && data.success) {
         const botResponse = {
           role: 'assistant',
@@ -495,47 +510,53 @@ export default function Chatbot() {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-black text-gray-300">
-      <div className="border-b border-gray-800 bg-black px-4 py-3">
-        <div className="max-w-3xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <h2 className="text-sm font-mono text-gray-200 font-semibold">
-              {isTacticalMode ? 'TACTICAL VISION MODE' : 'DOCUMENT INTELLIGENCE'}
+    <div className="flex flex-col h-screen" style={{ background: 'var(--bg-primary)', color: 'var(--text-primary)' }}>
+      <div className="border-b-2 px-6 py-5" style={{
+        borderColor: 'var(--border-color)',
+        background: 'var(--bg-secondary)'
+      }}>
+        <div className="max-w-6xl mx-auto flex items-center justify-between">
+          <div className="flex items-center gap-6">
+            <h2 className="text-sm font-medium" style={{
+              color: 'var(--text-primary)'
+            }}>
+              {isTacticalMode ? 'Tactical Vision' : 'Simulation Assistant'}
             </h2>
             <button
               onClick={() => setShowHealth(!showHealth)}
-              className="flex items-center gap-1 text-xs"
-              title="Click to see system status"
+              className="flex items-center gap-2 px-3 py-1 text-xs"
+              style={{
+                background: 'transparent',
+                border: '1px solid var(--border-color)',
+                color: 'var(--text-secondary)'
+              }}
             >
-              {systemHealth?.status === 'healthy' ? (
-                <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
-              ) : systemHealth?.status === 'error' ? (
-                <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse" />
-              ) : (
-                <div className="w-3 h-3 bg-yellow-500 rounded-full animate-pulse" />
-              )}
-              <span className="text-gray-400 font-mono text-xs font-semibold">STATUS</span>
+              <span>[{systemHealth?.status === 'healthy' ? 'ONLINE' : systemHealth?.status === 'error' ? 'ERROR' : 'CHECKING'}]</span>
             </button>
           </div>
-          
+
           <div className="flex items-center gap-2">
             <button
               onClick={() => setIsTacticalMode(!isTacticalMode)}
-              className={`px-3 py-1 text-xs font-mono font-semibold rounded transition-colors ${
-                isTacticalMode 
-                  ? 'bg-blue-900 text-blue-100 border border-blue-700' 
-                  : 'bg-black text-gray-400 border border-gray-800 hover:border-gray-700'
-              }`}
+              className="px-3 py-1 text-xs"
+              style={{
+                background: isTacticalMode ? 'var(--bg-tertiary)' : 'transparent',
+                border: '1px solid var(--border-color)',
+                color: 'var(--text-secondary)'
+              }}
             >
-              <Zap size={12} className="inline mr-1" />
-              TACTICAL
+              Tactical Mode
             </button>
 
-            <label 
-              className="px-3 py-1 text-xs font-mono font-semibold rounded bg-green-900 text-green-100 border border-green-700 hover:bg-green-800 cursor-pointer transition-colors" 
+            <label
+              className="px-3 py-1 text-xs cursor-pointer"
+              style={{
+                background: 'transparent',
+                border: '1px solid var(--border-color)',
+                color: 'var(--text-secondary)'
+              }}
             >
-              <BookOpen size={12} className="inline mr-1" />
-              KB
+              Knowledge Base
               <input
                 type="file"
                 accept=".pdf,.txt,.md,.doc,.docx"
@@ -546,11 +567,15 @@ export default function Chatbot() {
               />
             </label>
 
-            <label 
-              className="px-3 py-1 text-xs font-mono font-semibold rounded bg-gray-800 text-gray-100 border border-gray-700 hover:bg-gray-700 cursor-pointer transition-colors"
+            <label
+              className="px-3 py-1 text-xs cursor-pointer"
+              style={{
+                background: 'transparent',
+                border: '1px solid var(--border-color)',
+                color: 'var(--text-secondary)'
+              }}
             >
-              <Upload size={12} className="inline mr-1" />
-              {isUploading ? 'PROC...' : 'UPLOAD'}
+              {isUploading ? 'Processing' : 'Upload Docs'}
               <input
                 type="file"
                 accept=".pdf,.jpg,.jpeg,.png,.bmp,.tiff"
@@ -563,84 +588,121 @@ export default function Chatbot() {
 
             <button
               onClick={handleDeleteAll}
-              className="px-3 py-1 text-xs font-mono font-semibold rounded bg-black text-red-400 border border-gray-800 hover:border-red-700 transition-colors"
+              className="px-3 py-1 text-xs"
+              style={{
+                background: 'transparent',
+                border: '1px solid var(--border-color)',
+                color: 'var(--text-secondary)'
+              }}
             >
-              <Trash2 size={12} className="inline mr-1" />
-              DELETE
+              Delete All
             </button>
 
             <button
               onClick={handleRestart}
-              className="px-3 py-1 text-xs font-mono font-semibold rounded bg-black text-gray-400 border border-gray-800 hover:border-gray-700 transition-colors"
+              className="px-3 py-1 text-xs"
+              style={{
+                background: 'transparent',
+                border: '1px solid var(--border-color)',
+                color: 'var(--text-secondary)'
+              }}
             >
-              <RefreshCw size={12} className="inline mr-1" />
-              RESET
+              Clear Session
             </button>
           </div>
         </div>
       </div>
 
       {isTacticalMode && (
-        <div className="border-b border-gray-800 bg-black px-4 py-2">
-          <div className="max-w-3xl mx-auto flex items-center gap-4">
-            <span className="text-xs font-mono text-gray-400 font-semibold">SCENARIO:</span>
+        <div className="border-b px-6 py-2" style={{
+          borderColor: 'var(--border-color)',
+          background: 'var(--bg-secondary)'
+        }}>
+          <div className="max-w-6xl mx-auto flex items-center gap-4">
+            <span className="text-xs" style={{ color: 'var(--text-dim)' }}>Scenario:</span>
             <input
               type="text"
               value={scenario}
               onChange={(e) => setScenario(e.target.value)}
-              placeholder="Enter tactical scenario context..."
-              className="flex-1 px-3 py-1 text-xs font-mono bg-black border border-gray-800 rounded text-gray-300 focus:outline-none focus:border-gray-700 placeholder-gray-700"
+              placeholder="Enter tactical scenario context"
+              className="flex-1 px-3 py-1 text-xs focus:outline-none"
+              style={{
+                background: 'var(--bg-primary)',
+                border: '1px solid var(--border-color)',
+                color: 'var(--text-primary)'
+              }}
             />
           </div>
         </div>
       )}
 
       {showHealth && systemHealth && (
-        <div className="border-b border-gray-800 bg-black px-4 py-3">
-          <div className="max-w-3xl mx-auto">
+        <div className="border-b px-6 py-3" style={{
+          borderColor: 'var(--border-color)',
+          background: 'var(--bg-secondary)'
+        }}>
+          <div className="max-w-6xl mx-auto">
             <div className="flex items-start justify-between mb-3">
-              <h3 className="text-sm font-mono text-gray-300 font-semibold">SYSTEM STATUS</h3>
+              <h3 className="text-xs" style={{ color: 'var(--text-dim)' }}>System Diagnostics</h3>
               <button
                 onClick={checkHealth}
-                className="text-xs font-mono text-gray-500 hover:text-gray-300 transition-colors"
+                className="px-2 py-1 text-xs"
+                style={{
+                  background: 'transparent',
+                  color: 'var(--text-dim)',
+                  border: '1px solid var(--border-color)'
+                }}
               >
-                REFRESH
+                Refresh
               </button>
             </div>
-            
+
             {systemHealth.components && (
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs font-mono">
-                <div className={`p-3 border rounded ${getHealthColor(systemHealth.components.ollama?.status) === 'green' ? 'border-green-800 bg-green-950/40' : 'border-red-800 bg-red-950/40'}`}>
-                  <div className="text-gray-400 font-semibold mb-1">LLM</div>
-                  <div className={`font-bold text-sm ${getHealthColor(systemHealth.components.ollama?.status) === 'green' ? 'text-green-400' : 'text-red-400'}`}>
+              <div className="grid grid-cols-3 gap-3 text-xs mb-3">
+                <div className="p-2" style={{
+                  background: 'var(--bg-primary)',
+                  border: `1px solid var(--border-color)`
+                }}>
+                  <div style={{ color: 'var(--text-dim)' }} className="mb-1">LLM Engine</div>
+                  <div style={{
+                    color: getHealthColor(systemHealth.components.ollama?.status) === 'green' ? 'var(--success)' : 'var(--error)'
+                  }}>
                     {systemHealth.components.ollama?.status}
                   </div>
                 </div>
-                
-                <div className={`p-3 border rounded ${getHealthColor(systemHealth.components.embeddings?.status) === 'green' ? 'border-green-800 bg-green-950/40' : 'border-red-800 bg-red-950/40'}`}>
-                  <div className="text-gray-400 font-semibold mb-1">EMBEDDINGS</div>
-                  <div className={`font-bold text-sm ${getHealthColor(systemHealth.components.embeddings?.status) === 'green' ? 'text-green-400' : 'text-red-400'}`}>
+
+                <div className="p-2" style={{
+                  background: 'var(--bg-primary)',
+                  border: `1px solid var(--border-color)`
+                }}>
+                  <div style={{ color: 'var(--text-dim)' }} className="mb-1">Embeddings</div>
+                  <div style={{
+                    color: getHealthColor(systemHealth.components.embeddings?.status) === 'green' ? 'var(--success)' : 'var(--error)'
+                  }}>
                     {systemHealth.components.embeddings?.status}
                   </div>
                 </div>
-                
-                <div className={`p-3 border rounded ${systemHealth.components.vector_store?.status === 'ok' ? 'border-green-800 bg-green-950/40' : 'border-yellow-800 bg-yellow-950/40'}`}>
-                  <div className="text-gray-400 font-semibold mb-1">VECTOR DB</div>
-                  <div className={`font-bold text-sm ${systemHealth.components.vector_store?.status === 'ok' ? 'text-green-400' : 'text-yellow-400'}`}>
+
+                <div className="p-2" style={{
+                  background: 'var(--bg-primary)',
+                  border: `1px solid var(--border-color)`
+                }}>
+                  <div style={{ color: 'var(--text-dim)' }} className="mb-1">Vector DB</div>
+                  <div style={{
+                    color: systemHealth.components.vector_store?.status === 'ok' ? 'var(--success)' : 'var(--text-secondary)'
+                  }}>
                     {systemHealth.components.vector_store?.status}
                   </div>
                 </div>
               </div>
             )}
-            
+
             {systemHealth.stats && (
-              <div className="mt-3 pt-3 border-t border-gray-800 text-xs font-mono text-gray-400 font-semibold">
-                <div className="flex gap-6">
-                  <span>Queries: {systemHealth.stats.total_queries}</span>
-                  <span>Documents: {systemHealth.stats.documents_processed}</span>
-                  <span>KB Docs: {systemHealth.stats.kb_documents}</span>
-                  <span>Errors: {systemHealth.stats.errors}</span>
-                </div>
+              <div className="flex gap-6 text-xs pt-2" style={{ borderTop: '1px solid var(--border-color)', color: 'var(--text-dim)' }}>
+                <span>queries: {systemHealth.stats.total_queries}</span>
+                <span>docs: {systemHealth.stats.documents_processed}</span>
+                <span>kb: {systemHealth.stats.kb_documents}</span>
+                <span>errors: {systemHealth.stats.errors}</span>
               </div>
             )}
           </div>
@@ -648,35 +710,40 @@ export default function Chatbot() {
       )}
 
       {uploadedFile && (
-        <div className="border-b border-gray-800 bg-black px-4 py-2">
-          <div className="max-w-3xl mx-auto flex items-center gap-2 text-xs font-mono text-gray-300 font-semibold">
-            <FileText size={12} className="text-gray-400" />
-            <span>LOADED: {uploadedFile}</span>
+        <div className="border-b px-6 py-2" style={{
+          borderColor: 'var(--border-color)',
+          background: 'var(--bg-secondary)'
+        }}>
+          <div className="max-w-6xl mx-auto flex items-center gap-2 text-xs">
+            <FileText size={12} style={{ color: 'var(--text-dim)' }} />
+            <span style={{ color: 'var(--text-dim)' }}>Loaded:</span>
+            <span style={{ color: 'var(--text-secondary)' }}>{uploadedFile}</span>
           </div>
         </div>
       )}
 
       <div className={`flex-1 ${messages.length > 0 ? 'overflow-y-auto' : 'overflow-hidden flex items-center justify-center'}`}>
-        <div className="max-w-3xl mx-auto px-4 w-full">
-          
+        <div className="max-w-6xl mx-auto px-6 w-full">
+
           {messages.length === 0 && (
             <div className="flex flex-col items-center justify-center text-center px-4">
-              <div className="text-xs font-mono text-gray-600 mb-2">
-                {isTacticalMode ? '[TACTICAL ANALYSIS MODE]' : '[DOCUMENT Q&A MODE]'}
+              <div className="text-xs mb-2" style={{
+                color: 'var(--text-dim)'
+              }}>
+                {isTacticalMode ? 'Tactical Analysis' : 'Simulation Assistant'}
               </div>
-              <h1 className="text-3xl font-mono text-gray-300 mb-4 font-bold">
-                {isTacticalMode ? 'MULTI-MODEL ANALYSIS' : 'INTELLIGENT ASSISTANT'}
+              <h1 className="text-2xl mb-4" style={{
+                color: 'var(--text-primary)'
+              }}>
+                {isTacticalMode ? 'Multi-Model Tactical Analysis' : 'Document Intelligence System'}
               </h1>
-              <p className="text-sm font-mono text-gray-500 mb-6">
-                {isTacticalMode 
+              <p className="text-xs mb-6" style={{
+                color: 'var(--text-dim)'
+              }}>
+                {isTacticalMode
                   ? 'Upload tactical maps for CLIP, YOLO, and LLaVA analysis'
                   : 'Upload documents or ask questions'}
               </p>
-              <div className="text-xs font-mono text-gray-600 space-y-1">
-                <p>• <span className="text-green-400">KB Button</span>: Upload permanent reference documents</p>
-                <p>• <span className="text-gray-400">UPLOAD Button</span>: Upload documents for immediate analysis</p>
-                <p>• <span className="text-blue-400">TACTICAL Button</span>: Enable multi-model vision analysis</p>
-              </div>
             </div>
           )}
 
@@ -688,25 +755,31 @@ export default function Chatbot() {
               >
                 <div className={`flex gap-3 max-w-full ${message.role === 'user' ? 'flex-row-reverse' : ''}`}>
                   {message.role !== 'system' && (
-                    <div className={`flex-shrink-0 w-7 h-7 rounded flex items-center justify-center text-xs font-mono font-bold ${
-                      message.role === 'user' 
-                        ? 'bg-gray-700 text-gray-200 border border-gray-600' 
-                        : message.mode === 'tactical'
-                        ? 'bg-blue-900 text-blue-200 border border-blue-700'
-                        : 'bg-gray-700 text-gray-200 border border-gray-600'
-                    }`}>
+                    <div className="flex-shrink-0 w-6 h-6 flex items-center justify-center text-xs" style={{
+                      background: 'var(--bg-tertiary)',
+                      border: '1px solid var(--border-color)',
+                      color: 'var(--text-dim)'
+                    }}>
                       {message.role === 'user' ? 'U' : 'A'}
                     </div>
                   )}
-                  
+
                   <div className={`flex-1 ${message.role === 'user' ? 'text-right' : 'text-left'}`}>
-                    <div className={`text-sm font-mono leading-relaxed whitespace-pre-wrap ${
-                      message.role === 'system' 
-                        ? message.isError
-                          ? 'text-red-300 bg-red-950/30 border border-red-800 px-4 py-3 rounded font-semibold'
-                          : 'text-green-300 bg-green-950/30 border border-green-800 px-4 py-3 rounded font-semibold'
-                        : 'text-gray-200'
-                    }`}>
+                    <div className={`text-xs leading-relaxed whitespace-pre-wrap ${
+                      message.role === 'system'
+                        ? 'px-3 py-2'
+                        : ''
+                    }`} style={message.role === 'system' ? (
+                      message.isError ? {
+                        color: 'var(--error)',
+                        background: 'var(--bg-secondary)',
+                        border: '1px solid var(--border-color)'
+                      } : {
+                        color: 'var(--success)',
+                        background: 'var(--bg-secondary)',
+                        border: '1px solid var(--border-color)'
+                      }
+                    ) : { color: 'var(--text-primary)' }}>
                       {message.text}
                     </div>
                   </div>
@@ -716,11 +789,17 @@ export default function Chatbot() {
 
             {isThinking && (
               <div className="flex justify-start">
-                <div className="flex gap-3">
-                  <div className="flex-shrink-0 w-7 h-7 rounded flex items-center justify-center text-xs font-mono font-bold bg-gray-700 text-gray-200 border border-gray-600">
+                <div className="flex gap-3 items-center">
+                  <div className="flex-shrink-0 w-6 h-6 flex items-center justify-center text-xs" style={{
+                    background: 'var(--bg-tertiary)',
+                    border: '1px solid var(--border-color)',
+                    color: 'var(--text-dim)'
+                  }}>
                     A
                   </div>
-                  <div className="text-sm font-mono text-gray-400 font-semibold animate-pulse">processing...</div>
+                  <div className="text-xs" style={{
+                    color: 'var(--text-dim)'
+                  }}>Processing...</div>
                 </div>
               </div>
             )}
@@ -728,30 +807,44 @@ export default function Chatbot() {
         </div>
       </div>
 
-      <div className="border-t border-gray-800 bg-black">
-        <div className="max-w-3xl mx-auto px-4 py-4">
-          <div className="relative flex items-end gap-2">
+      <div className="border-t-2 px-6 py-5" style={{
+        borderColor: 'var(--border-color)',
+        background: 'var(--bg-secondary)'
+      }}>
+        <div className="max-w-6xl mx-auto">
+          <div className="relative flex items-center gap-2">
             <textarea
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               onKeyPress={handleKeyPress}
               onPaste={handlePaste}
-              placeholder={isTacticalMode && tacticalImageFile ? "Send message to analyze..." : isTacticalMode ? "Upload image or describe tactical scenario..." : "Ask a question or paste an image..."}
+              placeholder={isTacticalMode && tacticalImageFile ? "Send message to analyze" : isTacticalMode ? "Upload image or describe scenario" : "Ask a question or paste an image"}
               rows={1}
               disabled={isThinking}
-              className="flex-1 resize-none border border-gray-800 rounded bg-black px-4 py-3 pr-12 text-sm font-mono text-gray-200 placeholder-gray-600 focus:outline-none focus:border-gray-700 disabled:opacity-50"
-              style={{ minHeight: '40px', maxHeight: '200px' }}
+              className="flex-1 resize-none px-3 py-2 text-xs focus:outline-none disabled:opacity-50"
+              style={{
+                minHeight: '32px',
+                maxHeight: '200px',
+                background: 'var(--bg-primary)',
+                border: '1px solid var(--border-color)',
+                color: 'var(--text-primary)'
+              }}
             />
             <button
               onClick={handleSendMessage}
               disabled={(inputValue.trim() === '' && !tacticalImageFile) || isThinking}
-              className={`absolute right-3 bottom-3 p-2 rounded transition-colors ${
+              className={`px-3 py-2 text-xs ${
                 (inputValue.trim() === '' && !tacticalImageFile) || isThinking
-                  ? 'text-gray-700 cursor-not-allowed'
-                  : 'text-gray-300 hover:text-gray-100'
+                  ? 'cursor-not-allowed opacity-30'
+                  : ''
               }`}
+              style={{
+                background: 'transparent',
+                color: 'var(--text-secondary)',
+                border: '1px solid var(--border-color)'
+              }}
             >
-              <Send size={16} />
+              Send
             </button>
           </div>
         </div>
