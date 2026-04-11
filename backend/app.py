@@ -276,7 +276,6 @@ def analyze_coordinates():
         logger.info(f"Coordinate-based tactical analysis (via RAGService): {user_prompt[:100]}...")
         app_state["total_queries"] += 1
 
-        # Use RAGService which now handles terrain-aware tactical analysis
         response, method, data_availability = rag_service.process_query(user_prompt)
 
         # Build response - include terrain summary if coordinates were detected

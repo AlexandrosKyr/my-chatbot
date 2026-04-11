@@ -1,0 +1,4754 @@
+{
+  "US": {
+    "name": "United States",
+    "manpower": {
+      "active_personnel": 1333030,
+      "reserve_personnel": 799500,
+      "total_population": 341963408
+    },
+    "land": {
+      "tanks": 4666,
+      "armored_vehicles": 409660,
+      "self_propelled_artillery": 1521,
+      "towed_artillery": 1878,
+      "rocket_projectors": 1731
+    },
+    "air": {
+      "total_aircraft": 13032,
+      "fighters": 1791,
+      "attack_aircraft": 926,
+      "transport_aircraft": 917,
+      "total_helicopters": 5913,
+      "attack_helicopters": 1024
+    },
+    "naval": {
+      "total_assets": 465,
+      "aircraft_carriers": 11,
+      "helicopter_carriers": 9,
+      "destroyers": 83,
+      "frigates": 0,
+      "corvettes": 27,
+      "submarines": 66,
+      "patrol_vessels": 0
+    }
+  },
+  "RU": {
+    "name": "Russia",
+    "manpower": {
+      "active_personnel": 1320000,
+      "reserve_personnel": 2000000,
+      "total_population": 140820810
+    },
+    "land": {
+      "tanks": 5630,
+      "armored_vehicles": 126512,
+      "self_propelled_artillery": 3603,
+      "towed_artillery": 5920,
+      "rocket_projectors": 2486
+    },
+    "air": {
+      "total_aircraft": 4237,
+      "fighters": 861,
+      "attack_aircraft": 698,
+      "transport_aircraft": 458,
+      "total_helicopters": 1643,
+      "attack_helicopters": 556
+    },
+    "naval": {
+      "total_assets": 747,
+      "aircraft_carriers": 1,
+      "helicopter_carriers": 0,
+      "destroyers": 13,
+      "frigates": 12,
+      "corvettes": 79,
+      "submarines": 66,
+      "patrol_vessels": 70
+    }
+  },
+  "CN": {
+    "name": "China",
+    "manpower": {
+      "active_personnel": 2035000,
+      "reserve_personnel": 510000,
+      "total_population": 1415043270
+    },
+    "land": {
+      "tanks": 5870,
+      "armored_vehicles": 152040,
+      "self_propelled_artillery": 2940,
+      "towed_artillery": 1400,
+      "rocket_projectors": 2770
+    },
+    "air": {
+      "total_aircraft": 3529,
+      "fighters": 1443,
+      "attack_aircraft": 371,
+      "transport_aircraft": 287,
+      "total_helicopters": 1007,
+      "attack_helicopters": 281
+    },
+    "naval": {
+      "total_assets": 841,
+      "aircraft_carriers": 3,
+      "helicopter_carriers": 4,
+      "destroyers": 53,
+      "frigates": 46,
+      "corvettes": 50,
+      "submarines": 61,
+      "patrol_vessels": 150
+    }
+  },
+  "IN": {
+    "name": "India",
+    "manpower": {
+      "active_personnel": 1431000,
+      "reserve_personnel": 1000000,
+      "total_population": 1409128296
+    },
+    "land": {
+      "tanks": 3913,
+      "armored_vehicles": 163554,
+      "self_propelled_artillery": 100,
+      "towed_artillery": 5640,
+      "rocket_projectors": 300
+    },
+    "air": {
+      "total_aircraft": 2183,
+      "fighters": 476,
+      "attack_aircraft": 124,
+      "transport_aircraft": 277,
+      "total_helicopters": 594,
+      "attack_helicopters": 79
+    },
+    "naval": {
+      "total_assets": 343,
+      "aircraft_carriers": 2,
+      "helicopter_carriers": 0,
+      "destroyers": 13,
+      "frigates": 18,
+      "corvettes": 21,
+      "submarines": 18,
+      "patrol_vessels": 146
+    }
+  },
+  "KR": {
+    "name": "South Korea",
+    "manpower": {
+      "active_personnel": 450000,
+      "reserve_personnel": 3100000,
+      "total_population": 52081799
+    },
+    "land": {
+      "tanks": 1831,
+      "armored_vehicles": 117460,
+      "self_propelled_artillery": 2780,
+      "towed_artillery": 5800,
+      "rocket_projectors": 525
+    },
+    "air": {
+      "total_aircraft": 1540,
+      "fighters": 242,
+      "attack_aircraft": 98,
+      "transport_aircraft": 40,
+      "total_helicopters": 827,
+      "attack_helicopters": 113
+    },
+    "naval": {
+      "total_assets": 215,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 2,
+      "destroyers": 14,
+      "frigates": 18,
+      "corvettes": 3,
+      "submarines": 22,
+      "patrol_vessels": 96
+    }
+  },
+  "FR": {
+    "name": "France",
+    "manpower": {
+      "active_personnel": 264000,
+      "reserve_personnel": 43444,
+      "total_population": 68374591
+    },
+    "land": {
+      "tanks": 427,
+      "armored_vehicles": 110784,
+      "self_propelled_artillery": 74,
+      "towed_artillery": 0,
+      "rocket_projectors": 9
+    },
+    "air": {
+      "total_aircraft": 974,
+      "fighters": 223,
+      "attack_aircraft": 0,
+      "transport_aircraft": 118,
+      "total_helicopters": 452,
+      "attack_helicopters": 67
+    },
+    "naval": {
+      "total_assets": 166,
+      "aircraft_carriers": 1,
+      "helicopter_carriers": 3,
+      "destroyers": 11,
+      "frigates": 5,
+      "corvettes": 0,
+      "submarines": 9,
+      "patrol_vessels": 22
+    }
+  },
+  "JP": {
+    "name": "Japan",
+    "manpower": {
+      "active_personnel": 251500,
+      "reserve_personnel": 56000,
+      "total_population": 123201945
+    },
+    "land": {
+      "tanks": 734,
+      "armored_vehicles": 54390,
+      "self_propelled_artillery": 193,
+      "towed_artillery": 480,
+      "rocket_projectors": 99
+    },
+    "air": {
+      "total_aircraft": 1429,
+      "fighters": 217,
+      "attack_aircraft": 47,
+      "transport_aircraft": 53,
+      "total_helicopters": 583,
+      "attack_helicopters": 118
+    },
+    "naval": {
+      "total_assets": 158,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 4,
+      "destroyers": 41,
+      "frigates": 8,
+      "corvettes": 0,
+      "submarines": 23,
+      "patrol_vessels": 6
+    }
+  },
+  "GB": {
+    "name": "United Kingdom",
+    "manpower": {
+      "active_personnel": 141330,
+      "reserve_personnel": 31940,
+      "total_population": 68459055
+    },
+    "land": {
+      "tanks": 288,
+      "armored_vehicles": 94064,
+      "self_propelled_artillery": 14,
+      "towed_artillery": 126,
+      "rocket_projectors": 43
+    },
+    "air": {
+      "total_aircraft": 625,
+      "fighters": 103,
+      "attack_aircraft": 38,
+      "transport_aircraft": 30,
+      "total_helicopters": 262,
+      "attack_helicopters": 50
+    },
+    "naval": {
+      "total_assets": 116,
+      "aircraft_carriers": 2,
+      "helicopter_carriers": 0,
+      "destroyers": 6,
+      "frigates": 7,
+      "corvettes": 0,
+      "submarines": 10,
+      "patrol_vessels": 26
+    }
+  },
+  "TR": {
+    "name": "Turkiye",
+    "manpower": {
+      "active_personnel": 481000,
+      "reserve_personnel": 380000,
+      "total_population": 84119531
+    },
+    "land": {
+      "tanks": 2284,
+      "armored_vehicles": 98193,
+      "self_propelled_artillery": 1045,
+      "towed_artillery": 635,
+      "rocket_projectors": 237
+    },
+    "air": {
+      "total_aircraft": 1101,
+      "fighters": 201,
+      "attack_aircraft": 0,
+      "transport_aircraft": 84,
+      "total_helicopters": 509,
+      "attack_helicopters": 111
+    },
+    "naval": {
+      "total_assets": 192,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 1,
+      "destroyers": 0,
+      "frigates": 17,
+      "corvettes": 9,
+      "submarines": 14,
+      "patrol_vessels": 40
+    }
+  },
+  "IT": {
+    "name": "Italy",
+    "manpower": {
+      "active_personnel": 165500,
+      "reserve_personnel": 18300,
+      "total_population": 60964931
+    },
+    "land": {
+      "tanks": 203,
+      "armored_vehicles": 87364,
+      "self_propelled_artillery": 64,
+      "towed_artillery": 108,
+      "rocket_projectors": 21
+    },
+    "air": {
+      "total_aircraft": 714,
+      "fighters": 88,
+      "attack_aircraft": 65,
+      "transport_aircraft": 31,
+      "total_helicopters": 352,
+      "attack_helicopters": 37
+    },
+    "naval": {
+      "total_assets": 285,
+      "aircraft_carriers": 2,
+      "helicopter_carriers": 0,
+      "destroyers": 3,
+      "frigates": 14,
+      "corvettes": 0,
+      "submarines": 8,
+      "patrol_vessels": 15
+    }
+  },
+  "BR": {
+    "name": "Brazil",
+    "manpower": {
+      "active_personnel": 376000,
+      "reserve_personnel": 1340000,
+      "total_population": 220051512
+    },
+    "land": {
+      "tanks": 294,
+      "armored_vehicles": 22464,
+      "self_propelled_artillery": 149,
+      "towed_artillery": 412,
+      "rocket_projectors": 82
+    },
+    "air": {
+      "total_aircraft": 495,
+      "fighters": 44,
+      "attack_aircraft": 30,
+      "transport_aircraft": 107,
+      "total_helicopters": 186,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": 69,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 1,
+      "destroyers": 0,
+      "frigates": 8,
+      "corvettes": 2,
+      "submarines": 6,
+      "patrol_vessels": 22
+    }
+  },
+  "DE": {
+    "name": "Germany",
+    "manpower": {
+      "active_personnel": 184324,
+      "reserve_personnel": 860000,
+      "total_population": 84119100
+    },
+    "land": {
+      "tanks": 296,
+      "armored_vehicles": 87338,
+      "self_propelled_artillery": 134,
+      "towed_artillery": 0,
+      "rocket_projectors": 33
+    },
+    "air": {
+      "total_aircraft": 569,
+      "fighters": 127,
+      "attack_aircraft": 63,
+      "transport_aircraft": 55,
+      "total_helicopters": 292,
+      "attack_helicopters": 49
+    },
+    "naval": {
+      "total_assets": 96,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 11,
+      "corvettes": 6,
+      "submarines": 6,
+      "patrol_vessels": 54
+    }
+  },
+  "ID": {
+    "name": "Indonesia",
+    "manpower": {
+      "active_personnel": 404500,
+      "reserve_personnel": 401000,
+      "total_population": 281562465
+    },
+    "land": {
+      "tanks": 331,
+      "armored_vehicles": 28064,
+      "self_propelled_artillery": 153,
+      "towed_artillery": 396,
+      "rocket_projectors": 67
+    },
+    "air": {
+      "total_aircraft": 460,
+      "fighters": 41,
+      "attack_aircraft": 34,
+      "transport_aircraft": 73,
+      "total_helicopters": 212,
+      "attack_helicopters": 15
+    },
+    "naval": {
+      "total_assets": 338,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 10,
+      "corvettes": 26,
+      "submarines": 4,
+      "patrol_vessels": 211
+    }
+  },
+  "PK": {
+    "name": "Pakistan",
+    "manpower": {
+      "active_personnel": 660000,
+      "reserve_personnel": 550000,
+      "total_population": 252363571
+    },
+    "land": {
+      "tanks": 2677,
+      "armored_vehicles": 59044,
+      "self_propelled_artillery": 662,
+      "towed_artillery": 2629,
+      "rocket_projectors": 652
+    },
+    "air": {
+      "total_aircraft": 1397,
+      "fighters": 331,
+      "attack_aircraft": 90,
+      "transport_aircraft": 63,
+      "total_helicopters": 379,
+      "attack_helicopters": 55
+    },
+    "naval": {
+      "total_assets": 120,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 9,
+      "corvettes": 6,
+      "submarines": 8,
+      "patrol_vessels": 79
+    }
+  },
+  "IL": {
+    "name": "Israel",
+    "manpower": {
+      "active_personnel": 169500,
+      "reserve_personnel": 465000,
+      "total_population": 9402617
+    },
+    "land": {
+      "tanks": 1300,
+      "armored_vehicles": 62380,
+      "self_propelled_artillery": 323,
+      "towed_artillery": 171,
+      "rocket_projectors": 228
+    },
+    "air": {
+      "total_aircraft": 597,
+      "fighters": 239,
+      "attack_aircraft": 45,
+      "transport_aircraft": 14,
+      "total_helicopters": 127,
+      "attack_helicopters": 48
+    },
+    "naval": {
+      "total_assets": 82,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 7,
+      "submarines": 6,
+      "patrol_vessels": 66
+    }
+  },
+  "IR": {
+    "name": "Iran",
+    "manpower": {
+      "active_personnel": 610000,
+      "reserve_personnel": 350000,
+      "total_population": 88386937
+    },
+    "land": {
+      "tanks": 2675,
+      "armored_vehicles": 75939,
+      "self_propelled_artillery": 424,
+      "towed_artillery": 1803,
+      "rocket_projectors": 1550
+    },
+    "air": {
+      "total_aircraft": 551,
+      "fighters": 188,
+      "attack_aircraft": 21,
+      "transport_aircraft": 86,
+      "total_helicopters": 129,
+      "attack_helicopters": 13
+    },
+    "naval": {
+      "total_assets": 109,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 7,
+      "corvettes": 3,
+      "submarines": 25,
+      "patrol_vessels": 21
+    }
+  },
+  "AU": {
+    "name": "Australia",
+    "manpower": {
+      "active_personnel": 58910,
+      "reserve_personnel": 33270,
+      "total_population": 26768598
+    },
+    "land": {
+      "tanks": 46,
+      "armored_vehicles": 17118,
+      "self_propelled_artillery": 0,
+      "towed_artillery": 48,
+      "rocket_projectors": 8
+    },
+    "air": {
+      "total_aircraft": 348,
+      "fighters": 24,
+      "attack_aircraft": 71,
+      "transport_aircraft": 37,
+      "total_helicopters": 72,
+      "attack_helicopters": 22
+    },
+    "naval": {
+      "total_assets": 45,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 2,
+      "destroyers": 3,
+      "frigates": 7,
+      "corvettes": 0,
+      "submarines": 6,
+      "patrol_vessels": 13
+    }
+  },
+  "ES": {
+    "name": "Spain",
+    "manpower": {
+      "active_personnel": 121802,
+      "reserve_personnel": 24033,
+      "total_population": 47280433
+    },
+    "land": {
+      "tanks": 298,
+      "armored_vehicles": 49324,
+      "self_propelled_artillery": 96,
+      "towed_artillery": 188,
+      "rocket_projectors": 0
+    },
+    "air": {
+      "total_aircraft": 440,
+      "fighters": 136,
+      "attack_aircraft": 12,
+      "transport_aircraft": 51,
+      "total_helicopters": 169,
+      "attack_helicopters": 17
+    },
+    "naval": {
+      "total_assets": 175,
+      "aircraft_carriers": 1,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 11,
+      "corvettes": 0,
+      "submarines": 2,
+      "patrol_vessels": 112
+    }
+  },
+  "EG": {
+    "name": "Egypt",
+    "manpower": {
+      "active_personnel": 438500,
+      "reserve_personnel": 479000,
+      "total_population": 111247248
+    },
+    "land": {
+      "tanks": 3620,
+      "armored_vehicles": 54694,
+      "self_propelled_artillery": 1056,
+      "towed_artillery": 962,
+      "rocket_projectors": 648
+    },
+    "air": {
+      "total_aircraft": 1088,
+      "fighters": 242,
+      "attack_aircraft": 90,
+      "transport_aircraft": 53,
+      "total_helicopters": 348,
+      "attack_helicopters": 100
+    },
+    "naval": {
+      "total_assets": 149,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 2,
+      "destroyers": 0,
+      "frigates": 13,
+      "corvettes": 7,
+      "submarines": 8,
+      "patrol_vessels": 61
+    }
+  },
+  "UA": {
+    "name": "Ukraine",
+    "manpower": {
+      "active_personnel": 900000,
+      "reserve_personnel": 4000000,
+      "total_population": 35661826
+    },
+    "land": {
+      "tanks": 1121,
+      "armored_vehicles": 45458,
+      "self_propelled_artillery": 682,
+      "towed_artillery": 625,
+      "rocket_projectors": 288
+    },
+    "air": {
+      "total_aircraft": 347,
+      "fighters": 88,
+      "attack_aircraft": 30,
+      "transport_aircraft": 22,
+      "total_helicopters": 140,
+      "attack_helicopters": 39
+    },
+    "naval": {
+      "total_assets": 169,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 133
+    }
+  },
+  "PL": {
+    "name": "Poland",
+    "manpower": {
+      "active_personnel": 250000,
+      "reserve_personnel": 350000,
+      "total_population": 38746310
+    },
+    "land": {
+      "tanks": 798,
+      "armored_vehicles": 57972,
+      "self_propelled_artillery": 593,
+      "towed_artillery": 0,
+      "rocket_projectors": 298
+    },
+    "air": {
+      "total_aircraft": 457,
+      "fighters": 58,
+      "attack_aircraft": 12,
+      "transport_aircraft": 44,
+      "total_helicopters": 224,
+      "attack_helicopters": 29
+    },
+    "naval": {
+      "total_assets": 63,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 2,
+      "corvettes": 2,
+      "submarines": 1,
+      "patrol_vessels": 3
+    }
+  },
+  "TW": {
+    "name": "Taiwan",
+    "manpower": {
+      "active_personnel": 230000,
+      "reserve_personnel": 1657000,
+      "total_population": 23595274
+    },
+    "land": {
+      "tanks": 1090,
+      "armored_vehicles": 24067,
+      "self_propelled_artillery": 488,
+      "towed_artillery": 1360,
+      "rocket_projectors": 223
+    },
+    "air": {
+      "total_aircraft": 720,
+      "fighters": 258,
+      "attack_aircraft": 0,
+      "transport_aircraft": 19,
+      "total_helicopters": 239,
+      "attack_helicopters": 91
+    },
+    "naval": {
+      "total_assets": 91,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 4,
+      "frigates": 21,
+      "corvettes": 7,
+      "submarines": 4,
+      "patrol_vessels": 36
+    }
+  },
+  "VN": {
+    "name": "Vietnam",
+    "manpower": {
+      "active_personnel": 450000,
+      "reserve_personnel": 5000000,
+      "total_population": 105758975
+    },
+    "land": {
+      "tanks": 1999,
+      "armored_vehicles": 69914,
+      "self_propelled_artillery": 30,
+      "towed_artillery": 3250,
+      "rocket_projectors": 774
+    },
+    "air": {
+      "total_aircraft": 265,
+      "fighters": 61,
+      "attack_aircraft": 0,
+      "transport_aircraft": 6,
+      "total_helicopters": 101,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": 116,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 9,
+      "corvettes": 17,
+      "submarines": 6,
+      "patrol_vessels": 27
+    }
+  },
+  "TH": {
+    "name": "Thailand",
+    "manpower": {
+      "active_personnel": 360850,
+      "reserve_personnel": 200000,
+      "total_population": 69920998
+    },
+    "land": {
+      "tanks": 744,
+      "armored_vehicles": 52590,
+      "self_propelled_artillery": 59,
+      "towed_artillery": 595,
+      "rocket_projectors": 17
+    },
+    "air": {
+      "total_aircraft": 496,
+      "fighters": 73,
+      "attack_aircraft": 26,
+      "transport_aircraft": 52,
+      "total_helicopters": 258,
+      "attack_helicopters": 7
+    },
+    "naval": {
+      "total_assets": 304,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 1,
+      "destroyers": 0,
+      "frigates": 7,
+      "corvettes": 5,
+      "submarines": 0,
+      "patrol_vessels": 254
+    }
+  },
+  "SA": {
+    "name": "Saudi Arabia",
+    "manpower": {
+      "active_personnel": 247000,
+      "reserve_personnel": 0,
+      "total_population": 36544431
+    },
+    "land": {
+      "tanks": 1085,
+      "armored_vehicles": 22370,
+      "self_propelled_artillery": 380,
+      "towed_artillery": 557,
+      "rocket_projectors": 327
+    },
+    "air": {
+      "total_aircraft": 917,
+      "fighters": 283,
+      "attack_aircraft": 81,
+      "transport_aircraft": 49,
+      "total_helicopters": 264,
+      "attack_helicopters": 34
+    },
+    "naval": {
+      "total_assets": 32,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 7,
+      "corvettes": 9,
+      "submarines": 0,
+      "patrol_vessels": 9
+    }
+  },
+  "SE": {
+    "name": "Sweden",
+    "manpower": {
+      "active_personnel": 25600,
+      "reserve_personnel": 34000,
+      "total_population": 10589835
+    },
+    "land": {
+      "tanks": 110,
+      "armored_vehicles": 27576,
+      "self_propelled_artillery": 24,
+      "towed_artillery": 0,
+      "rocket_projectors": 0
+    },
+    "air": {
+      "total_aircraft": 172,
+      "fighters": 73,
+      "attack_aircraft": 0,
+      "transport_aircraft": 6,
+      "total_helicopters": 53,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": 279,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 7,
+      "submarines": 4,
+      "patrol_vessels": 116
+    }
+  },
+  "DZ": {
+    "name": "Algeria",
+    "manpower": {
+      "active_personnel": 130000,
+      "reserve_personnel": 150000,
+      "total_population": 47022473
+    },
+    "land": {
+      "tanks": 1485,
+      "armored_vehicles": 24920,
+      "self_propelled_artillery": 224,
+      "towed_artillery": 483,
+      "rocket_projectors": 188
+    },
+    "air": {
+      "total_aircraft": 620,
+      "fighters": 111,
+      "attack_aircraft": 42,
+      "transport_aircraft": 63,
+      "total_helicopters": 300,
+      "attack_helicopters": 74
+    },
+    "naval": {
+      "total_assets": 111,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 8,
+      "corvettes": 8,
+      "submarines": 6,
+      "patrol_vessels": 75
+    }
+  },
+  "CA": {
+    "name": "Canada",
+    "manpower": {
+      "active_personnel": 63500,
+      "reserve_personnel": 23000,
+      "total_population": 38794813
+    },
+    "land": {
+      "tanks": 74,
+      "armored_vehicles": 21780,
+      "self_propelled_artillery": 0,
+      "towed_artillery": 0,
+      "rocket_projectors": 0
+    },
+    "air": {
+      "total_aircraft": 354,
+      "fighters": 66,
+      "attack_aircraft": 0,
+      "transport_aircraft": 29,
+      "total_helicopters": 146,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": 67,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 12,
+      "corvettes": 0,
+      "submarines": 4,
+      "patrol_vessels": 17
+    }
+  },
+  "SG": {
+    "name": "Singapore",
+    "manpower": {
+      "active_personnel": 51000,
+      "reserve_personnel": 252500,
+      "total_population": 6028459
+    },
+    "land": {
+      "tanks": 170,
+      "armored_vehicles": 17244,
+      "self_propelled_artillery": 48,
+      "towed_artillery": 89,
+      "rocket_projectors": 24
+    },
+    "air": {
+      "total_aircraft": 235,
+      "fighters": 100,
+      "attack_aircraft": 0,
+      "transport_aircraft": 9,
+      "total_helicopters": 75,
+      "attack_helicopters": 20
+    },
+    "naval": {
+      "total_assets": 101,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 6,
+      "corvettes": 6,
+      "submarines": 6,
+      "patrol_vessels": 55
+    }
+  },
+  "GR": {
+    "name": "Greece",
+    "manpower": {
+      "active_personnel": 142700,
+      "reserve_personnel": 221350,
+      "total_population": 10461091
+    },
+    "land": {
+      "tanks": 1344,
+      "armored_vehicles": 56416,
+      "self_propelled_artillery": 589,
+      "towed_artillery": 698,
+      "rocket_projectors": 152
+    },
+    "air": {
+      "total_aircraft": 560,
+      "fighters": 178,
+      "attack_aircraft": 0,
+      "transport_aircraft": 17,
+      "total_helicopters": 285,
+      "attack_helicopters": 28
+    },
+    "naval": {
+      "total_assets": 186,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 14,
+      "corvettes": 0,
+      "submarines": 9,
+      "patrol_vessels": 45
+    }
+  },
+  "KP": {
+    "name": "North Korea",
+    "manpower": {
+      "active_personnel": 1320000,
+      "reserve_personnel": 560000,
+      "total_population": 26298666
+    },
+    "land": {
+      "tanks": 4895,
+      "armored_vehicles": 47792,
+      "self_propelled_artillery": 1300,
+      "towed_artillery": 700,
+      "rocket_projectors": 1500
+    },
+    "air": {
+      "total_aircraft": 837,
+      "fighters": 341,
+      "attack_aircraft": 114,
+      "transport_aircraft": 1,
+      "total_helicopters": 205,
+      "attack_helicopters": 20
+    },
+    "naval": {
+      "total_assets": 332,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 2,
+      "frigates": 2,
+      "corvettes": 8,
+      "submarines": 24,
+      "patrol_vessels": 227
+    }
+  },
+  "AR": {
+    "name": "Argentina",
+    "manpower": {
+      "active_personnel": 108000,
+      "reserve_personnel": 12370,
+      "total_population": 46994384
+    },
+    "land": {
+      "tanks": 362,
+      "armored_vehicles": 22432,
+      "self_propelled_artillery": 20,
+      "towed_artillery": 172,
+      "rocket_projectors": 27
+    },
+    "air": {
+      "total_aircraft": 241,
+      "fighters": 23,
+      "attack_aircraft": 11,
+      "transport_aircraft": 25,
+      "total_helicopters": 96,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": 42,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 3,
+      "frigates": 0,
+      "corvettes": 6,
+      "submarines": 2,
+      "patrol_vessels": 13
+    }
+  },
+  "NG": {
+    "name": "Nigeria",
+    "manpower": {
+      "active_personnel": 230000,
+      "reserve_personnel": 0,
+      "total_population": 236747130
+    },
+    "land": {
+      "tanks": 330,
+      "armored_vehicles": 12219,
+      "self_propelled_artillery": 40,
+      "towed_artillery": 339,
+      "rocket_projectors": 37
+    },
+    "air": {
+      "total_aircraft": 159,
+      "fighters": 14,
+      "attack_aircraft": 24,
+      "transport_aircraft": 12,
+      "total_helicopters": 69,
+      "attack_helicopters": 15
+    },
+    "naval": {
+      "total_assets": 152,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 1,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 132
+    }
+  },
+  "NL": {
+    "name": "Netherlands",
+    "manpower": {
+      "active_personnel": 44245,
+      "reserve_personnel": 8510,
+      "total_population": 17772378
+    },
+    "land": {
+      "tanks": 18,
+      "armored_vehicles": 6689,
+      "self_propelled_artillery": 46,
+      "towed_artillery": 0,
+      "rocket_projectors": 4
+    },
+    "air": {
+      "total_aircraft": 130,
+      "fighters": 0,
+      "attack_aircraft": 38,
+      "transport_aircraft": 4,
+      "total_helicopters": 67,
+      "attack_helicopters": 16
+    },
+    "naval": {
+      "total_assets": 140,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 6,
+      "corvettes": 0,
+      "submarines": 3,
+      "patrol_vessels": 76
+    }
+  },
+  "MM": {
+    "name": "Myanmar",
+    "manpower": {
+      "active_personnel": 228000,
+      "reserve_personnel": 19000,
+      "total_population": 57527139
+    },
+    "land": {
+      "tanks": 1040,
+      "armored_vehicles": 11576,
+      "self_propelled_artillery": 225,
+      "towed_artillery": 1680,
+      "rocket_projectors": 1520
+    },
+    "air": {
+      "total_aircraft": 331,
+      "fighters": 70,
+      "attack_aircraft": 20,
+      "transport_aircraft": 33,
+      "total_helicopters": 86,
+      "attack_helicopters": 9
+    },
+    "naval": {
+      "total_assets": 239,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 6,
+      "corvettes": 3,
+      "submarines": 3,
+      "patrol_vessels": 146
+    }
+  },
+  "MX": {
+    "name": "Mexico",
+    "manpower": {
+      "active_personnel": 387000,
+      "reserve_personnel": 98653,
+      "total_population": 130739927
+    },
+    "land": {
+      "tanks": 0,
+      "armored_vehicles": 23548,
+      "self_propelled_artillery": 35,
+      "towed_artillery": 0,
+      "rocket_projectors": 0
+    },
+    "air": {
+      "total_aircraft": 424,
+      "fighters": 2,
+      "attack_aircraft": 32,
+      "transport_aircraft": 40,
+      "total_helicopters": 173,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": 164,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 1,
+      "corvettes": 3,
+      "submarines": 0,
+      "patrol_vessels": 142
+    }
+  },
+  "BD": {
+    "name": "Bangladesh",
+    "manpower": {
+      "active_personnel": 204000,
+      "reserve_personnel": 0,
+      "total_population": 168697184
+    },
+    "land": {
+      "tanks": 320,
+      "armored_vehicles": 11584,
+      "self_propelled_artillery": 36,
+      "towed_artillery": 487,
+      "rocket_projectors": 103
+    },
+    "air": {
+      "total_aircraft": 212,
+      "fighters": 41,
+      "attack_aircraft": 0,
+      "transport_aircraft": 17,
+      "total_helicopters": 67,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": 121,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 7,
+      "corvettes": 6,
+      "submarines": 2,
+      "patrol_vessels": 61
+    }
+  },
+  "PT": {
+    "name": "Portugal",
+    "manpower": {
+      "active_personnel": 25000,
+      "reserve_personnel": 23500,
+      "total_population": 10639726
+    },
+    "land": {
+      "tanks": 34,
+      "armored_vehicles": 10419,
+      "self_propelled_artillery": 23,
+      "towed_artillery": 54,
+      "rocket_projectors": 0
+    },
+    "air": {
+      "total_aircraft": 128,
+      "fighters": 28,
+      "attack_aircraft": 5,
+      "transport_aircraft": 20,
+      "total_helicopters": 36,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": 128,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 5,
+      "corvettes": 2,
+      "submarines": 2,
+      "patrol_vessels": 71
+    }
+  },
+  "NO": {
+    "name": "Norway",
+    "manpower": {
+      "active_personnel": 33440,
+      "reserve_personnel": 20100,
+      "total_population": 5509733
+    },
+    "land": {
+      "tanks": 36,
+      "armored_vehicles": 11441,
+      "self_propelled_artillery": 28,
+      "towed_artillery": 0,
+      "rocket_projectors": 0
+    },
+    "air": {
+      "total_aircraft": 109,
+      "fighters": 0,
+      "attack_aircraft": 43,
+      "transport_aircraft": 4,
+      "total_helicopters": 34,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": 48,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 4,
+      "corvettes": 6,
+      "submarines": 6,
+      "patrol_vessels": 20
+    }
+  },
+  "ZA": {
+    "name": "South Africa",
+    "manpower": {
+      "active_personnel": 68731,
+      "reserve_personnel": 29350,
+      "total_population": 60442647
+    },
+    "land": {
+      "tanks": 248,
+      "armored_vehicles": 23024,
+      "self_propelled_artillery": 52,
+      "towed_artillery": 434,
+      "rocket_projectors": 201
+    },
+    "air": {
+      "total_aircraft": 181,
+      "fighters": 2,
+      "attack_aircraft": 0,
+      "transport_aircraft": 11,
+      "total_helicopters": 87,
+      "attack_helicopters": 10
+    },
+    "naval": {
+      "total_assets": 63,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 4,
+      "corvettes": 0,
+      "submarines": 3,
+      "patrol_vessels": 42
+    }
+  },
+  "PH": {
+    "name": "Philippines",
+    "manpower": {
+      "active_personnel": 160000,
+      "reserve_personnel": 1500000,
+      "total_population": 118277063
+    },
+    "land": {
+      "tanks": 18,
+      "armored_vehicles": 20551,
+      "self_propelled_artillery": 12,
+      "towed_artillery": 296,
+      "rocket_projectors": 0
+    },
+    "air": {
+      "total_aircraft": 204,
+      "fighters": 0,
+      "attack_aircraft": 17,
+      "transport_aircraft": 23,
+      "total_helicopters": 130,
+      "attack_helicopters": 6
+    },
+    "naval": {
+      "total_assets": 127,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 4,
+      "corvettes": 1,
+      "submarines": 0,
+      "patrol_vessels": 60
+    }
+  },
+  "MY": {
+    "name": "Malaysia",
+    "manpower": {
+      "active_personnel": 113000,
+      "reserve_personnel": 51600,
+      "total_population": 34564810
+    },
+    "land": {
+      "tanks": 48,
+      "armored_vehicles": 15415,
+      "self_propelled_artillery": 0,
+      "towed_artillery": 196,
+      "rocket_projectors": 36
+    },
+    "air": {
+      "total_aircraft": 132,
+      "fighters": 25,
+      "attack_aircraft": 11,
+      "transport_aircraft": 15,
+      "total_helicopters": 45,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": 100,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 2,
+      "corvettes": 4,
+      "submarines": 2,
+      "patrol_vessels": 72
+    }
+  },
+  "CO": {
+    "name": "Colombia",
+    "manpower": {
+      "active_personnel": 429000,
+      "reserve_personnel": 998000,
+      "total_population": 49588357
+    },
+    "land": {
+      "tanks": 0,
+      "armored_vehicles": 12780,
+      "self_propelled_artillery": 6,
+      "towed_artillery": 110,
+      "rocket_projectors": 0
+    },
+    "air": {
+      "total_aircraft": 430,
+      "fighters": 16,
+      "attack_aircraft": 24,
+      "transport_aircraft": 82,
+      "total_helicopters": 255,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": 213,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 9,
+      "corvettes": 2,
+      "submarines": 4,
+      "patrol_vessels": 158
+    }
+  },
+  "IQ": {
+    "name": "Iraq",
+    "manpower": {
+      "active_personnel": 193000,
+      "reserve_personnel": 0,
+      "total_population": 42083436
+    },
+    "land": {
+      "tanks": 1188,
+      "armored_vehicles": 37496,
+      "self_propelled_artillery": 434,
+      "towed_artillery": 610,
+      "rocket_projectors": 572
+    },
+    "air": {
+      "total_aircraft": 360,
+      "fighters": 26,
+      "attack_aircraft": 36,
+      "transport_aircraft": 15,
+      "total_helicopters": 183,
+      "attack_helicopters": 39
+    },
+    "naval": {
+      "total_assets": 67,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 1,
+      "submarines": 0,
+      "patrol_vessels": 55
+    }
+  },
+  "DK": {
+    "name": "Denmark",
+    "manpower": {
+      "active_personnel": 21000,
+      "reserve_personnel": 12000,
+      "total_population": 5973136
+    },
+    "land": {
+      "tanks": 44,
+      "armored_vehicles": 5930,
+      "self_propelled_artillery": 19,
+      "towed_artillery": 0,
+      "rocket_projectors": 8
+    },
+    "air": {
+      "total_aircraft": 122,
+      "fighters": 26,
+      "attack_aircraft": 19,
+      "transport_aircraft": 4,
+      "total_helicopters": 34,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": 50,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 9,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 9
+    }
+  },
+  "SZ": {
+    "name": "Switzerland",
+    "manpower": {
+      "active_personnel": 147178,
+      "reserve_personnel": 0,
+      "total_population": 8860574
+    },
+    "land": {
+      "tanks": 134,
+      "armored_vehicles": 6885,
+      "self_propelled_artillery": 133,
+      "towed_artillery": 0,
+      "rocket_projectors": 0
+    },
+    "air": {
+      "total_aircraft": 141,
+      "fighters": 40,
+      "attack_aircraft": 0,
+      "transport_aircraft": 16,
+      "total_helicopters": 39,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": null,
+      "aircraft_carriers": null,
+      "helicopter_carriers": null,
+      "destroyers": null,
+      "frigates": null,
+      "corvettes": null,
+      "submarines": null,
+      "patrol_vessels": null
+    }
+  },
+  "ET": {
+    "name": "Ethiopia",
+    "manpower": {
+      "active_personnel": 503000,
+      "reserve_personnel": 138000,
+      "total_population": 118550298
+    },
+    "land": {
+      "tanks": 338,
+      "armored_vehicles": 8586,
+      "self_propelled_artillery": 142,
+      "towed_artillery": 469,
+      "rocket_projectors": 79
+    },
+    "air": {
+      "total_aircraft": 104,
+      "fighters": 25,
+      "attack_aircraft": 0,
+      "transport_aircraft": 9,
+      "total_helicopters": 33,
+      "attack_helicopters": 7
+    },
+    "naval": {
+      "total_assets": null,
+      "aircraft_carriers": null,
+      "helicopter_carriers": null,
+      "destroyers": null,
+      "frigates": null,
+      "corvettes": null,
+      "submarines": null,
+      "patrol_vessels": null
+    }
+  },
+  "FI": {
+    "name": "Finland",
+    "manpower": {
+      "active_personnel": 24000,
+      "reserve_personnel": 870000,
+      "total_population": 5626414
+    },
+    "land": {
+      "tanks": 200,
+      "armored_vehicles": 14866,
+      "self_propelled_artillery": 125,
+      "towed_artillery": 667,
+      "rocket_projectors": 76
+    },
+    "air": {
+      "total_aircraft": 162,
+      "fighters": 53,
+      "attack_aircraft": 0,
+      "transport_aircraft": 11,
+      "total_helicopters": 27,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": 165,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 8
+    }
+  },
+  "CL": {
+    "name": "Chile",
+    "manpower": {
+      "active_personnel": 80000,
+      "reserve_personnel": 40000,
+      "total_population": 18664652
+    },
+    "land": {
+      "tanks": 386,
+      "armored_vehicles": 7480,
+      "self_propelled_artillery": 48,
+      "towed_artillery": 249,
+      "rocket_projectors": 9
+    },
+    "air": {
+      "total_aircraft": 274,
+      "fighters": 45,
+      "attack_aircraft": 0,
+      "transport_aircraft": 33,
+      "total_helicopters": 86,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": 130,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 8,
+      "corvettes": 0,
+      "submarines": 4,
+      "patrol_vessels": 40
+    }
+  },
+  "PE": {
+    "name": "Peru",
+    "manpower": {
+      "active_personnel": 120000,
+      "reserve_personnel": 386000,
+      "total_population": 32600249
+    },
+    "land": {
+      "tanks": 355,
+      "armored_vehicles": 9168,
+      "self_propelled_artillery": 12,
+      "towed_artillery": 290,
+      "rocket_projectors": 61
+    },
+    "air": {
+      "total_aircraft": 252,
+      "fighters": 15,
+      "attack_aircraft": 22,
+      "transport_aircraft": 39,
+      "total_helicopters": 112,
+      "attack_helicopters": 16
+    },
+    "naval": {
+      "total_assets": 78,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 7,
+      "corvettes": 8,
+      "submarines": 6,
+      "patrol_vessels": 13
+    }
+  },
+  "VE": {
+    "name": "Venezuela",
+    "manpower": {
+      "active_personnel": 109000,
+      "reserve_personnel": 8000,
+      "total_population": 31250306
+    },
+    "land": {
+      "tanks": 282,
+      "armored_vehicles": 15168,
+      "self_propelled_artillery": 60,
+      "towed_artillery": 92,
+      "rocket_projectors": 56
+    },
+    "air": {
+      "total_aircraft": 224,
+      "fighters": 30,
+      "attack_aircraft": 0,
+      "transport_aircraft": 47,
+      "total_helicopters": 85,
+      "attack_helicopters": 10
+    },
+    "naval": {
+      "total_assets": 41,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 1,
+      "corvettes": 0,
+      "submarines": 3,
+      "patrol_vessels": 26
+    }
+  },
+  "RO": {
+    "name": "Romania",
+    "manpower": {
+      "active_personnel": 90000,
+      "reserve_personnel": 55000,
+      "total_population": 18148155
+    },
+    "land": {
+      "tanks": 451,
+      "armored_vehicles": 13266,
+      "self_propelled_artillery": 0,
+      "towed_artillery": 720,
+      "rocket_projectors": 243
+    },
+    "air": {
+      "total_aircraft": 148,
+      "fighters": 29,
+      "attack_aircraft": 0,
+      "transport_aircraft": 13,
+      "total_helicopters": 66,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": 18,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 3,
+      "corvettes": 7,
+      "submarines": 0,
+      "patrol_vessels": 0
+    }
+  },
+  "UZ": {
+    "name": "Uzbekistan",
+    "manpower": {
+      "active_personnel": 120000,
+      "reserve_personnel": 0,
+      "total_population": 36520593
+    },
+    "land": {
+      "tanks": 470,
+      "armored_vehicles": 8692,
+      "self_propelled_artillery": 177,
+      "towed_artillery": 236,
+      "rocket_projectors": 108
+    },
+    "air": {
+      "total_aircraft": 159,
+      "fighters": 26,
+      "attack_aircraft": 13,
+      "transport_aircraft": 12,
+      "total_helicopters": 101,
+      "attack_helicopters": 34
+    },
+    "naval": {
+      "total_assets": 0,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 0
+    }
+  },
+  "AE": {
+    "name": "United Arab Emirates",
+    "manpower": {
+      "active_personnel": 65000,
+      "reserve_personnel": 130000,
+      "total_population": 10032213
+    },
+    "land": {
+      "tanks": 354,
+      "armored_vehicles": 8982,
+      "self_propelled_artillery": 165,
+      "towed_artillery": 99,
+      "rocket_projectors": 49
+    },
+    "air": {
+      "total_aircraft": 581,
+      "fighters": 99,
+      "attack_aircraft": 40,
+      "transport_aircraft": 35,
+      "total_helicopters": 250,
+      "attack_helicopters": 30
+    },
+    "naval": {
+      "total_assets": 84,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 11,
+      "submarines": 0,
+      "patrol_vessels": 34
+    }
+  },
+  "CZ": {
+    "name": "Czechia",
+    "manpower": {
+      "active_personnel": 30334,
+      "reserve_personnel": 4900,
+      "total_population": 10837890
+    },
+    "land": {
+      "tanks": 20,
+      "armored_vehicles": 6275,
+      "self_propelled_artillery": 53,
+      "towed_artillery": 0,
+      "rocket_projectors": 16
+    },
+    "air": {
+      "total_aircraft": 103,
+      "fighters": 12,
+      "attack_aircraft": 16,
+      "transport_aircraft": 10,
+      "total_helicopters": 42,
+      "attack_helicopters": 4
+    },
+    "naval": {
+      "total_assets": null,
+      "aircraft_carriers": null,
+      "helicopter_carriers": null,
+      "destroyers": null,
+      "frigates": null,
+      "corvettes": null,
+      "submarines": null,
+      "patrol_vessels": null
+    }
+  },
+  "MA": {
+    "name": "Morocco",
+    "manpower": {
+      "active_personnel": 400000,
+      "reserve_personnel": 250000,
+      "total_population": 37387585
+    },
+    "land": {
+      "tanks": 1346,
+      "armored_vehicles": 17594,
+      "self_propelled_artillery": 544,
+      "towed_artillery": 188,
+      "rocket_projectors": 185
+    },
+    "air": {
+      "total_aircraft": 271,
+      "fighters": 84,
+      "attack_aircraft": 0,
+      "transport_aircraft": 31,
+      "total_helicopters": 73,
+      "attack_helicopters": 6
+    },
+    "naval": {
+      "total_assets": 100,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 6,
+      "corvettes": 1,
+      "submarines": 0,
+      "patrol_vessels": 84
+    }
+  },
+  "HU": {
+    "name": "Hungary",
+    "manpower": {
+      "active_personnel": 41600,
+      "reserve_personnel": 20000,
+      "total_population": 9855745
+    },
+    "land": {
+      "tanks": 220,
+      "armored_vehicles": 11502,
+      "self_propelled_artillery": 24,
+      "towed_artillery": 295,
+      "rocket_projectors": 0
+    },
+    "air": {
+      "total_aircraft": 80,
+      "fighters": 12,
+      "attack_aircraft": 0,
+      "transport_aircraft": 3,
+      "total_helicopters": 50,
+      "attack_helicopters": 8
+    },
+    "naval": {
+      "total_assets": null,
+      "aircraft_carriers": null,
+      "helicopter_carriers": null,
+      "destroyers": null,
+      "frigates": null,
+      "corvettes": null,
+      "submarines": null,
+      "patrol_vessels": null
+    }
+  },
+  "KZ": {
+    "name": "Kazakhstan",
+    "manpower": {
+      "active_personnel": 110000,
+      "reserve_personnel": 135000,
+      "total_population": 20260006
+    },
+    "land": {
+      "tanks": 353,
+      "armored_vehicles": 17460,
+      "self_propelled_artillery": 126,
+      "towed_artillery": 194,
+      "rocket_projectors": 287
+    },
+    "air": {
+      "total_aircraft": 168,
+      "fighters": 37,
+      "attack_aircraft": 13,
+      "transport_aircraft": 21,
+      "total_helicopters": 72,
+      "attack_helicopters": 12
+    },
+    "naval": {
+      "total_assets": 26,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 23
+    }
+  },
+  "AO": {
+    "name": "Angola",
+    "manpower": {
+      "active_personnel": 107000,
+      "reserve_personnel": 0,
+      "total_population": 37202061
+    },
+    "land": {
+      "tanks": 319,
+      "armored_vehicles": 2258,
+      "self_propelled_artillery": 25,
+      "towed_artillery": 575,
+      "rocket_projectors": 116
+    },
+    "air": {
+      "total_aircraft": 278,
+      "fighters": 67,
+      "attack_aircraft": 6,
+      "transport_aircraft": 32,
+      "total_helicopters": 115,
+      "attack_helicopters": 14
+    },
+    "naval": {
+      "total_assets": 32,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 32
+    }
+  },
+  "AZ": {
+    "name": "Azerbaijan",
+    "manpower": {
+      "active_personnel": 128000,
+      "reserve_personnel": 306000,
+      "total_population": 10650239
+    },
+    "land": {
+      "tanks": 1354,
+      "armored_vehicles": 14448,
+      "self_propelled_artillery": 135,
+      "towed_artillery": 651,
+      "rocket_projectors": 696
+    },
+    "air": {
+      "total_aircraft": 159,
+      "fighters": 12,
+      "attack_aircraft": 20,
+      "transport_aircraft": 4,
+      "total_helicopters": 87,
+      "attack_helicopters": 16
+    },
+    "naval": {
+      "total_assets": 32,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 0,
+      "submarines": 4,
+      "patrol_vessels": 17
+    }
+  },
+  "BE": {
+    "name": "Belgium",
+    "manpower": {
+      "active_personnel": 26390,
+      "reserve_personnel": 6600,
+      "total_population": 11977634
+    },
+    "land": {
+      "tanks": 0,
+      "armored_vehicles": 3588,
+      "self_propelled_artillery": 0,
+      "towed_artillery": 0,
+      "rocket_projectors": 0
+    },
+    "air": {
+      "total_aircraft": 104,
+      "fighters": 44,
+      "attack_aircraft": 12,
+      "transport_aircraft": 7,
+      "total_helicopters": 14,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": 9,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 2,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 2
+    }
+  },
+  "BG": {
+    "name": "Bulgaria",
+    "manpower": {
+      "active_personnel": 36950,
+      "reserve_personnel": 3000,
+      "total_population": 6782659
+    },
+    "land": {
+      "tanks": 334,
+      "armored_vehicles": 6724,
+      "self_propelled_artillery": 48,
+      "towed_artillery": 24,
+      "rocket_projectors": 24
+    },
+    "air": {
+      "total_aircraft": 71,
+      "fighters": 11,
+      "attack_aircraft": 5,
+      "transport_aircraft": 6,
+      "total_helicopters": 23,
+      "attack_helicopters": 4
+    },
+    "naval": {
+      "total_assets": 45,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 6,
+      "corvettes": 3,
+      "submarines": 0,
+      "patrol_vessels": 0
+    }
+  },
+  "RS": {
+    "name": "Kosovo",
+    "manpower": {
+      "active_personnel": 4000,
+      "reserve_personnel": 5000,
+      "total_population": 1977093
+    },
+    "land": {
+      "tanks": 0,
+      "armored_vehicles": 1357,
+      "self_propelled_artillery": 0,
+      "towed_artillery": 0,
+      "rocket_projectors": 0
+    },
+    "air": {
+      "total_aircraft": 0,
+      "fighters": 0,
+      "attack_aircraft": 0,
+      "transport_aircraft": 0,
+      "total_helicopters": 0,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": null,
+      "aircraft_carriers": null,
+      "helicopter_carriers": null,
+      "destroyers": null,
+      "frigates": null,
+      "corvettes": null,
+      "submarines": null,
+      "patrol_vessels": null
+    }
+  },
+  "CD": {
+    "name": "Democratic Republic of the Congo",
+    "manpower": {
+      "active_personnel": 166580,
+      "reserve_personnel": 30800,
+      "total_population": 115403027
+    },
+    "land": {
+      "tanks": 212,
+      "armored_vehicles": 7164,
+      "self_propelled_artillery": 16,
+      "towed_artillery": 125,
+      "rocket_projectors": 81
+    },
+    "air": {
+      "total_aircraft": 56,
+      "fighters": 0,
+      "attack_aircraft": 6,
+      "transport_aircraft": 10,
+      "total_helicopters": 38,
+      "attack_helicopters": 9
+    },
+    "naval": {
+      "total_assets": 16,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 16
+    }
+  },
+  "CU": {
+    "name": "Cuba",
+    "manpower": {
+      "active_personnel": 50000,
+      "reserve_personnel": 40000,
+      "total_population": 10966038
+    },
+    "land": {
+      "tanks": 194,
+      "armored_vehicles": 7792,
+      "self_propelled_artillery": 140,
+      "towed_artillery": 364,
+      "rocket_projectors": 200
+    },
+    "air": {
+      "total_aircraft": 20,
+      "fighters": 11,
+      "attack_aircraft": 0,
+      "transport_aircraft": 4,
+      "total_helicopters": 13,
+      "attack_helicopters": 4
+    },
+    "naval": {
+      "total_assets": 19,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 1,
+      "corvettes": 1,
+      "submarines": 0,
+      "patrol_vessels": 6
+    }
+  },
+  "SD": {
+    "name": "Sudan",
+    "manpower": {
+      "active_personnel": 300000,
+      "reserve_personnel": 200000,
+      "total_population": 50467278
+    },
+    "land": {
+      "tanks": 1055,
+      "armored_vehicles": 8890,
+      "self_propelled_artillery": 100,
+      "towed_artillery": 1150,
+      "rocket_projectors": 800
+    },
+    "air": {
+      "total_aircraft": 183,
+      "fighters": 37,
+      "attack_aircraft": 36,
+      "transport_aircraft": 13,
+      "total_helicopters": 64,
+      "attack_helicopters": 35
+    },
+    "naval": {
+      "total_assets": 10,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 10
+    }
+  },
+  "AT": {
+    "name": "Austria",
+    "manpower": {
+      "active_personnel": 25000,
+      "reserve_personnel": 125600,
+      "total_population": 8967982
+    },
+    "land": {
+      "tanks": 56,
+      "armored_vehicles": 5160,
+      "self_propelled_artillery": 30,
+      "towed_artillery": 0,
+      "rocket_projectors": 0
+    },
+    "air": {
+      "total_aircraft": 90,
+      "fighters": 15,
+      "attack_aircraft": 0,
+      "transport_aircraft": 11,
+      "total_helicopters": 41,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": null,
+      "aircraft_carriers": null,
+      "helicopter_carriers": null,
+      "destroyers": null,
+      "frigates": null,
+      "corvettes": null,
+      "submarines": null,
+      "patrol_vessels": null
+    }
+  },
+  "LK": {
+    "name": "Sri Lanka",
+    "manpower": {
+      "active_personnel": 346000,
+      "reserve_personnel": 90000,
+      "total_population": 21982608
+    },
+    "land": {
+      "tanks": 87,
+      "armored_vehicles": 15021,
+      "self_propelled_artillery": 0,
+      "towed_artillery": 96,
+      "rocket_projectors": 28
+    },
+    "air": {
+      "total_aircraft": 90,
+      "fighters": 6,
+      "attack_aircraft": 0,
+      "transport_aircraft": 15,
+      "total_helicopters": 49,
+      "attack_helicopters": 8
+    },
+    "naval": {
+      "total_assets": 275,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 5,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 259
+    }
+  },
+  "SK": {
+    "name": "Slovakia",
+    "manpower": {
+      "active_personnel": 20982,
+      "reserve_personnel": 0,
+      "total_population": 5563649
+    },
+    "land": {
+      "tanks": 45,
+      "armored_vehicles": 6636,
+      "self_propelled_artillery": 35,
+      "towed_artillery": 9,
+      "rocket_projectors": 25
+    },
+    "air": {
+      "total_aircraft": 48,
+      "fighters": 7,
+      "attack_aircraft": 0,
+      "transport_aircraft": 7,
+      "total_helicopters": 22,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": null,
+      "aircraft_carriers": null,
+      "helicopter_carriers": null,
+      "destroyers": null,
+      "frigates": null,
+      "corvettes": null,
+      "submarines": null,
+      "patrol_vessels": null
+    }
+  },
+  "BY": {
+    "name": "Belarus",
+    "manpower": {
+      "active_personnel": 63000,
+      "reserve_personnel": 365400,
+      "total_population": 9501451
+    },
+    "land": {
+      "tanks": 577,
+      "armored_vehicles": 6820,
+      "self_propelled_artillery": 357,
+      "towed_artillery": 190,
+      "rocket_projectors": 206
+    },
+    "air": {
+      "total_aircraft": 194,
+      "fighters": 43,
+      "attack_aircraft": 50,
+      "transport_aircraft": 4,
+      "total_helicopters": 70,
+      "attack_helicopters": 31
+    },
+    "naval": {
+      "total_assets": null,
+      "aircraft_carriers": null,
+      "helicopter_carriers": null,
+      "destroyers": null,
+      "frigates": null,
+      "corvettes": null,
+      "submarines": null,
+      "patrol_vessels": null
+    }
+  },
+  "QA": {
+    "name": "Qatar",
+    "manpower": {
+      "active_personnel": 26550,
+      "reserve_personnel": 4000,
+      "total_population": 2552088
+    },
+    "land": {
+      "tanks": 62,
+      "armored_vehicles": 5576,
+      "self_propelled_artillery": 46,
+      "towed_artillery": 12,
+      "rocket_projectors": 16
+    },
+    "air": {
+      "total_aircraft": 263,
+      "fighters": 115,
+      "attack_aircraft": 6,
+      "transport_aircraft": 12,
+      "total_helicopters": 85,
+      "attack_helicopters": 24
+    },
+    "naval": {
+      "total_assets": 125,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 4,
+      "submarines": 0,
+      "patrol_vessels": 107
+    }
+  },
+  "EC": {
+    "name": "Ecuador",
+    "manpower": {
+      "active_personnel": 41250,
+      "reserve_personnel": 118000,
+      "total_population": 18309984
+    },
+    "land": {
+      "tanks": 202,
+      "armored_vehicles": 5322,
+      "self_propelled_artillery": 5,
+      "towed_artillery": 106,
+      "rocket_projectors": 24
+    },
+    "air": {
+      "total_aircraft": 99,
+      "fighters": 0,
+      "attack_aircraft": 0,
+      "transport_aircraft": 20,
+      "total_helicopters": 43,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": 30,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 2,
+      "corvettes": 6,
+      "submarines": 2,
+      "patrol_vessels": 5
+    }
+  },
+  "HR": {
+    "name": "Croatia",
+    "manpower": {
+      "active_personnel": 14325,
+      "reserve_personnel": 20100,
+      "total_population": 4150116
+    },
+    "land": {
+      "tanks": 55,
+      "armored_vehicles": 4874,
+      "self_propelled_artillery": 25,
+      "towed_artillery": 42,
+      "rocket_projectors": 42
+    },
+    "air": {
+      "total_aircraft": 67,
+      "fighters": 12,
+      "attack_aircraft": 0,
+      "transport_aircraft": 0,
+      "total_helicopters": 37,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": 30,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 11
+    }
+  },
+  "JO": {
+    "name": "Jordan",
+    "manpower": {
+      "active_personnel": 114500,
+      "reserve_personnel": 100000,
+      "total_population": 11174024
+    },
+    "land": {
+      "tanks": 1508,
+      "armored_vehicles": 25278,
+      "self_propelled_artillery": 478,
+      "towed_artillery": 80,
+      "rocket_projectors": 84
+    },
+    "air": {
+      "total_aircraft": 279,
+      "fighters": 44,
+      "attack_aircraft": 10,
+      "transport_aircraft": 12,
+      "total_helicopters": 159,
+      "attack_helicopters": 44
+    },
+    "naval": {
+      "total_assets": 27,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 27
+    }
+  },
+  "BH": {
+    "name": "Bahrain",
+    "manpower": {
+      "active_personnel": 18400,
+      "reserve_personnel": 110000,
+      "total_population": 1566888
+    },
+    "land": {
+      "tanks": 150,
+      "armored_vehicles": 5196,
+      "self_propelled_artillery": 38,
+      "towed_artillery": 26,
+      "rocket_projectors": 18
+    },
+    "air": {
+      "total_aircraft": 137,
+      "fighters": 28,
+      "attack_aircraft": 0,
+      "transport_aircraft": 3,
+      "total_helicopters": 66,
+      "attack_helicopters": 34
+    },
+    "naval": {
+      "total_assets": 64,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 2,
+      "corvettes": 2,
+      "submarines": 0,
+      "patrol_vessels": 50
+    }
+  },
+  "KW": {
+    "name": "Kuwait",
+    "manpower": {
+      "active_personnel": 78000,
+      "reserve_personnel": 24000,
+      "total_population": 3138355
+    },
+    "land": {
+      "tanks": 367,
+      "armored_vehicles": 7472,
+      "self_propelled_artillery": 51,
+      "towed_artillery": 0,
+      "rocket_projectors": 27
+    },
+    "air": {
+      "total_aircraft": 133,
+      "fighters": 47,
+      "attack_aircraft": 0,
+      "transport_aircraft": 2,
+      "total_helicopters": 68,
+      "attack_helicopters": 16
+    },
+    "naval": {
+      "total_assets": 123,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 106
+    }
+  },
+  "AL": {
+    "name": "Albania",
+    "manpower": {
+      "active_personnel": 7500,
+      "reserve_personnel": 0,
+      "total_population": 3107100
+    },
+    "land": {
+      "tanks": 0,
+      "armored_vehicles": 1492,
+      "self_propelled_artillery": 10,
+      "towed_artillery": 0,
+      "rocket_projectors": 270
+    },
+    "air": {
+      "total_aircraft": 20,
+      "fighters": 0,
+      "attack_aircraft": 0,
+      "transport_aircraft": 1,
+      "total_helicopters": 19,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": 33,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 33
+    }
+  },
+  "TM": {
+    "name": "Turkmenistan",
+    "manpower": {
+      "active_personnel": 36500,
+      "reserve_personnel": 0,
+      "total_population": 5744151
+    },
+    "land": {
+      "tanks": 654,
+      "armored_vehicles": 11588,
+      "self_propelled_artillery": 73,
+      "towed_artillery": 457,
+      "rocket_projectors": 164
+    },
+    "air": {
+      "total_aircraft": 91,
+      "fighters": 22,
+      "attack_aircraft": 27,
+      "transport_aircraft": 5,
+      "total_helicopters": 26,
+      "attack_helicopters": 10
+    },
+    "naval": {
+      "total_assets": 16,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 16
+    }
+  },
+  "TN": {
+    "name": "Tunisia",
+    "manpower": {
+      "active_personnel": 89800,
+      "reserve_personnel": 0,
+      "total_population": 12048847
+    },
+    "land": {
+      "tanks": 145,
+      "armored_vehicles": 13927,
+      "self_propelled_artillery": 0,
+      "towed_artillery": 105,
+      "rocket_projectors": 0
+    },
+    "air": {
+      "total_aircraft": 155,
+      "fighters": 10,
+      "attack_aircraft": 0,
+      "transport_aircraft": 12,
+      "total_helicopters": 101,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": 37,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 1,
+      "corvettes": 1,
+      "submarines": 0,
+      "patrol_vessels": 30
+    }
+  },
+  "LY": {
+    "name": "Libya",
+    "manpower": {
+      "active_personnel": 32000,
+      "reserve_personnel": 0,
+      "total_population": 7361263
+    },
+    "land": {
+      "tanks": 55,
+      "armored_vehicles": 2728,
+      "self_propelled_artillery": 20,
+      "towed_artillery": 38,
+      "rocket_projectors": 25
+    },
+    "air": {
+      "total_aircraft": 83,
+      "fighters": 10,
+      "attack_aircraft": 1,
+      "transport_aircraft": 12,
+      "total_helicopters": 22,
+      "attack_helicopters": 4
+    },
+    "naval": {
+      "total_assets": 5,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 1,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 2
+    }
+  },
+  "PY": {
+    "name": "Paraguay",
+    "manpower": {
+      "active_personnel": 15650,
+      "reserve_personnel": 168500,
+      "total_population": 7522549
+    },
+    "land": {
+      "tanks": 10,
+      "armored_vehicles": 2876,
+      "self_propelled_artillery": 6,
+      "towed_artillery": 50,
+      "rocket_projectors": 0
+    },
+    "air": {
+      "total_aircraft": 49,
+      "fighters": 0,
+      "attack_aircraft": 4,
+      "transport_aircraft": 12,
+      "total_helicopters": 18,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": null,
+      "aircraft_carriers": null,
+      "helicopter_carriers": null,
+      "destroyers": null,
+      "frigates": null,
+      "corvettes": null,
+      "submarines": null,
+      "patrol_vessels": null
+    }
+  },
+  "BO": {
+    "name": "Bolivia",
+    "manpower": {
+      "active_personnel": 40000,
+      "reserve_personnel": 40000,
+      "total_population": 12311974
+    },
+    "land": {
+      "tanks": 54,
+      "armored_vehicles": 764,
+      "self_propelled_artillery": 0,
+      "towed_artillery": 58,
+      "rocket_projectors": 0
+    },
+    "air": {
+      "total_aircraft": 67,
+      "fighters": 0,
+      "attack_aircraft": 0,
+      "transport_aircraft": 15,
+      "total_helicopters": 29,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": null,
+      "aircraft_carriers": null,
+      "helicopter_carriers": null,
+      "destroyers": null,
+      "frigates": null,
+      "corvettes": null,
+      "submarines": null,
+      "patrol_vessels": null
+    }
+  },
+  "KH": {
+    "name": "Cambodia",
+    "manpower": {
+      "active_personnel": 124300,
+      "reserve_personnel": 0,
+      "total_population": 17063669
+    },
+    "land": {
+      "tanks": 520,
+      "armored_vehicles": 5439,
+      "self_propelled_artillery": 30,
+      "towed_artillery": 525,
+      "rocket_projectors": 521
+    },
+    "air": {
+      "total_aircraft": 24,
+      "fighters": 0,
+      "attack_aircraft": 0,
+      "transport_aircraft": 4,
+      "total_helicopters": 20,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": 20,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 20
+    }
+  },
+  "KE": {
+    "name": "Kenya",
+    "manpower": {
+      "active_personnel": 50000,
+      "reserve_personnel": 0,
+      "total_population": 58246378
+    },
+    "land": {
+      "tanks": 188,
+      "armored_vehicles": 9114,
+      "self_propelled_artillery": 18,
+      "towed_artillery": 53,
+      "rocket_projectors": 0
+    },
+    "air": {
+      "total_aircraft": 154,
+      "fighters": 17,
+      "attack_aircraft": 0,
+      "transport_aircraft": 21,
+      "total_helicopters": 84,
+      "attack_helicopters": 2
+    },
+    "naval": {
+      "total_assets": 27,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 18
+    }
+  },
+  "TD": {
+    "name": "Chad",
+    "manpower": {
+      "active_personnel": 37750,
+      "reserve_personnel": 0,
+      "total_population": 19093595
+    },
+    "land": {
+      "tanks": 90,
+      "armored_vehicles": 4345,
+      "self_propelled_artillery": 10,
+      "towed_artillery": 13,
+      "rocket_projectors": 16
+    },
+    "air": {
+      "total_aircraft": 40,
+      "fighters": 0,
+      "attack_aircraft": 7,
+      "transport_aircraft": 7,
+      "total_helicopters": 16,
+      "attack_helicopters": 3
+    },
+    "naval": {
+      "total_assets": null,
+      "aircraft_carriers": null,
+      "helicopter_carriers": null,
+      "destroyers": null,
+      "frigates": null,
+      "corvettes": null,
+      "submarines": null,
+      "patrol_vessels": null
+    }
+  },
+  "OM": {
+    "name": "Oman",
+    "manpower": {
+      "active_personnel": 100000,
+      "reserve_personnel": 0,
+      "total_population": 3901992
+    },
+    "land": {
+      "tanks": 264,
+      "armored_vehicles": 11380,
+      "self_propelled_artillery": 24,
+      "towed_artillery": 144,
+      "rocket_projectors": 0
+    },
+    "air": {
+      "total_aircraft": 128,
+      "fighters": 29,
+      "attack_aircraft": 10,
+      "transport_aircraft": 9,
+      "total_helicopters": 31,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": 17,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 5,
+      "submarines": 0,
+      "patrol_vessels": 8
+    }
+  },
+  "SY": {
+    "name": "Syria",
+    "manpower": {
+      "active_personnel": 100000,
+      "reserve_personnel": 0,
+      "total_population": 23865423
+    },
+    "land": {
+      "tanks": 168,
+      "armored_vehicles": 18736,
+      "self_propelled_artillery": 60,
+      "towed_artillery": 0,
+      "rocket_projectors": 0
+    },
+    "air": {
+      "total_aircraft": 104,
+      "fighters": 52,
+      "attack_aircraft": 5,
+      "transport_aircraft": 2,
+      "total_helicopters": 39,
+      "attack_helicopters": 7
+    },
+    "naval": {
+      "total_assets": 12,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 8
+    }
+  },
+  "LT": {
+    "name": "Lithuania",
+    "manpower": {
+      "active_personnel": 23000,
+      "reserve_personnel": 104000,
+      "total_population": 2628186
+    },
+    "land": {
+      "tanks": 0,
+      "armored_vehicles": 4553,
+      "self_propelled_artillery": 16,
+      "towed_artillery": 54,
+      "rocket_projectors": 0
+    },
+    "air": {
+      "total_aircraft": 9,
+      "fighters": 0,
+      "attack_aircraft": 0,
+      "transport_aircraft": 5,
+      "total_helicopters": 4,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": 13,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 5
+    }
+  },
+  "TZ": {
+    "name": "Tanzania",
+    "manpower": {
+      "active_personnel": 25000,
+      "reserve_personnel": 0,
+      "total_population": 67462121
+    },
+    "land": {
+      "tanks": 200,
+      "armored_vehicles": 8408,
+      "self_propelled_artillery": 0,
+      "towed_artillery": 205,
+      "rocket_projectors": 70
+    },
+    "air": {
+      "total_aircraft": 38,
+      "fighters": 11,
+      "attack_aircraft": 0,
+      "transport_aircraft": 6,
+      "total_helicopters": 15,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": 12,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 10
+    }
+  },
+  "NZ": {
+    "name": "New Zealand",
+    "manpower": {
+      "active_personnel": 10050,
+      "reserve_personnel": 3300,
+      "total_population": 5161211
+    },
+    "land": {
+      "tanks": 0,
+      "armored_vehicles": 3378,
+      "self_propelled_artillery": 0,
+      "towed_artillery": 31,
+      "rocket_projectors": 0
+    },
+    "air": {
+      "total_aircraft": 47,
+      "fighters": 0,
+      "attack_aircraft": 0,
+      "transport_aircraft": 7,
+      "total_helicopters": 21,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": 8,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 2,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 4
+    }
+  },
+  "SI": {
+    "name": "Slovenia",
+    "manpower": {
+      "active_personnel": 7000,
+      "reserve_personnel": 26000,
+      "total_population": 2097893
+    },
+    "land": {
+      "tanks": 54,
+      "armored_vehicles": 4636,
+      "self_propelled_artillery": 17,
+      "towed_artillery": 18,
+      "rocket_projectors": 0
+    },
+    "air": {
+      "total_aircraft": 40,
+      "fighters": 0,
+      "attack_aircraft": 0,
+      "transport_aircraft": 5,
+      "total_helicopters": 16,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": 3,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 3
+    }
+  },
+  "MZ": {
+    "name": "Mozambique",
+    "manpower": {
+      "active_personnel": 11200,
+      "reserve_personnel": 0,
+      "total_population": 33350954
+    },
+    "land": {
+      "tanks": 60,
+      "armored_vehicles": 3488,
+      "self_propelled_artillery": 0,
+      "towed_artillery": 104,
+      "rocket_projectors": 12
+    },
+    "air": {
+      "total_aircraft": 23,
+      "fighters": 8,
+      "attack_aircraft": 2,
+      "transport_aircraft": 5,
+      "total_helicopters": 7,
+      "attack_helicopters": 2
+    },
+    "naval": {
+      "total_assets": 36,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 36
+    }
+  },
+  "MN": {
+    "name": "Mongolia",
+    "manpower": {
+      "active_personnel": 35000,
+      "reserve_personnel": 230000,
+      "total_population": 3281676
+    },
+    "land": {
+      "tanks": 420,
+      "armored_vehicles": 11040,
+      "self_propelled_artillery": 0,
+      "towed_artillery": 500,
+      "rocket_projectors": 130
+    },
+    "air": {
+      "total_aircraft": 8,
+      "fighters": 0,
+      "attack_aircraft": 0,
+      "transport_aircraft": 3,
+      "total_helicopters": 3,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": null,
+      "aircraft_carriers": null,
+      "helicopter_carriers": null,
+      "destroyers": null,
+      "frigates": null,
+      "corvettes": null,
+      "submarines": null,
+      "patrol_vessels": null
+    }
+  },
+  "IE": {
+    "name": "Ireland",
+    "manpower": {
+      "active_personnel": 7557,
+      "reserve_personnel": 1720,
+      "total_population": 5233461
+    },
+    "land": {
+      "tanks": 0,
+      "armored_vehicles": 3296,
+      "self_propelled_artillery": 0,
+      "towed_artillery": 0,
+      "rocket_projectors": 0
+    },
+    "air": {
+      "total_aircraft": 23,
+      "fighters": 0,
+      "attack_aircraft": 0,
+      "transport_aircraft": 5,
+      "total_helicopters": 8,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": 8,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 8
+    }
+  },
+  "GE": {
+    "name": "Georgia",
+    "manpower": {
+      "active_personnel": 37000,
+      "reserve_personnel": 205500,
+      "total_population": 4900961
+    },
+    "land": {
+      "tanks": 132,
+      "armored_vehicles": 5974,
+      "self_propelled_artillery": 67,
+      "towed_artillery": 121,
+      "rocket_projectors": 42
+    },
+    "air": {
+      "total_aircraft": 61,
+      "fighters": 0,
+      "attack_aircraft": 5,
+      "transport_aircraft": 2,
+      "total_helicopters": 44,
+      "attack_helicopters": 11
+    },
+    "naval": {
+      "total_assets": 19,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 31
+    }
+  },
+  "GT": {
+    "name": "Guatemala",
+    "manpower": {
+      "active_personnel": 106114,
+      "reserve_personnel": 90000,
+      "total_population": 18255216
+    },
+    "land": {
+      "tanks": 0,
+      "armored_vehicles": 3268,
+      "self_propelled_artillery": 0,
+      "towed_artillery": 110,
+      "rocket_projectors": 0
+    },
+    "air": {
+      "total_aircraft": 35,
+      "fighters": 0,
+      "attack_aircraft": 3,
+      "transport_aircraft": 10,
+      "total_helicopters": 20,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": 25,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 20
+    }
+  },
+  "UY": {
+    "name": "Uruguay",
+    "manpower": {
+      "active_personnel": 24000,
+      "reserve_personnel": 0,
+      "total_population": 3425330
+    },
+    "land": {
+      "tanks": 62,
+      "armored_vehicles": 5968,
+      "self_propelled_artillery": 16,
+      "towed_artillery": 83,
+      "rocket_projectors": 4
+    },
+    "air": {
+      "total_aircraft": 43,
+      "fighters": 0,
+      "attack_aircraft": 6,
+      "transport_aircraft": 6,
+      "total_helicopters": 12,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": 16,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 5
+    }
+  },
+  "YE": {
+    "name": "Yemen",
+    "manpower": {
+      "active_personnel": 33350,
+      "reserve_personnel": 0,
+      "total_population": 32140443
+    },
+    "land": {
+      "tanks": 0,
+      "armored_vehicles": 1550,
+      "self_propelled_artillery": 12,
+      "towed_artillery": 60,
+      "rocket_projectors": 30
+    },
+    "air": {
+      "total_aircraft": 160,
+      "fighters": 68,
+      "attack_aircraft": 0,
+      "transport_aircraft": 3,
+      "total_helicopters": 59,
+      "attack_helicopters": 14
+    },
+    "naval": {
+      "total_assets": 26,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 1,
+      "submarines": 0,
+      "patrol_vessels": 9
+    }
+  },
+  "CM": {
+    "name": "Cameroon",
+    "manpower": {
+      "active_personnel": 38000,
+      "reserve_personnel": 0,
+      "total_population": 30966105
+    },
+    "land": {
+      "tanks": 0,
+      "armored_vehicles": 860,
+      "self_propelled_artillery": 18,
+      "towed_artillery": 52,
+      "rocket_projectors": 20
+    },
+    "air": {
+      "total_aircraft": 35,
+      "fighters": 0,
+      "attack_aircraft": 0,
+      "transport_aircraft": 6,
+      "total_helicopters": 21,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": 19,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 19
+    }
+  },
+  "TJ": {
+    "name": "Tajikistan",
+    "manpower": {
+      "active_personnel": 150000,
+      "reserve_personnel": 600000,
+      "total_population": 10394063
+    },
+    "land": {
+      "tanks": 38,
+      "armored_vehicles": 6782,
+      "self_propelled_artillery": 3,
+      "towed_artillery": 13,
+      "rocket_projectors": 24
+    },
+    "air": {
+      "total_aircraft": 25,
+      "fighters": 0,
+      "attack_aircraft": 0,
+      "transport_aircraft": 1,
+      "total_helicopters": 20,
+      "attack_helicopters": 6
+    },
+    "naval": {
+      "total_assets": null,
+      "aircraft_carriers": null,
+      "helicopter_carriers": null,
+      "destroyers": null,
+      "frigates": null,
+      "corvettes": null,
+      "submarines": null,
+      "patrol_vessels": null
+    }
+  },
+  "AM": {
+    "name": "Armenia",
+    "manpower": {
+      "active_personnel": 65000,
+      "reserve_personnel": 210000,
+      "total_population": 2976765
+    },
+    "land": {
+      "tanks": 109,
+      "armored_vehicles": 1412,
+      "self_propelled_artillery": 104,
+      "towed_artillery": 193,
+      "rocket_projectors": 100
+    },
+    "air": {
+      "total_aircraft": 69,
+      "fighters": 4,
+      "attack_aircraft": 14,
+      "transport_aircraft": 3,
+      "total_helicopters": 36,
+      "attack_helicopters": 20
+    },
+    "naval": {
+      "total_assets": null,
+      "aircraft_carriers": null,
+      "helicopter_carriers": null,
+      "destroyers": null,
+      "frigates": null,
+      "corvettes": null,
+      "submarines": null,
+      "patrol_vessels": null
+    }
+  },
+  "LV": {
+    "name": "Latvia",
+    "manpower": {
+      "active_personnel": 17870,
+      "reserve_personnel": 38000,
+      "total_population": 1801246
+    },
+    "land": {
+      "tanks": 0,
+      "armored_vehicles": 3410,
+      "self_propelled_artillery": 47,
+      "towed_artillery": 0,
+      "rocket_projectors": 0
+    },
+    "air": {
+      "total_aircraft": 3,
+      "fighters": 0,
+      "attack_aircraft": 0,
+      "transport_aircraft": 0,
+      "total_helicopters": 3,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": 18,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 11
+    }
+  },
+  "HN": {
+    "name": "Honduras",
+    "manpower": {
+      "active_personnel": 52225,
+      "reserve_personnel": 0,
+      "total_population": 9529188
+    },
+    "land": {
+      "tanks": 22,
+      "armored_vehicles": 4666,
+      "self_propelled_artillery": 0,
+      "towed_artillery": 48,
+      "rocket_projectors": 0
+    },
+    "air": {
+      "total_aircraft": 45,
+      "fighters": 6,
+      "attack_aircraft": 7,
+      "transport_aircraft": 10,
+      "total_helicopters": 11,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": 98,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 93
+    }
+  },
+  "ML": {
+    "name": "Mali",
+    "manpower": {
+      "active_personnel": 40000,
+      "reserve_personnel": 0,
+      "total_population": 21990607
+    },
+    "land": {
+      "tanks": 0,
+      "armored_vehicles": 3717,
+      "self_propelled_artillery": 0,
+      "towed_artillery": 50,
+      "rocket_projectors": 30
+    },
+    "air": {
+      "total_aircraft": 44,
+      "fighters": 9,
+      "attack_aircraft": 12,
+      "transport_aircraft": 8,
+      "total_helicopters": 10,
+      "attack_helicopters": 8
+    },
+    "naval": {
+      "total_assets": null,
+      "aircraft_carriers": null,
+      "helicopter_carriers": null,
+      "destroyers": null,
+      "frigates": null,
+      "corvettes": null,
+      "submarines": null,
+      "patrol_vessels": null
+    }
+  },
+  "ZW": {
+    "name": "Zimbabwe",
+    "manpower": {
+      "active_personnel": 29000,
+      "reserve_personnel": 0,
+      "total_population": 17150352
+    },
+    "land": {
+      "tanks": 60,
+      "armored_vehicles": 1248,
+      "self_propelled_artillery": 0,
+      "towed_artillery": 0,
+      "rocket_projectors": 0
+    },
+    "air": {
+      "total_aircraft": 80,
+      "fighters": 9,
+      "attack_aircraft": 9,
+      "transport_aircraft": 14,
+      "total_helicopters": 28,
+      "attack_helicopters": 6
+    },
+    "naval": {
+      "total_assets": null,
+      "aircraft_carriers": null,
+      "helicopter_carriers": null,
+      "destroyers": null,
+      "frigates": null,
+      "corvettes": null,
+      "submarines": null,
+      "patrol_vessels": null
+    }
+  },
+  "EE": {
+    "name": "Estonia",
+    "manpower": {
+      "active_personnel": 7700,
+      "reserve_personnel": 230000,
+      "total_population": 1193791
+    },
+    "land": {
+      "tanks": 0,
+      "armored_vehicles": 2579,
+      "self_propelled_artillery": 48,
+      "towed_artillery": 0,
+      "rocket_projectors": 6
+    },
+    "air": {
+      "total_aircraft": 2,
+      "fighters": 0,
+      "attack_aircraft": 0,
+      "transport_aircraft": 2,
+      "total_helicopters": 0,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": 8,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 4
+    }
+  },
+  "UG": {
+    "name": "Uganda",
+    "manpower": {
+      "active_personnel": 45000,
+      "reserve_personnel": 0,
+      "total_population": 49283041
+    },
+    "land": {
+      "tanks": 259,
+      "armored_vehicles": 9702,
+      "self_propelled_artillery": 6,
+      "towed_artillery": 26,
+      "rocket_projectors": 12
+    },
+    "air": {
+      "total_aircraft": 51,
+      "fighters": 6,
+      "attack_aircraft": 0,
+      "transport_aircraft": 3,
+      "total_helicopters": 30,
+      "attack_helicopters": 6
+    },
+    "naval": {
+      "total_assets": null,
+      "aircraft_carriers": null,
+      "helicopter_carriers": null,
+      "destroyers": null,
+      "frigates": null,
+      "corvettes": null,
+      "submarines": null,
+      "patrol_vessels": null
+    }
+  },
+  "CI": {
+    "name": "Ivory Coast",
+    "manpower": {
+      "active_personnel": 22000,
+      "reserve_personnel": 0,
+      "total_population": 29981758
+    },
+    "land": {
+      "tanks": 0,
+      "armored_vehicles": 1328,
+      "self_propelled_artillery": 0,
+      "towed_artillery": 4,
+      "rocket_projectors": 6
+    },
+    "air": {
+      "total_aircraft": 22,
+      "fighters": 0,
+      "attack_aircraft": 0,
+      "transport_aircraft": 3,
+      "total_helicopters": 14,
+      "attack_helicopters": 5
+    },
+    "naval": {
+      "total_assets": 8,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 7
+    }
+  },
+  "KG": {
+    "name": "Kyrgyzstan",
+    "manpower": {
+      "active_personnel": 23000,
+      "reserve_personnel": 0,
+      "total_population": 6172101
+    },
+    "land": {
+      "tanks": 215,
+      "armored_vehicles": 5372,
+      "self_propelled_artillery": 30,
+      "towed_artillery": 174,
+      "rocket_projectors": 21
+    },
+    "air": {
+      "total_aircraft": 7,
+      "fighters": 0,
+      "attack_aircraft": 0,
+      "transport_aircraft": 0,
+      "total_helicopters": 7,
+      "attack_helicopters": 2
+    },
+    "naval": {
+      "total_assets": null,
+      "aircraft_carriers": null,
+      "helicopter_carriers": null,
+      "destroyers": null,
+      "frigates": null,
+      "corvettes": null,
+      "submarines": null,
+      "patrol_vessels": null
+    }
+  },
+  "LU": {
+    "name": "Luxembourg",
+    "manpower": {
+      "active_personnel": 1200,
+      "reserve_personnel": 0,
+      "total_population": 671254
+    },
+    "land": {
+      "tanks": 0,
+      "armored_vehicles": 476,
+      "self_propelled_artillery": 0,
+      "towed_artillery": 0,
+      "rocket_projectors": 0
+    },
+    "air": {
+      "total_aircraft": 1,
+      "fighters": 0,
+      "attack_aircraft": 0,
+      "transport_aircraft": 1,
+      "total_helicopters": 0,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": null,
+      "aircraft_carriers": null,
+      "helicopter_carriers": null,
+      "destroyers": null,
+      "frigates": null,
+      "corvettes": null,
+      "submarines": null,
+      "patrol_vessels": null
+    }
+  },
+  "ZM": {
+    "name": "Zambia",
+    "manpower": {
+      "active_personnel": 15150,
+      "reserve_personnel": 0,
+      "total_population": 20799116
+    },
+    "land": {
+      "tanks": 75,
+      "armored_vehicles": 848,
+      "self_propelled_artillery": 12,
+      "towed_artillery": 60,
+      "rocket_projectors": 50
+    },
+    "air": {
+      "total_aircraft": 78,
+      "fighters": 0,
+      "attack_aircraft": 0,
+      "transport_aircraft": 13,
+      "total_helicopters": 33,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": null,
+      "aircraft_carriers": null,
+      "helicopter_carriers": null,
+      "destroyers": null,
+      "frigates": null,
+      "corvettes": null,
+      "submarines": null,
+      "patrol_vessels": null
+    }
+  },
+  "GH": {
+    "name": "Ghana",
+    "manpower": {
+      "active_personnel": 15500,
+      "reserve_personnel": 0,
+      "total_population": 34589092
+    },
+    "land": {
+      "tanks": 0,
+      "armored_vehicles": 3648,
+      "self_propelled_artillery": 0,
+      "towed_artillery": 6,
+      "rocket_projectors": 6
+    },
+    "air": {
+      "total_aircraft": 18,
+      "fighters": 0,
+      "attack_aircraft": 0,
+      "transport_aircraft": 2,
+      "total_helicopters": 9,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": 20,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 20
+    }
+  },
+  "SS": {
+    "name": "South Sudan",
+    "manpower": {
+      "active_personnel": 185000,
+      "reserve_personnel": 0,
+      "total_population": 12703714
+    },
+    "land": {
+      "tanks": 122,
+      "armored_vehicles": 2550,
+      "self_propelled_artillery": 24,
+      "towed_artillery": 0,
+      "rocket_projectors": 15
+    },
+    "air": {
+      "total_aircraft": 19,
+      "fighters": 0,
+      "attack_aircraft": 0,
+      "transport_aircraft": 4,
+      "total_helicopters": 15,
+      "attack_helicopters": 6
+    },
+    "naval": {
+      "total_assets": null,
+      "aircraft_carriers": null,
+      "helicopter_carriers": null,
+      "destroyers": null,
+      "frigates": null,
+      "corvettes": null,
+      "submarines": null,
+      "patrol_vessels": null
+    }
+  },
+  "MK": {
+    "name": "North Macedonia",
+    "manpower": {
+      "active_personnel": 10010,
+      "reserve_personnel": 60000,
+      "total_population": 2135622
+    },
+    "land": {
+      "tanks": 0,
+      "armored_vehicles": 1878,
+      "self_propelled_artillery": 0,
+      "towed_artillery": 156,
+      "rocket_projectors": 18
+    },
+    "air": {
+      "total_aircraft": 20,
+      "fighters": 0,
+      "attack_aircraft": 0,
+      "transport_aircraft": 0,
+      "total_helicopters": 10,
+      "attack_helicopters": 4
+    },
+    "naval": {
+      "total_assets": null,
+      "aircraft_carriers": null,
+      "helicopter_carriers": null,
+      "destroyers": null,
+      "frigates": null,
+      "corvettes": null,
+      "submarines": null,
+      "patrol_vessels": null
+    }
+  },
+  "DO": {
+    "name": "Dominican Republic",
+    "manpower": {
+      "active_personnel": 89000,
+      "reserve_personnel": 189000,
+      "total_population": 10815857
+    },
+    "land": {
+      "tanks": 6,
+      "armored_vehicles": 930,
+      "self_propelled_artillery": 0,
+      "towed_artillery": 14,
+      "rocket_projectors": 0
+    },
+    "air": {
+      "total_aircraft": 80,
+      "fighters": 0,
+      "attack_aircraft": 8,
+      "transport_aircraft": 11,
+      "total_helicopters": 49,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": 34,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 14
+    }
+  },
+  "NI": {
+    "name": "Nicaragua",
+    "manpower": {
+      "active_personnel": 45000,
+      "reserve_personnel": 0,
+      "total_population": 6676948
+    },
+    "land": {
+      "tanks": 186,
+      "armored_vehicles": 6344,
+      "self_propelled_artillery": 0,
+      "towed_artillery": 347,
+      "rocket_projectors": 151
+    },
+    "air": {
+      "total_aircraft": 17,
+      "fighters": 0,
+      "attack_aircraft": 0,
+      "transport_aircraft": 5,
+      "total_helicopters": 12,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": 23,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 23
+    }
+  },
+  "CG": {
+    "name": "Republic of the Congo",
+    "manpower": {
+      "active_personnel": 10000,
+      "reserve_personnel": 0,
+      "total_population": 6097665
+    },
+    "land": {
+      "tanks": 61,
+      "armored_vehicles": 804,
+      "self_propelled_artillery": 3,
+      "towed_artillery": 38,
+      "rocket_projectors": 30
+    },
+    "air": {
+      "total_aircraft": 14,
+      "fighters": 2,
+      "attack_aircraft": 0,
+      "transport_aircraft": 4,
+      "total_helicopters": 8,
+      "attack_helicopters": 1
+    },
+    "naval": {
+      "total_assets": 4,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 0
+    }
+  },
+  "LB": {
+    "name": "Lebanon",
+    "manpower": {
+      "active_personnel": 80000,
+      "reserve_personnel": 15000,
+      "total_population": 5364482
+    },
+    "land": {
+      "tanks": 334,
+      "armored_vehicles": 6912,
+      "self_propelled_artillery": 12,
+      "towed_artillery": 350,
+      "rocket_projectors": 11
+    },
+    "air": {
+      "total_aircraft": 80,
+      "fighters": 0,
+      "attack_aircraft": 9,
+      "transport_aircraft": 0,
+      "total_helicopters": 68,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": 48,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 42
+    }
+  },
+  "ER": {
+    "name": "Eritrea",
+    "manpower": {
+      "active_personnel": 350000,
+      "reserve_personnel": 680000,
+      "total_population": 6343956
+    },
+    "land": {
+      "tanks": 148,
+      "armored_vehicles": 1040,
+      "self_propelled_artillery": 45,
+      "towed_artillery": 89,
+      "rocket_projectors": 44
+    },
+    "air": {
+      "total_aircraft": 20,
+      "fighters": 1,
+      "attack_aircraft": 0,
+      "transport_aircraft": 5,
+      "total_helicopters": 13,
+      "attack_helicopters": 6
+    },
+    "naval": {
+      "total_assets": 23,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 18
+    }
+  },
+  "NE": {
+    "name": "Niger",
+    "manpower": {
+      "active_personnel": 25000,
+      "reserve_personnel": 0,
+      "total_population": 26342784
+    },
+    "land": {
+      "tanks": 0,
+      "armored_vehicles": 1550,
+      "self_propelled_artillery": 0,
+      "towed_artillery": 0,
+      "rocket_projectors": 0
+    },
+    "air": {
+      "total_aircraft": 26,
+      "fighters": 0,
+      "attack_aircraft": 2,
+      "transport_aircraft": 7,
+      "total_helicopters": 13,
+      "attack_helicopters": 2
+    },
+    "naval": {
+      "total_assets": null,
+      "aircraft_carriers": null,
+      "helicopter_carriers": null,
+      "destroyers": null,
+      "frigates": null,
+      "corvettes": null,
+      "submarines": null,
+      "patrol_vessels": null
+    }
+  },
+  "AF": {
+    "name": "Afghanistan",
+    "manpower": {
+      "active_personnel": 75000,
+      "reserve_personnel": 0,
+      "total_population": 40121552
+    },
+    "land": {
+      "tanks": 0,
+      "armored_vehicles": 3902,
+      "self_propelled_artillery": 0,
+      "towed_artillery": 0,
+      "rocket_projectors": 0
+    },
+    "air": {
+      "total_aircraft": 5,
+      "fighters": 0,
+      "attack_aircraft": 0,
+      "transport_aircraft": 2,
+      "total_helicopters": 3,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": null,
+      "aircraft_carriers": null,
+      "helicopter_carriers": null,
+      "destroyers": null,
+      "frigates": null,
+      "corvettes": null,
+      "submarines": null,
+      "patrol_vessels": null
+    }
+  },
+  "NA": {
+    "name": "Namibia",
+    "manpower": {
+      "active_personnel": 17567,
+      "reserve_personnel": 0,
+      "total_population": 2803660
+    },
+    "land": {
+      "tanks": 7,
+      "armored_vehicles": 2402,
+      "self_propelled_artillery": 0,
+      "towed_artillery": 50,
+      "rocket_projectors": 55
+    },
+    "air": {
+      "total_aircraft": 36,
+      "fighters": 11,
+      "attack_aircraft": 0,
+      "transport_aircraft": 5,
+      "total_helicopters": 7,
+      "attack_helicopters": 2
+    },
+    "naval": {
+      "total_assets": 15,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 2,
+      "submarines": 0,
+      "patrol_vessels": 15
+    }
+  },
+  "MR": {
+    "name": "Mauritania",
+    "manpower": {
+      "active_personnel": 31540,
+      "reserve_personnel": 66000,
+      "total_population": 4328040
+    },
+    "land": {
+      "tanks": 51,
+      "armored_vehicles": 5024,
+      "self_propelled_artillery": 0,
+      "towed_artillery": 75,
+      "rocket_projectors": 0
+    },
+    "air": {
+      "total_aircraft": 23,
+      "fighters": 0,
+      "attack_aircraft": 4,
+      "transport_aircraft": 7,
+      "total_helicopters": 4,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": 6,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 6
+    }
+  },
+  "NP": {
+    "name": "Nepal",
+    "manpower": {
+      "active_personnel": 98500,
+      "reserve_personnel": 82000,
+      "total_population": 31122387
+    },
+    "land": {
+      "tanks": 0,
+      "armored_vehicles": 1108,
+      "self_propelled_artillery": 0,
+      "towed_artillery": 14,
+      "rocket_projectors": 0
+    },
+    "air": {
+      "total_aircraft": 17,
+      "fighters": 0,
+      "attack_aircraft": 0,
+      "transport_aircraft": 7,
+      "total_helicopters": 10,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": null,
+      "aircraft_carriers": null,
+      "helicopter_carriers": null,
+      "destroyers": null,
+      "frigates": null,
+      "corvettes": null,
+      "submarines": null,
+      "patrol_vessels": null
+    }
+  },
+  "LA": {
+    "name": "Laos",
+    "manpower": {
+      "active_personnel": 100000,
+      "reserve_personnel": 30000,
+      "total_population": 7953556
+    },
+    "land": {
+      "tanks": 160,
+      "armored_vehicles": 7725,
+      "self_propelled_artillery": 50,
+      "towed_artillery": 97,
+      "rocket_projectors": 64
+    },
+    "air": {
+      "total_aircraft": 29,
+      "fighters": 0,
+      "attack_aircraft": 0,
+      "transport_aircraft": 2,
+      "total_helicopters": 20,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": null,
+      "aircraft_carriers": null,
+      "helicopter_carriers": null,
+      "destroyers": null,
+      "frigates": null,
+      "corvettes": null,
+      "submarines": null,
+      "patrol_vessels": null
+    }
+  },
+  "SN": {
+    "name": "Senegal",
+    "manpower": {
+      "active_personnel": 17000,
+      "reserve_personnel": 0,
+      "total_population": 18847519
+    },
+    "land": {
+      "tanks": 0,
+      "armored_vehicles": 1860,
+      "self_propelled_artillery": 0,
+      "towed_artillery": 20,
+      "rocket_projectors": 6
+    },
+    "air": {
+      "total_aircraft": 39,
+      "fighters": 0,
+      "attack_aircraft": 0,
+      "transport_aircraft": 5,
+      "total_helicopters": 19,
+      "attack_helicopters": 5
+    },
+    "naval": {
+      "total_assets": 4,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 4
+    }
+  },
+  "BF": {
+    "name": "Burkina Faso",
+    "manpower": {
+      "active_personnel": 7500,
+      "reserve_personnel": 0,
+      "total_population": 23042199
+    },
+    "land": {
+      "tanks": 0,
+      "armored_vehicles": 876,
+      "self_propelled_artillery": 0,
+      "towed_artillery": 8,
+      "rocket_projectors": 9
+    },
+    "air": {
+      "total_aircraft": 26,
+      "fighters": 0,
+      "attack_aircraft": 3,
+      "transport_aircraft": 2,
+      "total_helicopters": 19,
+      "attack_helicopters": 5
+    },
+    "naval": {
+      "total_assets": null,
+      "aircraft_carriers": null,
+      "helicopter_carriers": null,
+      "destroyers": null,
+      "frigates": null,
+      "corvettes": null,
+      "submarines": null,
+      "patrol_vessels": null
+    }
+  },
+  "ME": {
+    "name": "Montenegro",
+    "manpower": {
+      "active_personnel": 2350,
+      "reserve_personnel": 0,
+      "total_population": 599849
+    },
+    "land": {
+      "tanks": 0,
+      "armored_vehicles": 946,
+      "self_propelled_artillery": 0,
+      "towed_artillery": 12,
+      "rocket_projectors": 12
+    },
+    "air": {
+      "total_aircraft": 10,
+      "fighters": 0,
+      "attack_aircraft": 0,
+      "transport_aircraft": 0,
+      "total_helicopters": 10,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": 20,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 14
+    }
+  },
+  "SV": {
+    "name": "El Salvador",
+    "manpower": {
+      "active_personnel": 25000,
+      "reserve_personnel": 0,
+      "total_population": 6628702
+    },
+    "land": {
+      "tanks": 0,
+      "armored_vehicles": 2144,
+      "self_propelled_artillery": 0,
+      "towed_artillery": 76,
+      "rocket_projectors": 0
+    },
+    "air": {
+      "total_aircraft": 51,
+      "fighters": 0,
+      "attack_aircraft": 15,
+      "transport_aircraft": 3,
+      "total_helicopters": 28,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": 13,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 8
+    }
+  },
+  "BW": {
+    "name": "Botswana",
+    "manpower": {
+      "active_personnel": 12000,
+      "reserve_personnel": 0,
+      "total_population": 2450668
+    },
+    "land": {
+      "tanks": 45,
+      "armored_vehicles": 1224,
+      "self_propelled_artillery": 12,
+      "towed_artillery": 36,
+      "rocket_projectors": 20
+    },
+    "air": {
+      "total_aircraft": 45,
+      "fighters": 10,
+      "attack_aircraft": 0,
+      "transport_aircraft": 9,
+      "total_helicopters": 16,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": null,
+      "aircraft_carriers": null,
+      "helicopter_carriers": null,
+      "destroyers": null,
+      "frigates": null,
+      "corvettes": null,
+      "submarines": null,
+      "patrol_vessels": null
+    }
+  },
+  "MG": {
+    "name": "Madagascar",
+    "manpower": {
+      "active_personnel": 13500,
+      "reserve_personnel": 0,
+      "total_population": 29452714
+    },
+    "land": {
+      "tanks": 12,
+      "armored_vehicles": 316,
+      "self_propelled_artillery": 0,
+      "towed_artillery": 17,
+      "rocket_projectors": 0
+    },
+    "air": {
+      "total_aircraft": 6,
+      "fighters": 0,
+      "attack_aircraft": 0,
+      "transport_aircraft": 1,
+      "total_helicopters": 5,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": 7,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 5
+    }
+  },
+  "GA": {
+    "name": "Gabon",
+    "manpower": {
+      "active_personnel": 5000,
+      "reserve_personnel": 0,
+      "total_population": 2455105
+    },
+    "land": {
+      "tanks": 0,
+      "armored_vehicles": 424,
+      "self_propelled_artillery": 0,
+      "towed_artillery": 4,
+      "rocket_projectors": 28
+    },
+    "air": {
+      "total_aircraft": 25,
+      "fighters": 6,
+      "attack_aircraft": 0,
+      "transport_aircraft": 3,
+      "total_helicopters": 16,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": 5,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 4
+    }
+  },
+  "BA": {
+    "name": "Bosnia and Herzegovina",
+    "manpower": {
+      "active_personnel": 18000,
+      "reserve_personnel": 8000,
+      "total_population": 3798671
+    },
+    "land": {
+      "tanks": 45,
+      "armored_vehicles": 892,
+      "self_propelled_artillery": 0,
+      "towed_artillery": 300,
+      "rocket_projectors": 24
+    },
+    "air": {
+      "total_aircraft": 15,
+      "fighters": 0,
+      "attack_aircraft": 0,
+      "transport_aircraft": 0,
+      "total_helicopters": 15,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": 0,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 0
+    }
+  },
+  "IS": {
+    "name": "Iceland",
+    "manpower": {
+      "active_personnel": 0,
+      "reserve_personnel": 0,
+      "total_population": 364036
+    },
+    "land": {
+      "tanks": 0,
+      "armored_vehicles": 350,
+      "self_propelled_artillery": 0,
+      "towed_artillery": 0,
+      "rocket_projectors": 0
+    },
+    "air": {
+      "total_aircraft": 0,
+      "fighters": 0,
+      "attack_aircraft": 0,
+      "transport_aircraft": 0,
+      "total_helicopters": 0,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": 0,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 0
+    }
+  },
+  "PA": {
+    "name": "Panama",
+    "manpower": {
+      "active_personnel": 16300,
+      "reserve_personnel": 0,
+      "total_population": 4470241
+    },
+    "land": {
+      "tanks": 0,
+      "armored_vehicles": 1550,
+      "self_propelled_artillery": 0,
+      "towed_artillery": 0,
+      "rocket_projectors": 0
+    },
+    "air": {
+      "total_aircraft": 38,
+      "fighters": 0,
+      "attack_aircraft": 0,
+      "transport_aircraft": 13,
+      "total_helicopters": 23,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": 22,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 14
+    }
+  },
+  "MD": {
+    "name": "Moldova",
+    "manpower": {
+      "active_personnel": 6500,
+      "reserve_personnel": 2000,
+      "total_population": 3599528
+    },
+    "land": {
+      "tanks": 0,
+      "armored_vehicles": 1598,
+      "self_propelled_artillery": 4,
+      "towed_artillery": 67,
+      "rocket_projectors": 11
+    },
+    "air": {
+      "total_aircraft": 3,
+      "fighters": 0,
+      "attack_aircraft": 0,
+      "transport_aircraft": 1,
+      "total_helicopters": 2,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": null,
+      "aircraft_carriers": null,
+      "helicopter_carriers": null,
+      "destroyers": null,
+      "frigates": null,
+      "corvettes": null,
+      "submarines": null,
+      "patrol_vessels": null
+    }
+  },
+  "SO": {
+    "name": "Somalia",
+    "manpower": {
+      "active_personnel": 30000,
+      "reserve_personnel": 0,
+      "total_population": 13017273
+    },
+    "land": {
+      "tanks": 0,
+      "armored_vehicles": 1104,
+      "self_propelled_artillery": 0,
+      "towed_artillery": 0,
+      "rocket_projectors": 0
+    },
+    "air": {
+      "total_aircraft": 6,
+      "fighters": 0,
+      "attack_aircraft": 0,
+      "transport_aircraft": 0,
+      "total_helicopters": 6,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": 19,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 19
+    }
+  },
+  "BJ": {
+    "name": "Benin",
+    "manpower": {
+      "active_personnel": 4750,
+      "reserve_personnel": 0,
+      "total_population": 14697052
+    },
+    "land": {
+      "tanks": 0,
+      "armored_vehicles": 92,
+      "self_propelled_artillery": 0,
+      "towed_artillery": 16,
+      "rocket_projectors": 0
+    },
+    "air": {
+      "total_aircraft": 7,
+      "fighters": 0,
+      "attack_aircraft": 0,
+      "transport_aircraft": 1,
+      "total_helicopters": 5,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": 2,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 2
+    }
+  },
+  "SL": {
+    "name": "Sierra Leone",
+    "manpower": {
+      "active_personnel": 13000,
+      "reserve_personnel": 0,
+      "total_population": 9121049
+    },
+    "land": {
+      "tanks": 0,
+      "armored_vehicles": 350,
+      "self_propelled_artillery": 0,
+      "towed_artillery": 0,
+      "rocket_projectors": 0
+    },
+    "air": {
+      "total_aircraft": 1,
+      "fighters": 0,
+      "attack_aircraft": 0,
+      "transport_aircraft": 0,
+      "total_helicopters": 1,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": 10,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 10
+    }
+  },
+  "LR": {
+    "name": "Liberia",
+    "manpower": {
+      "active_personnel": 2100,
+      "reserve_personnel": 0,
+      "total_population": 5437249
+    },
+    "land": {
+      "tanks": 0,
+      "armored_vehicles": 550,
+      "self_propelled_artillery": 0,
+      "towed_artillery": 0,
+      "rocket_projectors": 0
+    },
+    "air": {
+      "total_aircraft": 0,
+      "fighters": 0,
+      "attack_aircraft": 0,
+      "transport_aircraft": 0,
+      "total_helicopters": 0,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": 6,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 6
+    }
+  },
+  "SR": {
+    "name": "Suriname",
+    "manpower": {
+      "active_personnel": 2500,
+      "reserve_personnel": 0,
+      "total_population": 646758
+    },
+    "land": {
+      "tanks": 0,
+      "armored_vehicles": 1250,
+      "self_propelled_artillery": 0,
+      "towed_artillery": 0,
+      "rocket_projectors": 0
+    },
+    "air": {
+      "total_aircraft": 3,
+      "fighters": 0,
+      "attack_aircraft": 0,
+      "transport_aircraft": 0,
+      "total_helicopters": 3,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": 17,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 17
+    }
+  },
+  "CF": {
+    "name": "Central African Republic",
+    "manpower": {
+      "active_personnel": 30000,
+      "reserve_personnel": 0,
+      "total_population": 5650957
+    },
+    "land": {
+      "tanks": 0,
+      "armored_vehicles": 270,
+      "self_propelled_artillery": 0,
+      "towed_artillery": 0,
+      "rocket_projectors": 0
+    },
+    "air": {
+      "total_aircraft": 8,
+      "fighters": 0,
+      "attack_aircraft": 8,
+      "transport_aircraft": 0,
+      "total_helicopters": 0,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": null,
+      "aircraft_carriers": null,
+      "helicopter_carriers": null,
+      "destroyers": null,
+      "frigates": null,
+      "corvettes": null,
+      "submarines": null,
+      "patrol_vessels": null
+    }
+  },
+  "BZ": {
+    "name": "Beliz",
+    "manpower": {
+      "active_personnel": 2000,
+      "reserve_personnel": 850,
+      "total_population": 415789
+    },
+    "land": {
+      "tanks": 0,
+      "armored_vehicles": 164,
+      "self_propelled_artillery": 0,
+      "towed_artillery": 0,
+      "rocket_projectors": 0
+    },
+    "air": {
+      "total_aircraft": 3,
+      "fighters": 0,
+      "attack_aircraft": 0,
+      "transport_aircraft": 1,
+      "total_helicopters": 1,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": 15,
+      "aircraft_carriers": 0,
+      "helicopter_carriers": 0,
+      "destroyers": 0,
+      "frigates": 0,
+      "corvettes": 0,
+      "submarines": 0,
+      "patrol_vessels": 15
+    }
+  },
+  "BT": {
+    "name": "Bhutan",
+    "manpower": {
+      "active_personnel": 16000,
+      "reserve_personnel": 50000,
+      "total_population": 884546
+    },
+    "land": {
+      "tanks": 0,
+      "armored_vehicles": 78,
+      "self_propelled_artillery": 0,
+      "towed_artillery": 0,
+      "rocket_projectors": 0
+    },
+    "air": {
+      "total_aircraft": 2,
+      "fighters": 0,
+      "attack_aircraft": 0,
+      "transport_aircraft": 0,
+      "total_helicopters": 2,
+      "attack_helicopters": 0
+    },
+    "naval": {
+      "total_assets": null,
+      "aircraft_carriers": null,
+      "helicopter_carriers": null,
+      "destroyers": null,
+      "frigates": null,
+      "corvettes": null,
+      "submarines": null,
+      "patrol_vessels": null
+    }
+  }
+}

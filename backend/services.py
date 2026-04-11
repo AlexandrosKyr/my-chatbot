@@ -1,7 +1,9 @@
+import json
 import logging
 import os
 import shutil
 from datetime import datetime
+from pathlib import Path
 from langchain_community.document_loaders import PyPDFLoader
 from utils import (
     extract_text_with_ocr,
@@ -164,6 +166,17 @@ class RAGService:
         self.parent_store = parent_store
         self.coordinate_parser = CoordinateParser()
         self.terrain_fetcher = TerrainDataFetcher()
+
+        # Load military power prompt DB (keyed by ISO alpha-2, e.g. "US", "RU")
+        _db_path = Path(__file__).parent.parent / "db" / "military_power_prompt.json"
+        try:
+            with open(_db_path, encoding="utf-8") as f:
+                self._military_db = json.load(f)
+            logger.info("Military power DB loaded: %d countries", len(self._military_db))
+        except FileNotFoundError:
+            self._military_db = {}
+            logger.warning("Military power DB not found at %s — skipping military intel", _db_path)
+
         self.last_terrain_summary = None  # Store for API response
         # Store full terrain context for follow-up reuse
         self.last_terrain_intel = None
@@ -559,6 +572,15 @@ class RAGService:
                 intel_parts.append(f"    - Low visibility conditions: reduced observation range")
             if precip == 0 and summary.get('avg_sunshine_hours', 0) and summary['avg_sunshine_hours'] > 8:
                 intel_parts.append(f"    - Clear/dry conditions: good visibility, firm ground")
+
+        # Military power data (from Global Firepower DB)
+        country_code = terrain_data.get("address", {}).get("country_code", "")
+        mil = self._military_db.get(country_code) if country_code else None
+        if mil:
+            intel_parts.append(f"\nMILITARY POWER ({mil['name']}):")
+            intel_parts.append(json.dumps(mil, indent=2))
+        else:
+            intel_parts.append(f"\nMILITARY POWER: No data available for country code '{country_code}'")
 
         intel_parts.append("\n" + "=" * 60)
 
