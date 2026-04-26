@@ -1,17 +1,21 @@
 import os
+from pathlib import Path
 from dotenv import load_dotenv
 
-load_dotenv()
+# Explicit path so .env loads correctly regardless of working directory.
+load_dotenv(Path(__file__).parent / ".env")
 
 class Config:
     """Application configuration"""
     
     # Folder settings
-    _BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    _BASE_DIR = os.path.dirname(os.path.abspath(__file__))          # backend/
+    _DATA_DIR = os.path.join(_BASE_DIR, "..", "data")               # data/
+
     UPLOAD_FOLDER = os.path.join(_BASE_DIR, "uploads")
-    KB_FOLDER = os.path.join(_BASE_DIR, "knowledge_base")
-    CHROMA_DB_PATH = os.path.join(_BASE_DIR, "chroma_db")
-    PARENT_CHUNKS_DB_PATH = os.path.join(_BASE_DIR, "chroma_db", "parent_chunks.db")
+    KB_FOLDER = os.path.join(_DATA_DIR, "knowledge_base")
+    CHROMA_DB_PATH = os.path.join(_DATA_DIR, "chroma_db")
+    PARENT_CHUNKS_DB_PATH = os.path.join(_DATA_DIR, "chroma_db", "parent_chunks.db")
     
     # Model settings
     EMBEDDINGS_MODEL = "BAAI/bge-large-en-v1.5"  # Better retrieval for technical documents
@@ -36,7 +40,7 @@ class Config:
     # Retrieval settings
     MIN_RELEVANCE_SCORE = 0.5  # Minimum cosine similarity for chunk retrieval
 
-# Ensure folders exist
+# Ensure runtime folders exist
 os.makedirs(Config.UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(Config.KB_FOLDER, exist_ok=True)
 os.makedirs(Config.CHROMA_DB_PATH, exist_ok=True)

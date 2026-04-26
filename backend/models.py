@@ -1,6 +1,6 @@
 import logging
 from langchain_huggingface import HuggingFaceEmbeddings
-from langchain_ollama import OllamaLLM
+from langchain_ollama import ChatOllama
 from langchain_community.vectorstores import Chroma
 from config import Config
 from utils import ParentChunkStore
@@ -29,11 +29,9 @@ class ModelLoader:
     def load_llm(self):
         """Load Ollama LLM"""
         try:
-            self.llm = OllamaLLM(
+            self.llm = ChatOllama(
                 model=Config.LLM_MODEL,
-                num_ctx= 16384
-                #num_predict=4096,
-                #extra_body={"think": False},
+                num_ctx=16384,
             )
             logger.info(f"LLM loaded: {Config.LLM_MODEL}")
             return self.llm

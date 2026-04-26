@@ -1,74 +1,53 @@
-# Dependencies
-/node_modules
-/.pnp
-.pnp.js
-package-lock.json
+# ── Python ───────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.so
+.Python
+.venv/
+venv/
+env/
+ENV/
+.pytest_cache/
+backend/.python-version
 
-# Testing
-/coverage
-backend/models
-backend/scripts
-backend/training
-
-# Production build
-/build
-
-# Environment variables
+# ── Environment variables ────────────────────────────────────────────────────
 .env
 .env.*
 !.env.example
 
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-venv/
-env/
-ENV/
-.venv/
-.pytest_cache/
+# ── Data (auto-generated or too large for git) ───────────────────────────────
+# Vector store — rebuilt automatically on first run
+data/chroma_db/
+# Doctrine PDFs — copy manually after cloning
+data/knowledge_base/
+# Runtime uploads
+backend/uploads/
+backend/*.db
 
-# Python version file
-backend/.python-version
+# ── Archive datasets (large image files) ─────────────────────────────────────
+archive/legacy/datasets/
 
-# Model weights (too large for GitHub — download or train locally)
-backend/models/*.pth
-backend/models/*.pt
+# ── Model weights ─────────────────────────────────────────────────────────────
 *.pth
 *.pt
 
-# Database files
-backend/chroma_db/
-backend/*.db
+# ── Frontend ──────────────────────────────────────────────────────────────────
+node_modules/
+frontend/build/
+frontend/coverage/
+package-lock.json
+frontend/package-lock.json
 
-# Knowledge base PDFs (too large for GitHub)
-backend/knowledge_base/
-
-# Training data
-backend/symbol_dataset/
-backend/legacy/
-backend/doctrine/
-
-# Upload directory
-backend/uploads/
-
-# IDE and OS files
+# ── OS / IDE / Tools ─────────────────────────────────────────────────────────
 .DS_Store
 .vscode/
 .idea/
+.claude/
 *.swp
 *.swo
 *~
 
-# Logs
+# ── Logs ──────────────────────────────────────────────────────────────────────
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
-# Poetry virtual environments
-backend/.venv/
-
-# Markdown docs (optional — remove this line if you want READMEs tracked)
-*.md
