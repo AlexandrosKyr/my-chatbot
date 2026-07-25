@@ -231,6 +231,14 @@ class ParentChunkStore:
         conn.commit()
         conn.close()
 
+    def delete_uploads(self):
+        """Delete parent chunks for user uploads only. Knowledge Base documents
+        are stored with a 'KB_' source prefix, so we keep those."""
+        conn = sqlite3.connect(self.db_path)
+        conn.execute("DELETE FROM parent_chunks WHERE source NOT LIKE 'KB\\_%' ESCAPE '\\'")
+        conn.commit()
+        conn.close()
+
 
 # ============== Text Chunking ==============
 

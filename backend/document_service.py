@@ -99,6 +99,45 @@ class DocumentService:
             logger.error(f"Upload error: {e}")
             raise
 
+    def delete_uploads(self) -> dict:
+        """Delete only user-uploaded (non-KB) documents; keep the Knowledge Base."""
+        try:
+            removed_chunks = 0
+
+            # 1. Remove non-KB chunks from the vector store.
+            if self.vectorstore is not None:
+                try:
+                    collection = self.vectorstore._collection
+                    before = collection.count()
+                    collection.delete(where={"is_kb": False})
+                    removed_chunks = before - collection.count()
+                except Exception as e:
+                    logger.error(f"Vector store upload cleanup failed: {e}")
+
+            # 2. Delete uploaded files on disk (this folder holds only uploads).
+            if os.path.exists(Config.UPLOAD_FOLDER):
+                for filename in os.listdir(Config.UPLOAD_FOLDER):
+                    filepath = os.path.join(Config.UPLOAD_FOLDER, filename)
+                    try:
+                        if os.path.isfile(filepath):
+                            os.remove(filepath)
+                    except Exception as e:
+                        logger.error(f"Error deleting {filename}: {e}")
+
+            # 3. Remove their parent chunks (KB parents are kept).
+            if self.parent_store:
+                self.parent_store.delete_uploads()
+
+            # 4. Forget non-KB raw documents.
+            self.raw_documents = [d for d in self.raw_documents if d.get("is_kb")]
+
+            logger.info(f"Uploaded documents cleared ({removed_chunks} chunks)")
+            return {"success": True, "chunks_deleted": removed_chunks}
+
+        except Exception as e:
+            logger.error(f"Delete uploads error: {e}")
+            raise
+
     def delete_all(self) -> dict:
         """Delete all uploaded documents and clear the vector store."""
         try:

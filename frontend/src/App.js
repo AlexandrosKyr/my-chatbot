@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { FileText } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { FileText, Paperclip, Send } from 'lucide-react';
 
 // Simple markdown renderer for tactical analysis output
 const renderMarkdown = (text) => {
@@ -126,6 +126,39 @@ const renderInlineFormatting = (text) => {
   return parts.length > 0 ? parts : text;
 };
 
+function Tooltip({ text, align = 'left', place = 'bottom', children }) {
+  const [show, setShow] = useState(false);
+  const box = {
+    position: 'absolute',
+    zIndex: 50,
+    width: 'max-content',
+    maxWidth: '300px',
+    padding: '10px 13px',
+    fontSize: '13.5px',
+    lineHeight: 1.5,
+    color: 'var(--text-primary)',
+    background: 'var(--bg-tertiary)',
+    border: '1px solid var(--border-color)',
+    borderRadius: '10px',
+    boxShadow: '0 6px 22px rgba(0, 0, 0, 0.4)',
+    whiteSpace: 'normal',
+    textAlign: 'left',
+    pointerEvents: 'none',
+    [align]: 0,
+    ...(place === 'bottom' ? { top: 'calc(100% + 8px)' } : { bottom: 'calc(100% + 8px)' }),
+  };
+  return (
+    <span
+      style={{ position: 'relative', display: 'inline-flex' }}
+      onMouseEnter={() => setShow(true)}
+      onMouseLeave={() => setShow(false)}
+    >
+      {children}
+      {show && <span style={box}>{text}</span>}
+    </span>
+  );
+}
+
 export default function Chatbot() {
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState('');
@@ -135,6 +168,26 @@ export default function Chatbot() {
   const [systemHealth, setSystemHealth] = useState(null);
   const [showHealth, setShowHealth] = useState(false);
   const [scenario, setScenario] = useState('Tactical analysis request');
+
+  // Composer auto-grow
+  const textareaRef = useRef(null);
+  const COMPOSER_MIN = 96;   // px — starting height (a few lines, like modern chat apps)
+  const COMPOSER_MAX = 260;  // px — grow up to this, then scroll
+
+  useEffect(() => {
+    const el = textareaRef.current;
+    if (!el) return;
+    el.style.height = 'auto';
+    el.style.height = Math.min(Math.max(el.scrollHeight, COMPOSER_MIN), COMPOSER_MAX) + 'px';
+  }, [inputValue]);
+
+  // Prompt editor
+  const [showPrompts, setShowPrompts] = useState(false);
+  const [promptItems, setPromptItems] = useState([]);   // [{key,label,description,required,value,default}]
+  const [promptDraft, setPromptDraft] = useState({});   // key -> textarea value
+  const [promptErrors, setPromptErrors] = useState({}); // key -> [error strings]
+  const [promptStatus, setPromptStatus] = useState('');
+  const [promptSaving, setPromptSaving] = useState(false);
 
   useEffect(() => {
     checkHealth();
@@ -159,12 +212,23 @@ export default function Chatbot() {
     }
   };
 
-  const handleRestart = () => {
-    if (window.confirm('Clear conversation history?')) {
-      setMessages([]);
-      setInputValue('');
-      checkHealth();
+  const handleRestart = async () => {
+    if (!window.confirm('Start a fresh chat? This also removes the files you uploaded in this session. Your Knowledge Base is kept.')) {
+      return;
     }
+    try {
+      await fetch('http://127.0.0.1:5001/delete_uploads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({}),
+      });
+    } catch (error) {
+      // Best effort — still clear the screen even if the request fails.
+    }
+    setMessages([]);
+    setInputValue('');
+    setUploadedFile(null);
+    checkHealth();
   };
 
   const handleDeleteAll = async () => {
@@ -212,6 +276,56 @@ export default function Chatbot() {
 
   const handlePaste = () => {
     // Allow normal text paste - no special handling needed for coordinate-based analysis
+  };
+
+  const openPrompts = async () => {
+    setShowPrompts(true);
+    setPromptErrors({});
+    setPromptStatus('Loading...');
+    try {
+      const response = await fetch('http://127.0.0.1:5001/prompts');
+      const data = await response.json();
+      const items = data.prompts || [];
+      setPromptItems(items);
+      const draft = {};
+      items.forEach(p => { draft[p.key] = p.value; });
+      setPromptDraft(draft);
+      setPromptStatus('');
+    } catch (error) {
+      setPromptStatus('Cannot load prompts. Is the backend running?');
+    }
+  };
+
+  const savePrompts = async () => {
+    setPromptSaving(true);
+    setPromptErrors({});
+    setPromptStatus('Saving...');
+    try {
+      const response = await fetch('http://127.0.0.1:5001/prompts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompts: promptDraft }),
+      });
+      const data = await response.json();
+      if (data.ok) {
+        setPromptStatus('Saved. Changes apply to your next question.');
+        setPromptItems(prev => prev.map(p => ({ ...p, value: promptDraft[p.key] ?? p.value })));
+      } else {
+        setPromptErrors(data.errors || {});
+        setPromptStatus('Could not save - fix the highlighted prompts below.');
+      }
+    } catch (error) {
+      setPromptStatus('Save failed. Is the backend running?');
+    } finally {
+      setPromptSaving(false);
+    }
+  };
+
+  const resetPrompt = (key) => {
+    const item = promptItems.find(p => p.key === key);
+    if (item) {
+      setPromptDraft(prev => ({ ...prev, [key]: item.default }));
+    }
   };
 
   const uploadDocument = async (file, showCompletion = true) => {
@@ -587,6 +701,27 @@ export default function Chatbot() {
     return 'yellow';
   };
 
+  // ONLINE only when every engine is available: LLM, embeddings, and vector DB.
+  const engines = systemHealth?.components;
+  const allEnginesOk =
+    engines?.ollama?.status === 'ok' &&
+    engines?.embeddings?.status === 'ok' &&
+    engines?.vector_store?.status === 'ok';
+  const statusLabel = allEnginesOk
+    ? 'ONLINE'
+    : systemHealth?.status === 'error'
+    ? 'OFFLINE'
+    : systemHealth
+    ? 'PARTIAL'
+    : 'CHECKING';
+  const statusColor = allEnginesOk
+    ? 'var(--success)'
+    : statusLabel === 'OFFLINE'
+    ? 'var(--error)'
+    : statusLabel === 'PARTIAL'
+    ? '#fbbf24'
+    : 'var(--text-dim)';
+
   return (
     <div className="flex flex-col h-screen" style={{ background: 'var(--bg-primary)', color: 'var(--text-primary)' }}>
       <div className="border-b-2 px-6 py-5" style={{
@@ -600,81 +735,99 @@ export default function Chatbot() {
             }}>
               Tactical Assistant
             </h2>
-            <button
-              onClick={() => setShowHealth(!showHealth)}
-              className="flex items-center gap-2 px-3 py-1 text-xs"
-              style={{
-                background: 'transparent',
-                border: '1px solid var(--border-color)',
-                color: 'var(--text-secondary)'
-              }}
+            <Tooltip
+              align="left"
+              text="Shows whether the app is ready. Green ONLINE means all three engines are working (AI, search model, and document database). Amber PARTIAL means one is still starting or missing; red OFFLINE means the server can't be reached. Click for details."
             >
-              <span>[{systemHealth?.status === 'healthy' ? 'ONLINE' : systemHealth?.status === 'error' ? 'ERROR' : 'CHECKING'}]</span>
-            </button>
+              <button
+                onClick={() => setShowHealth(!showHealth)}
+                className="flex items-center gap-2 px-3 py-1 text-xs"
+                style={{
+                  background: 'transparent',
+                  border: '1px solid var(--border-color)',
+                  color: 'var(--text-secondary)'
+                }}
+              >
+                <span style={{ color: statusColor, fontWeight: 600 }}>[{statusLabel}]</span>
+              </button>
+            </Tooltip>
           </div>
 
           <div className="flex items-center gap-2">
-            <label
-              className="px-3 py-1 text-xs cursor-pointer"
-              style={{
-                background: 'transparent',
-                border: '1px solid var(--border-color)',
-                color: 'var(--text-secondary)'
-              }}
+            <Tooltip
+              align="right"
+              text="Add reference documents (PDF, Word, or text). The assistant reads them and uses them to answer your questions. They stay saved for next time."
             >
-              Knowledge Base
-              <input
-                type="file"
-                accept=".pdf,.txt,.md,.doc,.docx"
-                onChange={handleDoctrineUpload}
-                disabled={isUploading}
-                multiple
-                className="hidden"
-              />
-            </label>
+              <label
+                className="px-3 py-1 text-xs cursor-pointer"
+                style={{
+                  background: 'transparent',
+                  border: '1px solid var(--border-color)',
+                  color: 'var(--text-secondary)'
+                }}
+              >
+                Knowledge Base
+                <input
+                  type="file"
+                  accept=".pdf,.txt,.md,.doc,.docx"
+                  onChange={handleDoctrineUpload}
+                  disabled={isUploading}
+                  multiple
+                  className="hidden"
+                />
+              </label>
+            </Tooltip>
 
-            <label
-              className="px-3 py-1 text-xs cursor-pointer"
-              style={{
-                background: 'transparent',
-                border: '1px solid var(--border-color)',
-                color: 'var(--text-secondary)'
-              }}
+            <Tooltip
+              align="right"
+              text="Erases everything you have added — both uploaded files and reference documents. This cannot be undone."
             >
-              {isUploading ? 'Processing' : 'Upload Files'}
-              <input
-                type="file"
-                accept=".pdf,.jpg,.jpeg,.png,.bmp,.tiff"
-                onChange={handleFileUpload}
-                disabled={isUploading}
-                multiple
-                className="hidden"
-              />
-            </label>
+              <button
+                onClick={handleDeleteAll}
+                className="px-3 py-1 text-xs"
+                style={{
+                  background: 'transparent',
+                  border: '1px solid var(--border-color)',
+                  color: 'var(--text-secondary)'
+                }}
+              >
+                Delete All
+              </button>
+            </Tooltip>
 
-            <button
-              onClick={handleDeleteAll}
-              className="px-3 py-1 text-xs"
-              style={{
-                background: 'transparent',
-                border: '1px solid var(--border-color)',
-                color: 'var(--text-secondary)'
-              }}
+            <Tooltip
+              align="right"
+              text="Starts a fresh chat and removes the files you uploaded here. Your Knowledge Base documents are kept."
             >
-              Delete All
-            </button>
+              <button
+                onClick={handleRestart}
+                className="px-3 py-1 text-xs"
+                style={{
+                  background: 'transparent',
+                  border: '1px solid var(--border-color)',
+                  color: 'var(--text-secondary)'
+                }}
+              >
+                Clear Session
+              </button>
+            </Tooltip>
 
-            <button
-              onClick={handleRestart}
-              className="px-3 py-1 text-xs"
-              style={{
-                background: 'transparent',
-                border: '1px solid var(--border-color)',
-                color: 'var(--text-secondary)'
-              }}
+            <Tooltip
+              align="right"
+              text="Change the instructions that tell the assistant how to answer. You can reword them; the map, doctrine, and military information are always included automatically."
             >
-              Clear Session
-            </button>
+              <button
+                onClick={() => (showPrompts ? setShowPrompts(false) : openPrompts())}
+                className="px-3 py-1 text-xs"
+                style={{
+                  background: 'transparent',
+                  border: '1px solid var(--border-color)',
+                  color: 'var(--text-secondary)'
+                }}
+              >
+                Prompts
+              </button>
+            </Tooltip>
           </div>
         </div>
       </div>
@@ -702,9 +855,10 @@ export default function Chatbot() {
 
             {systemHealth.components && (
               <div className="grid grid-cols-3 gap-3 text-xs mb-3">
-                <div className="p-2" style={{
+                <div className="p-3" style={{
                   background: 'var(--bg-primary)',
-                  border: `1px solid var(--border-color)`
+                  border: `1px solid var(--border-color)`,
+                  borderRadius: '10px'
                 }}>
                   <div style={{ color: 'var(--text-dim)' }} className="mb-1">LLM Engine</div>
                   <div style={{
@@ -714,9 +868,10 @@ export default function Chatbot() {
                   </div>
                 </div>
 
-                <div className="p-2" style={{
+                <div className="p-3" style={{
                   background: 'var(--bg-primary)',
-                  border: `1px solid var(--border-color)`
+                  border: `1px solid var(--border-color)`,
+                  borderRadius: '10px'
                 }}>
                   <div style={{ color: 'var(--text-dim)' }} className="mb-1">Embeddings</div>
                   <div style={{
@@ -726,9 +881,10 @@ export default function Chatbot() {
                   </div>
                 </div>
 
-                <div className="p-2" style={{
+                <div className="p-3" style={{
                   background: 'var(--bg-primary)',
-                  border: `1px solid var(--border-color)`
+                  border: `1px solid var(--border-color)`,
+                  borderRadius: '10px'
                 }}>
                   <div style={{ color: 'var(--text-dim)' }} className="mb-1">Vector DB</div>
                   <div style={{
@@ -752,6 +908,87 @@ export default function Chatbot() {
         </div>
       )}
 
+      {showPrompts && (
+        <div className="border-b px-6 py-3" style={{
+          borderColor: 'var(--border-color)',
+          background: 'var(--bg-secondary)'
+        }}>
+          <div className="max-w-6xl mx-auto">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-xs" style={{ color: 'var(--text-dim)' }}>Edit Prompts</h3>
+              <div className="flex items-center gap-3">
+                <span className="text-xs" style={{ color: 'var(--text-dim)' }}>{promptStatus}</span>
+                <button
+                  onClick={savePrompts}
+                  disabled={promptSaving}
+                  className="px-2 py-1 text-xs"
+                  style={{ background: 'transparent', color: 'var(--text-secondary)', border: '1px solid var(--border-color)' }}
+                >
+                  {promptSaving ? 'Saving' : 'Save'}
+                </button>
+                <button
+                  onClick={() => setShowPrompts(false)}
+                  className="px-2 py-1 text-xs"
+                  style={{ background: 'transparent', color: 'var(--text-dim)', border: '1px solid var(--border-color)' }}
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+
+            <div className="space-y-4" style={{ maxHeight: '60vh', overflowY: 'auto' }}>
+              {promptItems.map(p => (
+                <div key={p.key} className="p-3" style={{ background: 'var(--bg-primary)', border: '1px solid var(--border-color)', borderRadius: '10px' }}>
+                  <div className="flex items-center justify-between mb-1">
+                    <div className="text-xs" style={{ color: 'var(--text-secondary)' }}>{p.label}</div>
+                    <button
+                      onClick={() => resetPrompt(p.key)}
+                      className="px-2 py-1 text-xs"
+                      style={{ background: 'transparent', color: 'var(--text-dim)', border: '1px solid var(--border-color)' }}
+                    >
+                      Reset to default
+                    </button>
+                  </div>
+                  <div className="text-xs mb-1" style={{ color: 'var(--text-dim)' }}>{p.description}</div>
+                  {p.required.length > 0 && (
+                    <div className="text-xs mb-2" style={{ color: 'var(--text-secondary)' }}>
+                      <span style={{ fontWeight: 700, color: 'var(--text-primary)' }}>Must keep:</span>{' '}
+                      {p.required.map(r => (
+                        <span
+                          key={r}
+                          style={{ fontWeight: 700, fontFamily: 'monospace', color: 'var(--text-primary)', marginRight: '8px' }}
+                        >
+                          {`{${r}}`}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                  <textarea
+                    value={promptDraft[p.key] ?? ''}
+                    onChange={e => setPromptDraft(prev => ({ ...prev, [p.key]: e.target.value }))}
+                    rows={p.key === 'ipb_analysis' ? 16 : p.key === 'followup' ? 8 : 2}
+                    spellCheck={false}
+                    className="w-full text-xs p-2"
+                    style={{
+                      background: 'var(--bg-secondary)',
+                      color: 'var(--text-primary)',
+                      border: `1px solid ${promptErrors[p.key] ? 'var(--error)' : 'var(--border-color)'}`,
+                      fontFamily: 'monospace',
+                      resize: 'vertical'
+                    }}
+                  />
+                  {promptErrors[p.key] && (
+                    <div className="text-xs mt-1" style={{ color: 'var(--error)' }}>
+                      {promptErrors[p.key].join('  ·  ')}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
       {uploadedFile && (
         <div className="border-b px-6 py-2" style={{
           borderColor: 'var(--border-color)',
@@ -765,7 +1002,7 @@ export default function Chatbot() {
         </div>
       )}
 
-      <div className={`flex-1 ${messages.length > 0 ? 'overflow-y-auto' : 'overflow-hidden flex items-center justify-center'}`}>
+      <div className={`flex-1 overflow-x-hidden ${messages.length > 0 ? 'overflow-y-auto' : 'overflow-hidden flex items-center justify-center'}`}>
         <div className="max-w-6xl mx-auto px-6 w-full">
 
           {messages.length === 0 && (
@@ -802,31 +1039,39 @@ export default function Chatbot() {
               >
                 <div className={`flex gap-3 max-w-full ${message.role === 'user' ? 'flex-row-reverse' : ''}`}>
                   {message.role !== 'system' && (
-                    <div className="flex-shrink-0 w-6 h-6 flex items-center justify-center text-xs" style={{
+                    <div className="flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-xs" style={{
                       background: 'var(--bg-tertiary)',
                       border: '1px solid var(--border-color)',
-                      color: 'var(--text-dim)'
+                      color: 'var(--text-secondary)'
                     }}>
                       {message.role === 'user' ? 'U' : 'A'}
                     </div>
                   )}
 
-                  <div className={`flex-1 ${message.role === 'user' ? 'text-right' : 'text-left'}`}>
-                    <div className={`text-xs leading-relaxed ${
-                      message.role === 'system'
-                        ? 'px-3 py-2'
-                        : ''
-                    } ${message.role === 'user' ? 'whitespace-pre-wrap' : ''}`} style={message.role === 'system' ? (
-                      message.isError ? {
-                        color: 'var(--error)',
-                        background: 'var(--bg-secondary)',
-                        border: '1px solid var(--border-color)'
-                      } : {
-                        color: 'var(--success)',
-                        background: 'var(--bg-secondary)',
-                        border: '1px solid var(--border-color)'
+                  <div className={`flex-1 min-w-0 ${message.role === 'user' ? 'text-right' : 'text-left'}`} style={{ overflowWrap: 'break-word', wordBreak: 'break-word' }}>
+                    <div
+                      className={`text-sm leading-relaxed ${
+                        message.role === 'system' || message.role === 'user' ? 'px-4 py-2' : ''
+                      } ${message.role === 'user' ? 'whitespace-pre-wrap' : ''}`}
+                      style={
+                        message.role === 'system'
+                          ? {
+                              color: message.isError ? 'var(--error)' : 'var(--success)',
+                              background: 'var(--bg-secondary)',
+                              border: '1px solid var(--border-color)',
+                              borderRadius: '12px'
+                            }
+                          : message.role === 'user'
+                          ? {
+                              color: 'var(--text-primary)',
+                              background: 'var(--bg-tertiary)',
+                              borderRadius: '14px',
+                              display: 'inline-block',
+                              textAlign: 'left'
+                            }
+                          : { color: 'var(--text-primary)' }
                       }
-                    ) : { color: 'var(--text-primary)' }}>
+                    >
                       {message.role === 'assistant' ? renderMarkdown(message.text) : message.text}
                     </div>
                   </div>
@@ -854,13 +1099,21 @@ export default function Chatbot() {
         </div>
       </div>
 
-      <div className="border-t-2 px-6 py-5" style={{
-        borderColor: 'var(--border-color)',
-        background: 'var(--bg-secondary)'
+      <div className="px-6 pt-2 pb-5" style={{
+        background: 'transparent'
       }}>
         <div className="max-w-6xl mx-auto">
-          <div className="relative flex items-center gap-2">
+          <div
+            className="flex flex-col px-4 pt-3 pb-2"
+            style={{
+              background: 'var(--bg-primary)',
+              border: '1px solid var(--border-color)',
+              borderRadius: '18px'
+            }}
+          >
+            {/* Text area on top, full width */}
             <textarea
+              ref={textareaRef}
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               onKeyDown={handleKeyDown}
@@ -868,31 +1121,78 @@ export default function Chatbot() {
               placeholder="Ask doctrine questions or provide coordinates (e.g., 40.7128, -74.0060)"
               rows={1}
               disabled={isThinking}
-              className="flex-1 resize-none px-3 py-2 text-xs focus:outline-none disabled:opacity-50"
+              className="w-full resize-none px-1 py-1 focus:outline-none disabled:opacity-50"
               style={{
-                minHeight: '32px',
-                maxHeight: '200px',
-                background: 'var(--bg-primary)',
-                border: '1px solid var(--border-color)',
-                color: 'var(--text-primary)'
+                minHeight: `${COMPOSER_MIN}px`,
+                maxHeight: `${COMPOSER_MAX}px`,
+                background: 'transparent',
+                border: 'none',
+                color: 'var(--text-primary)',
+                fontSize: '15px',
+                lineHeight: '1.55',
+                overflowX: 'hidden',
+                overflowY: 'auto'
               }}
             />
-            <button
-              onClick={handleSendMessage}
-              disabled={inputValue.trim() === '' || isThinking}
-              className={`px-3 py-2 text-xs ${
-                inputValue.trim() === '' || isThinking
-                  ? 'cursor-not-allowed opacity-30'
-                  : ''
-              }`}
-              style={{
-                background: 'transparent',
-                color: 'var(--text-secondary)',
-                border: '1px solid var(--border-color)'
-              }}
-            >
-              Send
-            </button>
+
+            {/* Controls row along the bottom */}
+            <div className="flex items-center justify-between mt-1">
+              <Tooltip
+                align="left"
+                place="top"
+                text={isUploading
+                  ? 'Reading your file, please wait...'
+                  : 'Attach a PDF or image (like a map or scanned page). The assistant will read it and use it to answer your next questions.'}
+              >
+                <label
+                  className="flex items-center justify-center cursor-pointer"
+                  style={{
+                    width: '38px',
+                    height: '38px',
+                    borderRadius: '9px',
+                    color: isUploading ? 'var(--text-dim)' : 'var(--text-secondary)'
+                  }}
+                >
+                  <Paperclip size={18} />
+                  <input
+                    type="file"
+                    accept=".pdf,.jpg,.jpeg,.png,.bmp,.tiff"
+                    onChange={handleFileUpload}
+                    disabled={isUploading}
+                    multiple
+                    className="hidden"
+                  />
+                </label>
+              </Tooltip>
+
+              <div className="flex items-center gap-3">
+                <span className="text-xs hidden sm:inline" style={{ color: 'var(--text-dim)' }}>
+                  Enter to send · Shift+Enter for a new line
+                </span>
+                <Tooltip align="right" place="top" text="Send your message (or just press Enter).">
+                  <button
+                    onClick={handleSendMessage}
+                    disabled={inputValue.trim() === '' || isThinking}
+                    aria-label="Send message"
+                    className={`flex items-center justify-center ${
+                      inputValue.trim() === '' || isThinking
+                        ? 'cursor-not-allowed opacity-40'
+                        : ''
+                    }`}
+                    style={{
+                      width: '40px',
+                      height: '40px',
+                      borderRadius: '10px',
+                      background: 'var(--bg-tertiary)',
+                      color: 'var(--text-primary)',
+                      border: '1px solid var(--border-color)'
+                    }}
+                  >
+                    <Send size={17} />
+                  </button>
+                </Tooltip>
+              </div>
+            </div>
           </div>
         </div>
       </div>

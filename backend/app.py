@@ -15,6 +15,7 @@ from retriever import DoctrineRetriever
 from terrain_data_fetcher import TerrainDataFetcher
 from utils import ParentChunkStore
 from agent import TacticalAgent
+import prompt_store
 import tools.terrain as terrain_tool
 import tools.doctrine as doctrine_tool
 import tools.military as military_tool
@@ -183,6 +184,24 @@ def delete_all():
         return jsonify({"error": "Failed to delete data"}), 500
 
 
+@app.route("/delete_uploads", methods=["POST"])
+def delete_uploads():
+    """Remove only user-uploaded (non-KB) documents. Used by 'Clear Session'."""
+    global document_service
+    try:
+        if document_service is None:
+            return jsonify({"error": "Service unavailable"}), 503
+
+        result = document_service.delete_uploads()
+        app_state["documents_processed"] = 0
+        return jsonify(result), 200
+
+    except Exception as e:
+        app_state["errors"] += 1
+        logger.error(f"Delete uploads error: {e}")
+        return jsonify({"error": "Failed to delete uploads"}), 500
+
+
 @app.route("/chat", methods=["POST"])
 def chat():
     global agent
@@ -276,6 +295,33 @@ def analyze_coordinates():
         logger.error(f"Coordinate analysis error: {e}")
         logger.error(traceback.format_exc())
         return jsonify({"error": "Failed to analyze coordinates"}), 500
+
+
+@app.route("/prompts", methods=["GET"])
+def get_prompts():
+    """Return all editable prompts + their current and default values."""
+    try:
+        return jsonify(prompt_store.api_payload()), 200
+    except Exception as e:
+        logger.error(f"Get prompts failed: {e}")
+        return jsonify({"error": "Failed to load prompts"}), 500
+
+
+@app.route("/prompts", methods=["POST"])
+def save_prompts():
+    """Validate and save edited prompts. Body: {"prompts": {key: text, ...}}."""
+    try:
+        body = request.json or {}
+        new_prompts = body.get("prompts", {})
+        if not isinstance(new_prompts, dict):
+            return jsonify({"ok": False, "errors": {"_body": ["Invalid request"]}}), 400
+
+        result = prompt_store.save(new_prompts)
+        return jsonify(result), 200 if result["ok"] else 400
+
+    except Exception as e:
+        logger.error(f"Save prompts failed: {e}")
+        return jsonify({"ok": False, "errors": {"_server": ["Failed to save prompts"]}}), 500
 
 
 @app.route("/debug/chunks", methods=["GET"])

@@ -22,14 +22,11 @@ dependencies = [
     "torch>=2.0.0,<3.0.0",
     "torchvision>=0.15.0,<1.0.0",
     "tqdm>=4.67.1,<5.0.0",
-    "ftfy>=6.1.0,<7.0.0",
-    "regex>=2023.0.0,<2025.0.0",
-    "ultralytics>=8.0.0,<9.0.0",
     "python-dotenv>=1.0.0",
+    "pyyaml>=6.0",
     "requests>=2.32.0",
     "numpy>=1.24.0",
     "pypdf>=3.17.0",
-    "clip @ git+https://github.com/openai/CLIP.git",
     # Geospatial tools
     "pyproj>=3.5.0",
     "mgrs>=1.4.0",
@@ -46,3 +43,12 @@ packages = ["."]
 
 [tool.uv]
 package = false
+
+[dependency-groups]
+dev = ["pytest>=8.0.0"]
+
+[tool.pytest.ini_options]
+# Anchor pytest to backend/ so it uses this venv, not a parent-dir config.
+rootdir = "."
+pythonpath = ["."]
+testpaths = ["../tests"]

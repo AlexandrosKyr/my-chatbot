@@ -12,20 +12,29 @@ from tools.coordinates import (
     decode_geohash,
     encode_plus_code,
     decode_plus_code,
+    encode_maidenhead,
+    decode_maidenhead,
+    convert_to_mils,
+    convert_from_mils,
 )
 from tools.geometry import calculate_distance, calculate_bearing, analyze_aspect
 from tools.files import parse_kml_file, parse_kml_string
+import prompt_store
 
 logger = logging.getLogger(__name__)
 
 # Only genuinely optional tools go here — things the LLM may or may not need.
 OPTIONAL_TOOLS = [
-    # Coordinate conversion
+    # Coordinate conversion & datums
     convert_coordinates,
     encode_geohash,
     decode_geohash,
     encode_plus_code,
     decode_plus_code,
+    encode_maidenhead,
+    decode_maidenhead,
+    convert_to_mils,
+    convert_from_mils,
     # Geometry
     calculate_distance,
     calculate_bearing,
@@ -218,14 +227,10 @@ def _detect_scenario_type(question: str) -> str:
 
 
 def _get_scenario_guidance(scenario_type: str) -> str:
-    guidance = {
-        "defensive":      "DEFENSIVE OPERATIONS: Identify defensible terrain, engagement areas, obstacle integration, key terrain to retain, and enemy avenues of approach.",
-        "offensive":      "OFFENSIVE OPERATIONS: Identify friendly avenues of approach, key terrain objectives, obstacles to breach/bypass, cover and concealment for movement.",
-        "stability":      "STABILITY OPERATIONS: Focus on civil considerations (ASCOPE), population centers, sensitive sites, critical infrastructure.",
-        "reconnaissance": "RECONNAISSANCE: Identify observation positions, named areas of interest (NAIs), screen lines, information collection priorities.",
-        "general":        "COMPREHENSIVE IPB: Full OAKOC terrain analysis, threat evaluation, course of action development.",
-    }
-    return guidance.get(scenario_type, guidance["general"])
+    key = f"scenario_{scenario_type}"
+    if key not in prompt_store.DEFAULTS:
+        key = "scenario_general"
+    return prompt_store.get(key)
 
 
 def _build_ipb_prompt(question: str, terrain_text: str, doctrine_text: str,
@@ -255,50 +260,21 @@ def _build_ipb_prompt(question: str, terrain_text: str, doctrine_text: str,
         "MILITARY POWER DATA: Not available for this location."
     )
 
-    return f"""/no_think
-You are a NATO officer conducting Intelligence Preparation of the Battlefield (IPB) following ATP 2-01.3.
-
-CRITICAL RULES:
-1. Use ONLY the terrain data and doctrine provided below — do NOT add information from your training data.
-2. Cite doctrine with exact document name and page as provided — NEVER invent sources.
-3. If data is missing, state it clearly rather than speculating.
-4. IPB Step 4 analyses ENEMY courses of action, not friendly COAs.
-
-{history_section}SCENARIO: {scenario_guidance}
-
-{doctrine_section}
-
-TERRAIN DATA ({coord_str}):
-{terrain_text}
-
-{military_section}
-
-TASK: {question}
-
-OUTPUT FORMAT:
-
-## 1. SITUATION OVERVIEW
-
-## 2. TERRAIN ANALYSIS — IPB Step 2 (OAKOC)
-- **Observation & Fields of Fire**
-- **Avenues of Approach** (Unrestricted / Restricted / Severely Restricted)
-- **Key Terrain**
-- **Obstacles**
-- **Cover & Concealment**
-
-## 3. CIVIL CONSIDERATIONS (ASCOPE)
-
-## 4. THREAT EVALUATION — IPB Step 3
-
-## 5. ENEMY COURSES OF ACTION — IPB Step 4
-**Most Probable COA (MPCOA):**
-**Most Dangerous COA (MDCOA):**
-
-## 6. NAMED AREAS OF INTEREST
-
-## 7. RECOMMENDATIONS
-
-Begin analysis. Use only the data provided above."""
+    fields = dict(
+        history_section=history_section,
+        scenario_guidance=scenario_guidance,
+        doctrine_section=doctrine_section,
+        coord_str=coord_str,
+        terrain_text=terrain_text,
+        military_section=military_section,
+        question=question,
+    )
+    template = prompt_store.get("ipb_analysis")
+    try:
+        return template.format(**fields)
+    except (KeyError, IndexError, ValueError) as e:
+        logger.error("Bad ipb_analysis prompt (%s); using built-in default.", e)
+        return prompt_store.DEFAULTS["ipb_analysis"].format(**fields)
 
 
 def _build_followup_prompt(question: str, conversation_history: list,
@@ -315,18 +291,17 @@ def _build_followup_prompt(question: str, conversation_history: list,
         if place and coords:
             location_context = f"Previous analysis: {place} ({coords.get('lat')}, {coords.get('lon')})\n\n"
 
-    return f"""You are a NATO Tactical Terrain Analysis Assistant.
-
-{location_context}{"=" * 50}
-CONVERSATION HISTORY
-{"=" * 50}
-{history_text}
-{"=" * 50}
-CURRENT QUESTION
-{"=" * 50}
-{question}
-
-Answer based on the previous analysis. If new coordinates are needed, ask for them."""
+    fields = dict(
+        location_context=location_context,
+        history_text=history_text,
+        question=question,
+    )
+    template = prompt_store.get("followup")
+    try:
+        return template.format(**fields)
+    except (KeyError, IndexError, ValueError) as e:
+        logger.error("Bad followup prompt (%s); using built-in default.", e)
+        return prompt_store.DEFAULTS["followup"].format(**fields)
 
 
 def _empty_availability() -> dict:
